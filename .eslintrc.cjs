@@ -12,6 +12,15 @@ module.exports = {
   settings: { react: { version: '18.2' } },
   plugins: ['react-refresh'],
   rules: {
+    "camelcase": "off",
+    "no-var": "error",
+    "object-shorthand": "error",
+    "prefer-const": ["error", { "destructuring": "any" }],
+    "prefer-rest-params": "error",
+    "prefer-spread": "error",
+    "prefer-object-spread": "error",
+    "prefer-destructuring": "error",
+    "prefer-numeric-literals": "error",
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },
