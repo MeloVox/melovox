@@ -3,7 +3,8 @@ import Login from './components/Login.jsx'
 import Layout from './components/Layout.jsx'
 import Home from './components/Home.jsx'
 import Notfound from './components/404.jsx'
-import Register from "../../melovox-api/src/routes/register.js";
+import Register from "./components/Register.jsx";
+import { UserInfo } from "./components/User.jsx";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/profile" element={<UserInfo />} />
             <Route path="*" element={<Notfound />} />
           </Route>
         </Routes>

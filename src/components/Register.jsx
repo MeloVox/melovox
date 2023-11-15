@@ -1,23 +1,23 @@
 import { useState } from 'react';
+import { GoogleLogin } from '@react-oauth/google';
+import { useNavigate } from "react-router-dom";
 
 function Register() {
-    const [message, setMessage] = useState('');
+    const [message, setMessage] = useState("");
     const [mail, setMail] = useState("");
     const [password, setPassword] = useState("");
-    const API = "http://127.0.0.1:3333"
+    const API = "http://localhost:3333"
+    const navigate = useNavigate()
 
-    const submitLogin = (mail, password) => {
-        fetch(`${API}/api/login`, {
+    const submitRegister = (mail, password) => {
+        fetch(`${API}/api/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({ email: mail, password }),
         }).catch((err) => {
-            err.json().then((data) => {
-                const { message } = data
-                setMessage(message)
-            })
+            setMessage(err.toString())
         }).then((reponse) => {
             reponse.json().then((data) => {
                 const { message } = data
@@ -26,11 +26,39 @@ function Register() {
         })
     }
 
+    const submitGoogle = (googleUser) => {
+        fetch(`${API}/api/handlegoogle`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(googleUser),
+        }).catch((err) => {
+            setMessage(err.toString())
+        }).then((reponse) => {
+            reponse.json().then((data) => {
+                const { message } = data
+                setMessage(message)
+                localStorage.setItem('user', JSON.stringify(data));
+                navigate('/profile')
+            })
+        })
+    }
+
     return (
         <div className="h-screen w-full flex justify-center items-center">
             <div className="flex flex-col space-y-5 m-5 border border-black rounded-md p-5">
+                <GoogleLogin
+                    onSuccess={credentialResponse => {
+                        submitGoogle(credentialResponse)
+                    }}
+                    onError={() => {
+                        console.log('Login Failed');
+                    }}
+                    useOneTap
+                />
                 <h1 className="font-bold text-4xl">Register</h1>
-                <form className="flex flex-col space-y-5" onSubmit={(e) =>{ e.preventDefault(); submitLogin(mail, password); }}>
+                <form className="flex flex-col space-y-5" onSubmit={(e) => { e.preventDefault(); submitRegister(mail, password); }}>
 
                     <div className="flex flex-col">
                         <label htmlFor="">Mail</label>
