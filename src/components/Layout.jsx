@@ -1,24 +1,27 @@
-import { Outlet, Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from 'react';
+import { Outlet, Link, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import logo from '../assets/logo.svg'
 
 const Layout = () => {
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState([])
   const navigate = useNavigate()
 
   const handlePP = () => {
-    if(user) return <img className="rounded-full h-10 w-10" src={user.picture} alt="" />
+    if (user?.picture)
+      return (
+        <img className="rounded-full h-10 w-10" src={user.picture} alt="" />
+      )
     else return ''
   }
 
   useEffect(() => {
-    const response = localStorage.getItem('user');
+    const response = localStorage.getItem('user')
     if (!response) {
-        return
-    } 
+      return
+    }
     const { data } = JSON.parse(response)
     setUser(data)
-}, [navigate])
+  }, [navigate])
   return (
     <>
       <nav className="sticky w-full h-28 bgcolor flex">
@@ -36,16 +39,18 @@ const Layout = () => {
           <li>
             <Link to="/profile">Profile</Link>
           </li>
-          <input placeholder="Search in site" className="bgcolor font-roboto text-sm border bordercolor border-2 rounded-md py-1 px-2" type="search" />
-          <a href="">
-            {handlePP()}
-          </a>
+          <input
+            placeholder="Search in site"
+            className="bgcolor font-roboto text-sm border bordercolor border-2 rounded-md py-1 px-2"
+            type="search"
+          />
+          <a href="">{handlePP()}</a>
         </ul>
       </nav>
 
       <Outlet />
     </>
   )
-};
+}
 
-export default Layout;
+export default Layout
