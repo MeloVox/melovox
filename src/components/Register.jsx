@@ -44,7 +44,7 @@ function Register() {
           const { message, data } = response
           setMessage(message)
           if (data) {
-            localStorage.setItem('user', JSON.stringify(data))
+            localStorage.setItem('user', JSON.stringify(response))
             navigate('/profile')
           }
         })
@@ -52,8 +52,9 @@ function Register() {
   }
 
   return (
-    <div className="h-screen w-full flex justify-center items-center">
-      <div className="flex flex-col space-y-5 m-5 border border-black rounded-md p-5">
+    <div className="h-screen w-full flex justify-center items-center bgcolor">
+      <div className="flex flex-col space-y-5 text-white">
+        <h1 className="text-4xl font-Rollicker text-center">Welcome</h1>
         <GoogleLogin
           onSuccess={credentialResponse => {
             submitGoogle(credentialResponse)
@@ -63,7 +64,6 @@ function Register() {
           }}
           useOneTap
         />
-        <h1 className="font-bold text-4xl">Register</h1>
         <form
           className="flex flex-col space-y-5"
           onSubmit={e => {
@@ -72,27 +72,32 @@ function Register() {
           }}
         >
           <div className="flex flex-col">
-            <label htmlFor="">Mail</label>
+            <label className="font-Inter font-bold" htmlFor="">
+              E-Mail adress
+            </label>
             <input
               value={mail}
               onChange={e => setMail(e.target.value)}
-              className="text-black px-2 border border-black"
+              className="px-2 text-black border border-black"
               type="mail"
               name=""
               id=""
             />
           </div>
           <div className="flex flex-col">
-            <label htmlFor="">Password</label>
+            <label className="font-Inter font-bold">Password</label>
             <input
               value={password}
               onChange={e => setPassword(e.target.value)}
-              className="text-black px-2 border border-black"
+              className="px-2 text-black border border-black"
               type="password"
             />
           </div>
-          <button className="w-fit border border-black" type="submit">
-            Login
+          <button
+            className="w-fit border border-black font-Anton"
+            type="submit"
+          >
+            Register
           </button>
           <p>{message}</p>
         </form>
