@@ -38,7 +38,6 @@ const Layout = () => {
           />
         </Link>
       )
-    else return
   }
 
   useEffect(() => {

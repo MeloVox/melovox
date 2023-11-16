@@ -1,8 +1,6 @@
-import { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET } from '../logs.js'
+import { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, API } from '../logs.js'
 import querystring from 'querystring'
 import { Buffer } from 'buffer/'
-
-const API = 'http://127.0.0.1:3333'
 
 export const submitGoogle = (googleUser, setMessage, navigate) => {
   fetch(`${API}/api/handlegoogle`, {

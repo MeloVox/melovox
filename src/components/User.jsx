@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { googleLogout } from '@react-oauth/google'
 
 export const UserInfo = () => {
   const [user, setUser] = useState([])
@@ -19,6 +20,7 @@ export const UserInfo = () => {
     setUser(data)
   }, [navigate])
   const logout = () => {
+    googleLogout()
     localStorage.clear('user')
     navigate('/login')
     refreshPage()
