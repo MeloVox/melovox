@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { GoogleLogin } from '@react-oauth/google'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 function Login() {
   const [message, setMessage] = useState('')
@@ -59,18 +59,22 @@ function Login() {
   }
 
   return (
-    <div className="h-screen w-full flex justify-center items-center bgcolor">
-      <div className="flex flex-col space-y-5 text-white">
-        <h1 className="text-4xl font-Rollicker">Welcome Back</h1>
-        <GoogleLogin
-          onSuccess={credentialResponse => {
-            submitGoogle(credentialResponse)
-          }}
-          onError={() => {
-            console.log('Login Failed')
-          }}
-          useOneTap
-        />
+    <div className="h-screen w-full flex flex-col text-white space-y-10 justify-center items-center bgcolor">
+      <h1 className="w-fit text-5xl font-Rollicker">Welcome Back !</h1>
+      <div className="flex w-[30%] flex-col space-y-20">
+        <div className="w-full flex justify-center items-center">
+          <GoogleLogin
+            shape="circle"
+            theme="filled_black"
+            onSuccess={credentialResponse => {
+              submitGoogle(credentialResponse)
+            }}
+            onError={() => {
+              console.log('Login Failed')
+            }}
+            useOneTap
+          />
+        </div>
         <form
           className="flex flex-col space-y-5"
           onSubmit={e => {
@@ -78,34 +82,49 @@ function Login() {
             submitLogin(mail, password)
           }}
         >
-          <div className="flex flex-col">
-            <label className="font-Inter font-bold" htmlFor="">
-              E-Mail adress
+          <div className="flex flex-col space-y-2">
+            <label className="font-Inter font-semibold" htmlFor="">
+              E-Mail adress or username
             </label>
             <input
               value={mail}
               onChange={e => setMail(e.target.value)}
-              className="px-2 text-black border border-black"
+              placeholder="E-Mail adress or username"
+              className="px-4 py-1 font-Inter textcolor rounded-full bgbox h-10 border border-gray-500"
               type="mail"
-              name=""
-              id=""
             />
           </div>
-          <div className="flex flex-col">
-            <label className="font-Inter font-bold">Password</label>
+          <div className="flex flex-col space-y-2">
+            <label className="font-Inter font-semibold">Password</label>
             <input
               value={password}
               onChange={e => setPassword(e.target.value)}
-              className="px-2 text-black border border-black"
+              placeholder="Password"
+              className="px-4 py-1 font-Inter textcolor rounded-full bgbox h-10 border border-gray-500"
               type="password"
             />
           </div>
-          <button
-            className="w-fit border border-black font-Anton"
-            type="submit"
-          >
-            Login
-          </button>
+          <span className="textcolor font-Inter text-sm underline cursor-pointer">
+            Forgot password ?
+          </span>
+          <div className="w-full flex justify-center items-center">
+            <button
+              className="mt-5 w-[50%] border border-black text-black rounded-full font-Anton bg-gray-300 py-2 px-5"
+              type="submit"
+            >
+              Connexion
+            </button>
+          </div>
+          <div className="w-full flex justify-center items-center">
+            <span className="textcolor font-Inter text-sm">
+              I dont have an account yet.
+              <Link to="/register">
+                <a className="ml-2 text-gray-300 font-bold underline cursor-pointer">
+                  Sign in
+                </a>
+              </Link>
+            </span>
+          </div>
           <p>{message}</p>
         </form>
       </div>
