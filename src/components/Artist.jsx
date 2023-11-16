@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom'
+import { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET } from '../../logs.js'
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import querystring from 'querystring'
@@ -7,12 +8,12 @@ import { Buffer } from 'buffer/'
 function Artist() {
   const { artistId } = useParams()
   const [artistInfo, setArtistInfo] = useState(null)
-  const clientId = '56ffc456c1fb44769e3de5c87c3b58e4'
-  const clientSecret = 'f0c8bbf1457944f2a338ee7e919702ec'
   async function getAccessToken() {
     const authUrl = 'https://accounts.spotify.com/api/token'
 
-    const auth = Buffer.from(`${clientId}:${clientSecret}`).toString('base64')
+    const auth = Buffer.from(
+      `${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`,
+    ).toString('base64')
     const headers = {
       Authorization: `Basic ${auth}`,
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -48,8 +49,7 @@ function Artist() {
   useEffect(() => {
     async function fetchData() {
       const accessToken = await getAccessToken()
-      const spotifyArtistId = '0TnOYISbd1XYRBk9myaseg'
-      const data = await getArtistInfo(spotifyArtistId, accessToken)
+      const data = await getArtistInfo(artistId, accessToken)
       setArtistInfo(data)
     }
 
