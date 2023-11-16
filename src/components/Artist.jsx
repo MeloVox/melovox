@@ -7,7 +7,8 @@ import { Buffer } from 'buffer/'
 function Artist() {
   const { artistId } = useParams()
   const [artistInfo, setArtistInfo] = useState(null)
-  async function getAccessToken() {
+  const [token, setToken] = useState(null)
+  function getAccessToken() {
     const authUrl = 'https://accounts.spotify.com/api/token'
 
     const auth = Buffer.from(
@@ -22,7 +23,7 @@ function Artist() {
       grant_type: 'client_credentials',
     })
 
-    await fetch(authUrl, {
+    fetch(authUrl, {
       method: 'POST',
       headers: headers,
       body: data,
@@ -31,18 +32,20 @@ function Artist() {
         console.error('Error getting access token', error)
       })
       .then(response => {
-        return response.access_token
+        response.json().then(data => {
+          setToken(data.access_token)
+        })
       })
   }
 
-  async function getArtistInfo(spotifyArtistId, accessToken) {
+  function getArtistInfo(spotifyArtistId, accessToken) {
     const artistUrl = `https://api.spotify.com/v1/artists/${spotifyArtistId}`
 
     const headers = {
       Authorization: `Bearer ${accessToken}`,
     }
 
-    return fetch(artistUrl, {
+    fetch(artistUrl, {
       method: 'GET',
       headers: headers,
     })
@@ -50,11 +53,9 @@ function Artist() {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`)
         }
-        return response.json()
-      })
-      .then(data => {
-        console.log(data)
-        return data
+        response.json().then(data => {
+          setArtistInfo(data)
+        })
       })
       .catch(error => {
         console.error('Error getting artist info', error)
@@ -63,16 +64,15 @@ function Artist() {
 
   useEffect(() => {
     async function fetchData() {
-      const accessToken = await getAccessToken()
-      const data = await getArtistInfo(artistId, accessToken)
-      setArtistInfo(data)
+      getAccessToken()
+      getArtistInfo(artistId, token)
     }
 
     fetchData()
   }, [])
 
   if (!artistInfo) {
-    return <div>Loading...</div>
+    return <div>Erreur</div>
   }
 
   return (
