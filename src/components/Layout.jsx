@@ -52,23 +52,27 @@ const Layout = () => {
   }, [navigate])
   return (
     <>
-      <nav className="sticky w-full h-28 bgcolor flex">
-        <img className="p-5" src={logo} alt="" />
-        <ul className="absolute p-10 right-0 flex items-center space-x-5 text-white text-md font-Anton">
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          {handleConnected()}
-          <input
-            placeholder="Search in site"
-            className="bgcolor font-roboto text-sm border bordercolor border-2 rounded-md py-1 px-2"
-            type="search"
-          />
-          {handlePP()}
-        </ul>
-      </nav>
-      <Outlet />
-      <footer className="sticky w-full h-28 bgcolor flex justify-center items-center">
+      <header className="sticky top-0 z-10 w-full h-28">
+        <nav className="h-full w-full bgcolor flex">
+          <img className="p-5" src={logo} alt="" />
+          <ul className="absolute p-10 right-0 flex items-center space-x-5 text-white text-md font-Anton">
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            {handleConnected()}
+            <input
+              placeholder="Search in site"
+              className="bgcolor font-roboto text-sm border bordercolor border-2 rounded-md py-1 px-2"
+              type="search"
+            />
+            {handlePP()}
+          </ul>
+        </nav>
+      </header>
+      <div className="w-full">
+        <Outlet />
+      </div>
+      <footer className="w-full h-28 bgcolor flex justify-center items-center">
         <ul className="p-10 flex items-center space-x-20 text-white text-md font-Anton">
           <li>
             <Link to="/about">About Us</Link>
