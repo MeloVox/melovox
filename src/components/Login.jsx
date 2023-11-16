@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 import { GoogleLogin } from '@react-oauth/google'
 import { useNavigate, Link } from 'react-router-dom'
+import { submitGoogle, submitLogin } from '../core'
 
 function Login() {
   const [message, setMessage] = useState('')
   const [mail, setMail] = useState('')
   const [password, setPassword] = useState('')
-  const API = 'http://127.0.0.1:3333'
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -17,60 +17,6 @@ function Login() {
     }
   }, [navigate])
 
-  const submitGoogle = googleUser => {
-    fetch(`${API}/api/handlegoogle`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(googleUser),
-    })
-      .catch(err => {
-        if (err instanceof TypeError)
-          setMessage(`API offline: login not supported`)
-        else setMessage(err.toString())
-        return
-      })
-      .then(reponse => {
-        if (!reponse) return
-        reponse.json().then(response => {
-          const { message, data } = response
-          setMessage(message)
-          if (data) {
-            localStorage.setItem('user', JSON.stringify(response))
-            navigate('/profile')
-          }
-        })
-      })
-  }
-
-  const submitLogin = (mail, password) => {
-    fetch(`${API}/api/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email: mail, password }),
-    })
-      .catch(err => {
-        if (err instanceof TypeError)
-          setMessage(`API offline: login not supported`)
-        else setMessage(err.toString())
-        return
-      })
-      .then(reponse => {
-        if (!reponse) return
-        reponse.json().then(response => {
-          const { message, data } = response
-          setMessage(message)
-          if (data) {
-            localStorage.setItem('user', JSON.stringify(response))
-            navigate('/profile')
-          }
-        })
-      })
-  }
-
   return (
     <div className="h-screen w-full flex flex-col text-white space-y-10 justify-center items-center bgcolor">
       <h1 className="w-fit text-5xl font-Rollicker">Welcome Back !</h1>
@@ -80,7 +26,7 @@ function Login() {
             shape="circle"
             theme="filled_black"
             onSuccess={credentialResponse => {
-              submitGoogle(credentialResponse)
+              submitGoogle(credentialResponse, setMessage, navigate)
             }}
             onError={() => {
               console.log('Login Failed')
@@ -92,7 +38,7 @@ function Login() {
           className="flex flex-col space-y-5"
           onSubmit={e => {
             e.preventDefault()
-            submitLogin(mail, password)
+            submitLogin({ mail, password }, setMessage, navigate)
           }}
         >
           <div className="flex flex-col space-y-2">

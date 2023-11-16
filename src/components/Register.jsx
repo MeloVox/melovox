@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 import { GoogleLogin } from '@react-oauth/google'
 import { useNavigate, Link } from 'react-router-dom'
+import { submitRegister, submitGoogle } from '../core.js'
 
 function Register() {
   const [message, setMessage] = useState('')
   const [mail, setMail] = useState('')
   const [password, setPassword] = useState('')
-  const API = 'http://localhost:3333'
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -17,56 +17,6 @@ function Register() {
     }
   }, [navigate])
 
-  const submitRegister = (mail, password) => {
-    fetch(`${API}/api/register`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email: mail, password }),
-    })
-      .catch(err => {
-        if (err instanceof TypeError)
-          setMessage(`API offline: register not supported`)
-        else setMessage(err.toString())
-        return
-      })
-      .then(reponse => {
-        if (!reponse) return
-        reponse.json().then(data => {
-          const { message } = data
-          setMessage(message)
-        })
-      })
-  }
-
-  const submitGoogle = googleUser => {
-    fetch(`${API}/api/handlegoogle`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(googleUser),
-    })
-      .catch(err => {
-        if (err instanceof TypeError)
-          setMessage(`API offline: register not supported`)
-        else setMessage(err.toString())
-        return
-      })
-      .then(reponse => {
-        if (!reponse) return
-        reponse.json().then(response => {
-          const { message, data } = response
-          setMessage(message)
-          if (data) {
-            localStorage.setItem('user', JSON.stringify(response))
-            navigate('/profile')
-          }
-        })
-      })
-  }
-
   return (
     <div className="h-screen w-full flex flex-col justify-center items-center space-y-10 bgcolor text-white">
       <h1 className="w-fit text-5xl font-Rollicker">Welcome to Melovox !</h1>
@@ -76,7 +26,7 @@ function Register() {
             shape="circle"
             theme="filled_black"
             onSuccess={credentialResponse => {
-              submitGoogle(credentialResponse)
+              submitGoogle(credentialResponse, setMessage)
             }}
             onError={() => {
               console.log('Login Failed')
@@ -88,7 +38,7 @@ function Register() {
           className="flex flex-col space-y-5"
           onSubmit={e => {
             e.preventDefault()
-            submitRegister(mail, password)
+            submitRegister({ mail, password }, setMessage)
           }}
         >
           <div className="flex flex-col space-y-2">
