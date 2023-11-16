@@ -26,9 +26,13 @@ function Register() {
       body: JSON.stringify({ email: mail, password }),
     })
       .catch(err => {
-        setMessage(err.toString())
+        if (err instanceof TypeError)
+          setMessage(`API offline: register not supported`)
+        else setMessage(err.toString())
+        return
       })
       .then(reponse => {
+        if (!reponse) return
         reponse.json().then(data => {
           const { message } = data
           setMessage(message)
@@ -45,9 +49,13 @@ function Register() {
       body: JSON.stringify(googleUser),
     })
       .catch(err => {
-        setMessage(err.toString())
+        if (err instanceof TypeError)
+          setMessage(`API offline: register not supported`)
+        else setMessage(err.toString())
+        return
       })
       .then(reponse => {
+        if (!reponse) return
         reponse.json().then(response => {
           const { message, data } = response
           setMessage(message)
@@ -108,6 +116,7 @@ function Register() {
           <span className="textcolor font-Inter text-sm underline cursor-pointer">
             Data Policy
           </span>
+          <p className="w-full text-center">{message}</p>
           <div className="w-full flex justify-center items-center">
             <button
               className="mt-5 w-[50%] border border-black text-black rounded-full font-Anton bg-gray-300 py-2 px-5"
@@ -127,7 +136,6 @@ function Register() {
               </Link>
             </span>
           </div>
-          <p>{message}</p>
         </form>
       </div>
     </div>
