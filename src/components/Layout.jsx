@@ -42,12 +42,11 @@ const Layout = () => {
 
   useEffect(() => {
     const response = localStorage.getItem('user')
-    if (!response) {
-      return
+    if (response) {
+      const { data } = JSON.parse(response)
+      setUser(data)
     }
-    const { data } = JSON.parse(response)
-    setUser(data)
-  }, [])
+  }, [user])
   return (
     <>
       <header className="sticky top-0 z-10 w-full h-28">
