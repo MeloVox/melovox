@@ -24,7 +24,7 @@ export const UserInfo = () => {
     refreshPage()
   }
   return (
-    <div className="bgcolor flex justify-center w-full h-full text-white">
+    <div className="bgcolor flex justify-center w-full h-screen text-white">
       <section className="w-[50%] h-full">
         <div className="h-[50%] flex justify-center items-center">
           <div className="h-full w-full flex justify-center items-center">
