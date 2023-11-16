@@ -5,6 +5,7 @@ import Home from './components/Home.jsx'
 import Notfound from './components/404.jsx'
 import Register from './components/Register.jsx'
 import { UserInfo } from './components/User.jsx'
+import Artist from './components/Artist.jsx'
 
 function App() {
   return (
