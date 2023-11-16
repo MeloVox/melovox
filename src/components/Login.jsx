@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { GoogleLogin } from '@react-oauth/google'
 import { useNavigate, Link } from 'react-router-dom'
 
@@ -8,6 +8,14 @@ function Login() {
   const [password, setPassword] = useState('')
   const API = 'http://127.0.0.1:3333'
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const response = localStorage.getItem('user')
+    if (response) {
+      navigate('/profile')
+      return
+    }
+  }, [navigate])
 
   const submitGoogle = googleUser => {
     fetch(`${API}/api/handlegoogle`, {
@@ -90,7 +98,7 @@ function Login() {
               value={mail}
               onChange={e => setMail(e.target.value)}
               placeholder="E-Mail adress or username"
-              className="px-4 py-1 font-Inter textcolor rounded-full bgbox h-10 border border-gray-500"
+              className="px-4 py-1 font-Inter text-gray-500 rounded-full bgbox h-10 border border-gray-500"
               type="mail"
             />
           </div>
@@ -100,7 +108,7 @@ function Login() {
               value={password}
               onChange={e => setPassword(e.target.value)}
               placeholder="Password"
-              className="px-4 py-1 font-Inter textcolor rounded-full bgbox h-10 border border-gray-500"
+              className="px-4 py-1 font-Inter text-gray-500 rounded-full bgbox h-10 border border-gray-500"
               type="password"
             />
           </div>
@@ -118,11 +126,7 @@ function Login() {
           <div className="w-full flex justify-center items-center">
             <span className="textcolor font-Inter text-sm">
               I dont have an account yet.
-              <Link to="/register">
-                <a className="ml-2 text-gray-300 font-bold underline cursor-pointer">
-                  Sign in
-                </a>
-              </Link>
+              <Link className="ml-2 text-gray-300 font-bold underline cursor-pointer" to="/register">Sign in</Link>
             </span>
           </div>
           <p>{message}</p>

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { GoogleLogin } from '@react-oauth/google'
 import { useNavigate, Link } from 'react-router-dom'
 
@@ -8,6 +8,14 @@ function Register() {
   const [password, setPassword] = useState('')
   const API = 'http://localhost:3333'
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const response = localStorage.getItem('user')
+    if (response) {
+      navigate('/profile')
+      return
+    }
+  }, [navigate])
 
   const submitRegister = (mail, password) => {
     fetch(`${API}/api/register`, {
@@ -83,7 +91,7 @@ function Register() {
               value={mail}
               onChange={e => setMail(e.target.value)}
               placeholder="E-Mail adress or username"
-              className="px-4 py-1 font-Inter textcolor rounded-full bgbox h-10 border border-gray-500"
+              className="px-4 py-1 font-Inter text-gray-500 rounded-full bgbox h-10 border border-gray-500"
               type="mail"
             />
           </div>
@@ -93,7 +101,7 @@ function Register() {
               value={password}
               onChange={e => setPassword(e.target.value)}
               placeholder="Password"
-              className="px-4 py-1 font-Inter textcolor rounded-full bgbox h-10 border border-gray-500"
+              className="px-4 py-1 font-Inter text-gray-500 rounded-full bgbox h-10 border border-gray-500"
               type="password"
             />
           </div>
@@ -105,17 +113,13 @@ function Register() {
               className="mt-5 w-[50%] border border-black text-black rounded-full font-Anton bg-gray-300 py-2 px-5"
               type="submit"
             >
-              Connexion
+              Créer le compte
             </button>
           </div>
           <div className="w-full flex justify-center items-center">
             <span className="textcolor font-Inter text-sm">
               I already have an account.
-              <Link to="/login">
-                <a className="ml-2 text-gray-300 font-bold underline cursor-pointer">
-                  Log in
-                </a>
-              </Link>
+              <Link className="ml-2 text-gray-300 font-bold underline cursor-pointer" to="/login">Log in</Link>
             </span>
           </div>
           <p>{message}</p>

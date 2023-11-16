@@ -3,8 +3,30 @@ import { useEffect, useState } from 'react'
 import logo from '../assets/logo.svg'
 
 const Layout = () => {
-  const [user, setUser] = useState([])
+  const [user, setUser] = useState(null)
   const navigate = useNavigate()
+
+  const handleConnected = () => {
+    if (!user) {
+      return (
+        <>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+          <li>
+            <Link to="/register">Register</Link>
+          </li>
+        </>
+      )
+    }
+    return (
+      <>
+        <li>
+          <Link to="/profile">Profile</Link>
+        </li>
+      </>
+    )
+  }
 
   const handlePP = () => {
     if (user?.picture)
@@ -17,7 +39,7 @@ const Layout = () => {
           />
         </Link>
       )
-    else return ''
+    else return
   }
 
   useEffect(() => {
@@ -36,15 +58,7 @@ const Layout = () => {
           <li>
             <Link to="/">Home</Link>
           </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-          <li>
-            <Link to="/register">Register</Link>
-          </li>
-          <li>
-            <Link to="/profile">Profile</Link>
-          </li>
+          {handleConnected()}
           <input
             placeholder="Search in site"
             className="bgcolor font-roboto text-sm border bordercolor border-2 rounded-md py-1 px-2"
