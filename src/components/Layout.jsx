@@ -1,10 +1,9 @@
-import { Outlet, Link, useNavigate } from 'react-router-dom'
+import { Outlet, Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import logo from '../assets/logo.svg'
 
 const Layout = () => {
   const [user, setUser] = useState(null)
-  const navigate = useNavigate()
 
   const handleConnected = () => {
     if (!user) {
@@ -49,7 +48,7 @@ const Layout = () => {
     }
     const { data } = JSON.parse(response)
     setUser(data)
-  }, [navigate])
+  }, [])
   return (
     <>
       <header className="sticky top-0 z-10 w-full h-28">
