@@ -119,7 +119,12 @@ function Register() {
           <div className="w-full flex justify-center items-center">
             <span className="textcolor font-Inter text-sm">
               I already have an account.
-              <Link className="ml-2 text-gray-300 font-bold underline cursor-pointer" to="/login">Log in</Link>
+              <Link
+                className="ml-2 text-gray-300 font-bold underline cursor-pointer"
+                to="/login"
+              >
+                Log in
+              </Link>
             </span>
           </div>
           <p>{message}</p>

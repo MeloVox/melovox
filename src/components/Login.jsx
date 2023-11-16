@@ -126,7 +126,12 @@ function Login() {
           <div className="w-full flex justify-center items-center">
             <span className="textcolor font-Inter text-sm">
               I dont have an account yet.
-              <Link className="ml-2 text-gray-300 font-bold underline cursor-pointer" to="/register">Sign in</Link>
+              <Link
+                className="ml-2 text-gray-300 font-bold underline cursor-pointer"
+                to="/register"
+              >
+                Sign in
+              </Link>
             </span>
           </div>
           <p>{message}</p>
