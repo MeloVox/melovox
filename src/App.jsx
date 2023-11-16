@@ -16,6 +16,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<UserInfo />} />
+            <Route path="/artist/:artistId" element={<Artist />} />
             <Route path="*" element={<Notfound />} />
           </Route>
         </Routes>
