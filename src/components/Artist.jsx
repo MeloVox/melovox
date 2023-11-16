@@ -1,7 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET } from '../../logs.js'
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import { useState, useEffect } from 'react'
 import querystring from 'querystring'
 import { Buffer } from 'buffer/'
 
@@ -23,12 +22,17 @@ function Artist() {
       grant_type: 'client_credentials',
     })
 
-    try {
-      const response = await axios.post(authUrl, data, { headers })
-      return response.data.access_token
-    } catch (error) {
-      console.error('Error getting access token', error)
-    }
+    await fetch(authUrl, {
+      method: 'POST',
+      headers: headers,
+      body: data,
+    })
+      .catch(error => {
+        console.error('Error getting access token', error)
+      })
+      .then(response => {
+        return response.access_token
+      })
   }
 
   async function getArtistInfo(spotifyArtistId, accessToken) {
@@ -38,12 +42,23 @@ function Artist() {
       Authorization: `Bearer ${accessToken}`,
     }
 
-    try {
-      const response = await axios.get(artistUrl, { headers })
-      return response.data
-    } catch (error) {
-      console.error('Error getting artist info', error)
-    }
+    return fetch(artistUrl, {
+      method: 'GET',
+      headers: headers,
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        return response.json()
+      })
+      .then(data => {
+        console.log(data)
+        return data
+      })
+      .catch(error => {
+        console.error('Error getting artist info', error)
+      })
   }
 
   useEffect(() => {
