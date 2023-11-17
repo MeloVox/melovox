@@ -9,7 +9,7 @@ function Artist() {
 
   useEffect(() => {
     handleSpotify()
-    const response = localStorage.getItem('spotify-token')
+    const response = sessionStorage.getItem('spotify-token')
     if (response) {
       const { token_type, access_token } = JSON.parse(response)
       const token = `${token_type} ${access_token}`
