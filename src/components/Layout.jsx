@@ -1,5 +1,5 @@
 import { Outlet, Link } from 'react-router-dom'
-import { useEffect, useState, createContext } from 'react'
+import { useEffect, useState } from 'react'
 import logo from '../assets/logo.svg'
 
 const Layout = () => {
@@ -86,7 +86,7 @@ const Layout = () => {
           </li>
         </ul>
       </footer>
-    </UserContext.Provider>
+    </>
   )
 }
 

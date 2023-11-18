@@ -10,7 +10,7 @@ import Callback from './components/Callback.jsx'
 
 function App() {
   return (
-    <div className="h-screen w-full flex flex-col justify-center items-center">
+    <div className="h-screen w-full flex flex-col justify-center items-center bgcolor">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
