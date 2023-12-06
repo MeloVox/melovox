@@ -19,7 +19,7 @@ function Artist() {
 
   if (!artistInfo) {
     return (
-      <div className="w-full h-screen flex justify-center items-center">
+      <div className="w-full h-screen flex text-white justify-center items-center">
         <div>Status: {status}</div>
       </div>
     )

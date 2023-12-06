@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { GoogleLogin } from '@react-oauth/google'
 import { useNavigate, Link } from 'react-router-dom'
-import { submitRegister, submitGoogle } from '../core.js'
+import { submitRegister, submitGoogle, spotifyLogin } from '../core.js'
+import logo_spotify from '../assets/logo_spotify.png'
 
 function Register() {
   const [message, setMessage] = useState('')
@@ -10,8 +11,10 @@ function Register() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const response = localStorage.getItem('user')
-    if (response) {
+    const response = sessionStorage.getItem('user')
+    const spotify = sessionStorage.getItem('spotify-login')
+
+    if (response || spotify) {
       navigate('/profile')
       return
     }
@@ -20,19 +23,32 @@ function Register() {
   return (
     <div className="h-screen w-full flex flex-col justify-center items-center space-y-10 bgcolor text-white">
       <h1 className="w-fit text-5xl font-Rollicker">Welcome to Melovox !</h1>
-      <div className="flex w-[30%] flex-col space-y-20">
-        <div className="w-full flex justify-center items-center">
-          <GoogleLogin
-            shape="circle"
-            theme="filled_black"
-            onSuccess={credentialResponse => {
-              submitGoogle(credentialResponse, setMessage)
-            }}
-            onError={() => {
-              console.log('Login Failed')
-            }}
-            useOneTap
-          />
+      <div className="flex w-[30%] flex-col space-y-10">
+        <div className="w-full flex flex-col space-y-5 justify-center items-center">
+          <div className="w-fit space-y-5">
+            <GoogleLogin
+              shape="circle"
+              theme="filled_black"
+              onSuccess={credentialResponse => {
+                submitGoogle(credentialResponse, setMessage, navigate)
+              }}
+              onError={() => {
+                console.log('Login Failed')
+              }}
+              useOneTap
+            />
+            <div
+              onClick={spotifyLogin}
+              className="w-full text-sm flex space-x-2 p-1 justify-center items-center rounded-full cursor-pointer bg-neutral-800 transition-all hover:bg-neutral-700 "
+            >
+              <p className="absolute w-fit textspotify font-Inter font-medium">
+                Continue with spotify
+              </p>
+              <div className="w-full flex justify-end">
+                <img src={logo_spotify} className="w-8" />
+              </div>
+            </div>
+          </div>
         </div>
         <form
           className="flex flex-col space-y-5"

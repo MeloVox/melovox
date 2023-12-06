@@ -6,6 +6,7 @@ import Notfound from './components/404.jsx'
 import Register from './components/Register.jsx'
 import { UserInfo } from './components/User.jsx'
 import Artist from './components/Artist.jsx'
+import Callback from './components/Callback.jsx'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<UserInfo />} />
+            <Route path="/callback" element={<Callback />} />
             <Route path="/artist/:artistId" element={<Artist />} />
             <Route path="*" element={<Notfound />} />
           </Route>
