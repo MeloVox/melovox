@@ -11,6 +11,7 @@ function App() {
     setItems(response)
   }
 
+
   return (
     <div className="mt-4 pt-72 w-full  text-white bg-black ">
       <div className="flex justify-center gap-6">
@@ -133,6 +134,70 @@ function App() {
           ))}
       </div>
     </div>
+  //     <Container>
+  //       <h4>Artistes</h4>
+  //       <Row className="mx-5 row row-cols-6">
+  //         {artist &&
+  //           artist.length > 0 &&
+  //           artist.slice(0, 6).map((singleArtist, index) => (
+  //             <Card key={index}>
+  //               <CardBody>
+  //                 <CardImg
+  //                   style={{ width: '2em' }}
+  //                   src={
+  //                     singleArtist.images.length > 0
+  //                       ? singleArtist.images[0].url
+  //                       : 'URL_PAR_DEFAUT_SI_AUCUNE_IMAGE'
+  //                   }
+  //                 />
+  //                 <CardTitle style={{ fontSize: '15px' }}>
+  //                   {singleArtist.name}
+  //                 </CardTitle>
+  //                 <CardText style={{ fontSize: '15px' }}>
+  //                   {singleArtist.followers.total ??
+  //                     'Nombre de followers non disponible'}
+  //                 </CardText>
+  //               </CardBody>
+  //             </Card>
+  //           ))}
+  //       </Row>
+  //       <h4>Albums du premier Artiste</h4>
+  //       <Row className="mx-2 row row-cols-6">
+  //         {albums.slice(0, 6).map((album, i) => {
+  //           return (
+  //             <Card key={i}>
+  //               <Card.Img style={{ width: '2em' }} src={album.images[0].url} />
+  //               <CardBody>
+  //                 <CardTitle style={{ fontSize: '15px' }}>
+  //                   {album.name}
+  //                 </CardTitle>
+  //                 <CardText style={{ fontSize: '15px' }}>
+  //                   Sortie le: {album.release_date}
+  //                 </CardText>
+  //                 <CardSubtitle style={{ fontSize: '15px' }}>
+  //                   Tracks: {album.total_tracks}
+  //                 </CardSubtitle>
+  //               </CardBody>
+  //             </Card>
+  //           )
+  //         })}
+  //       </Row>
+  //       <h4>Chansons du premier albums</h4>
+  //       <Row className="mx-2 row row-cols-6">
+  //         {songs.slice(0, 6).map((song, i) => {
+  //           return (
+  //             <Card key={i}>
+  //               <CardBody>
+  //                 <CardTitle style={{ fontSize: '15px' }}>
+  //                   {song.name}
+  //                 </CardTitle>
+  //               </CardBody>
+  //             </Card>
+  //           )
+  //         })}
+  //       </Row>
+  //     </Container>
+  //   </div>
   )
 }
 
