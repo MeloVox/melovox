@@ -85,12 +85,12 @@ function App() {
   }
 
   return (
-    <div>
+    <div class="space-y-20 mt-40  ">
       {/* Recherche un artiste par le nom */}
-      <div>
+      <div class="flex justify-center">
         <input
           placeholder="Chercher un album"
-          type="input"
+          class="relative m-0 -mr-0.5 block min-w-0  rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
           onKeyUp={event => {
             if (event.key === 'Enter') {
               search()
@@ -98,16 +98,17 @@ function App() {
           }}
           onChange={event => setSearchInput(event.target.value)}
         ></input>
-        <button onClick={search}>Rechercher</button>
+        <button onClick={search}       class="relative text-black z-[2] flex items-center rounded-r bg-primary px-6 py-2.5 text-xs font-medium uppercase leading-tight  shadow-md transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
+ >Rechercher</button>
       </div>
-      <div>
+      <div class="flex space-x-20 justify-center">
         {artist &&
           artist.length > 0 &&
           artist.slice(0, 6).map((singleArtist, index) => (
             <div key={index}>
               <a>{singleArtist.name}</a>
-              <img
-                style={{ width: '2em' }}
+              <img class="rounded-full"
+                style={{ width: '5em' }}
                 src={
                   singleArtist.images.length > 0
                     ? singleArtist.images[0].url
@@ -117,14 +118,13 @@ function App() {
             </div>
           ))}
       </div>
-      <div>
-        {albums &&
+      <div class="flex space-x-20 justify-center">        {albums &&
           albums.length > 0 &&
           albums.slice(0, 6).map((album, i) => (
             <div key={i}>
               <a>{album.name}</a>
               <img
-                style={{ width: '2em' }}
+                style={{ width: '5em' }}
                 src={
                   album.images.length > 0
                     ? album.images[0].url
@@ -134,7 +134,7 @@ function App() {
             </div>
           ))}
       </div>
-      <div>
+      <div class="flex space-x-20 justify-center">
         {songs &&
           songs.length > 0 &&
           songs.slice(0, 6).map((song, index) => (
