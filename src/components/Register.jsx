@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 import { GoogleLogin } from '@react-oauth/google'
 import { useNavigate, Link } from 'react-router-dom'
-import { submitRegister, submitGoogle, spotifyLogin } from '../core.js'
+import { authMelovoxAPI, spotifyLogin } from '../core.js'
 import logo_spotify from '../assets/logo_spotify.png'
 
 function Register() {
   const [message, setMessage] = useState('')
-  const [mail, setMail] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
 
@@ -29,9 +29,13 @@ function Register() {
             <GoogleLogin
               shape="circle"
               theme="filled_black"
-              onSuccess={credentialResponse => {
-                submitGoogle(credentialResponse, setMessage, navigate)
-              }}
+              onSuccess={credentialResponse =>
+                authMelovoxAPI({
+                  url: `api/handlegoogle`,
+                  props: credentialResponse,
+                  callback: { setMessage, navigate },
+                })
+              }
               onError={() => {
                 console.log('Login Failed')
               }}
@@ -54,7 +58,11 @@ function Register() {
           className="flex flex-col space-y-5"
           onSubmit={e => {
             e.preventDefault()
-            submitRegister({ mail, password }, setMessage)
+            authMelovoxAPI({
+              url: `api/register`,
+              props: { email, password },
+              callback: { setMessage, navigate },
+            })
           }}
         >
           <div className="flex flex-col space-y-2">
@@ -62,8 +70,8 @@ function Register() {
               E-Mail adress or username
             </label>
             <input
-              value={mail}
-              onChange={e => setMail(e.target.value)}
+              value={email}
+              onChange={e => setEmail(e.target.value)}
               placeholder="E-Mail adress or username"
               className="px-4 py-1 font-Inter text-gray-500 rounded-full bgbox h-10 border border-gray-500"
               type="mail"

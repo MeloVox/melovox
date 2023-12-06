@@ -2,81 +2,31 @@ import { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, API } from '../logs.js'
 import querystring from 'querystring'
 import { Buffer } from 'buffer/'
 
-export const submitGoogle = (googleUser, setMessage, navigate) => {
-  fetch(`${API}/api/handlegoogle`, {
+export const authMelovoxAPI = ({ url, props, callback }) => {
+  const { navigate, setMessage } = callback
+  const params = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(googleUser),
-  })
+    body: JSON.stringify(props),
+  }
+  fetch(`${API}/${url}`, params)
     .catch(err => {
       if (err instanceof TypeError)
-        setMessage(`API offline: login not supported`)
-      else setMessage(err.toString())
-      return
+        return setMessage(`API offline: login not supported`)
+      return setMessage(err.toString())
     })
     .then(reponse => {
-      if (!reponse) return
+      if (!reponse.ok) return setMessage(`API offline: login not supported`)
       reponse.json().then(response => {
         const { message, data } = response
         setMessage(message)
         if (data) {
-          localStorage.setItem('user', JSON.stringify(response))
+          sessionStorage.setItem('user', JSON.stringify(response))
           navigate('/profile')
+          return
         }
-      })
-    })
-}
-
-export const submitLogin = (user, setMessage, navigate) => {
-  const { mail, password } = user
-  fetch(`${API}/api/login`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ email: mail, password }),
-  })
-    .catch(err => {
-      if (err instanceof TypeError)
-        setMessage(`API offline: login not supported`)
-      else setMessage(err.toString())
-      return
-    })
-    .then(reponse => {
-      if (!reponse) return
-      reponse.json().then(response => {
-        const { message, data } = response
-        setMessage(message)
-        if (data) {
-          localStorage.setItem('user', JSON.stringify(response))
-          navigate('/profile')
-        }
-      })
-    })
-}
-
-export const submitRegister = (user, setMessage) => {
-  const { mail, password } = user
-  fetch(`${API}/api/register`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ email: mail, password }),
-  })
-    .catch(err => {
-      if (err instanceof TypeError)
-        setMessage(`API offline: register not supported`)
-      else setMessage(err.toString())
-      return
-    })
-    .then(reponse => {
-      if (!reponse) return
-      reponse.json().then(data => {
-        const { message } = data
-        setMessage(message)
       })
     })
 }

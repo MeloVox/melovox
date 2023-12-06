@@ -42,7 +42,7 @@ const Layout = () => {
 
   useEffect(() => {
     const response = localStorage.getItem('user')
-    if (response) {
+    if (response && !user) {
       const { data } = JSON.parse(response)
       setUser(data)
     }
