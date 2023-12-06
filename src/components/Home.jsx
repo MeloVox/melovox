@@ -86,7 +86,7 @@ function App() {
 
   return (
    
-    <div className="mt-40 pt-72 w-full bg-black text-white ">
+    <div className="mt-40 pt-72 w-full  text-white bg-black ">
       {/* Recherche un artiste par le nom */}
       <div className="flex justify-center gap-6">
         <input
@@ -111,7 +111,7 @@ function App() {
       
       <div className="flex-col gap-6 flex mt-8">
 
-          <div className="flex justify-center items-center gap-8 w-full ">
+          <div className="flex justify-center items-center gap-8 w-full">
             <div className="bg-gradient-to-r from-red-400 to-red-300 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold"><div className="m-auto">Rap</div></div>
             <div className="bg-gradient-to-r from-yellow-200 to-yellow-300 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">Techno</div>
             <div className="bg-gradient-to-r from-green-200 to-green-300 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold"><div className="m-auto">Disco</div></div>
