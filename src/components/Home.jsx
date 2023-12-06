@@ -1,18 +1,3 @@
-// import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
-// import {
-//   Container,
-//   InputGroup,
-//   FormControl,
-//   Button,
-//   Row,
-//   Card,
-//   CardBody,
-//   CardTitle,
-//   CardText,
-//   Col,
-//   CardImg,
-//   CardSubtitle,
-// } from 'react-bootstrap'
 import { useState, useEffect } from 'react'
 
 //CLE SPOTIFY CLIENT ID ET CLIENT SECRET
@@ -33,7 +18,7 @@ function App() {
 
   //Transmet les infos à Spotify
   useEffect(() => {
-    var authParameters = {
+    const authParameters = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -53,7 +38,7 @@ function App() {
   async function search() {
     console.log('Search for ' + searchInput)
 
-    var searchParameters = {
+    const searchParameters = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -62,7 +47,7 @@ function App() {
     }
 
     //Récupère une liste d'artistes
-    var artistData = await fetch(
+    const artistData = await fetch(
       'https://api.spotify.com/v1/search?q=' + searchInput + '&type=artist',
       searchParameters,
     )
@@ -72,7 +57,7 @@ function App() {
     console.log(artistData[0])
 
     //Récupère une liste d'albums par rapport à l'artiste [0]
-    var returnedAlbums = await fetch(
+    await fetch(
       'https://api.spotify.com/v1/artists/' +
         artistData[0].id +
         '/albums' +
@@ -85,7 +70,7 @@ function App() {
 
         // Récupère une liste de chansons par rapport à l'artiste [0]
         if (data.items.length > 0) {
-          var returnedSongs = fetch(
+        fetch(
             'https://api.spotify.com/v1/albums/' + data.items[0].id + '/tracks',
             searchParameters,
           )
