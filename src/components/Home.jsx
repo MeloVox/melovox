@@ -98,6 +98,10 @@ function App() {
           }}
           onChange={event => setSearchInput(event.target.value)}
         ></input>
+        <select id="select" nom="select">
+          <option selected value="artist">Artist</option>
+          <option value="album">Album</option>
+        </select>
         <button onClick={search}       class="relative text-black z-[2] flex items-center rounded-r bg-primary px-6 py-2.5 text-xs font-medium uppercase leading-tight  shadow-md transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
  >Rechercher</button>
       </div>
