@@ -4,7 +4,7 @@ import Layout from './components/Layout.jsx'
 import Home from './components/Home.jsx'
 import Notfound from './components/404.jsx'
 import Register from './components/Register.jsx'
-import { UserInfo } from './components/User.jsx'
+import Profile from './components/Profile.jsx'
 import Artist from './components/Artist.jsx'
 import Callback from './components/Callback.jsx'
 
@@ -17,7 +17,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/profile" element={<UserInfo />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/callback" element={<Callback />} />
             <Route path="/artist/:artistId" element={<Artist />} />
             <Route path="*" element={<Notfound />} />

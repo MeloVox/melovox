@@ -24,6 +24,8 @@ export const authMelovoxAPI = ({ url, props, callback }) => {
         setMessage(message)
         if (data) {
           sessionStorage.setItem('user', JSON.stringify(response))
+          const event = new CustomEvent('userLoggedIn', { data: response })
+          window.dispatchEvent(event)
           navigate('/profile')
           return
         }

@@ -2,13 +2,9 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { googleLogout } from '@react-oauth/google'
 
-export const UserInfo = () => {
+const Profile = () => {
   const [user, setUser] = useState([])
   const navigate = useNavigate()
-
-  const refreshPage = () => {
-    window.location.reload(false)
-  }
 
   useEffect(() => {
     const response = sessionStorage.getItem('user')
@@ -25,11 +21,13 @@ export const UserInfo = () => {
       return
     }
   }, [navigate])
+
   const logout = () => {
     googleLogout()
     sessionStorage.clear()
+    const event = new CustomEvent('userDisconnected')
+    window.dispatchEvent(event)
     navigate('/login')
-    refreshPage()
   }
   return (
     <div className="bgcolor flex justify-center w-full h-screen text-white">
@@ -74,3 +72,5 @@ export const UserInfo = () => {
     </div>
   )
 }
+
+export default Profile
