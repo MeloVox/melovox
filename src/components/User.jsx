@@ -11,17 +11,21 @@ export const UserInfo = () => {
   }
 
   useEffect(() => {
-    const response = localStorage.getItem('user')
-    if (!response) {
+    const response = sessionStorage.getItem('user')
+    const spotify = sessionStorage.getItem('spotify-login')
+
+    if (!response && !spotify) {
       navigate('/login')
       return
     }
-    const { data } = JSON.parse(response)
-    setUser(data)
+    if (response) {
+      const { data } = JSON.parse(response)
+      setUser(data)
+    }
   }, [navigate])
   const logout = () => {
     googleLogout()
-    localStorage.clear('user')
+    sessionStorage.clear()
     navigate('/login')
     refreshPage()
   }
