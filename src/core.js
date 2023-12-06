@@ -88,9 +88,7 @@ export const getArtistInfo = (token, artistId, setStatus, setArtistInfo, setArti
         if (response.status == 429) return setStatus('Too many request (429)')
         return setStatus(`fetch error ${response.status}`)
       }
-      response.json().then(response => {
-        setArtistInfo(response)
-      })
+      response.json().then(response => setArtistInfo(response))
     })
     .catch(error => {
       return setStatus(error.message)
