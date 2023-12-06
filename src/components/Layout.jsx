@@ -3,66 +3,67 @@ import { useEffect, useState } from 'react'
 import logo from '../assets/logo.svg'
 
 const Layout = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [user, setUser] = useState(null)
 
-  const handleConnected = () => {
-    if (!user) {
-      return (
-        <>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-          <li>
-            <Link to="/register">Register</Link>
-          </li>
-        </>
-      )
-    }
-    return (
-      <>
-        <li>
-          <Link to="/profile">Profile</Link>
-        </li>
-      </>
-    )
-  }
-
-  const handlePP = () => {
-    if (user?.picture)
-      return (
-        <Link to="/profile">
-          <img
-            className="rounded-full cursor-pointer h-10 w-10"
-            src={user.picture}
-            alt=""
-          />
-        </Link>
-      )
-  }
-
   useEffect(() => {
-    const response = localStorage.getItem('user')
-    if (response && !user) {
-      const { data } = JSON.parse(response)
+    const handleUserLogin = () => {
+      const { data } = JSON.parse(sessionStorage.getItem('user'))
       setUser(data)
+      setIsLoggedIn(true)
     }
-  }, [user])
+
+    const handleDisconnect = () => {
+      setUser(null)
+      setIsLoggedIn(false)
+    }
+
+    window.addEventListener('userLoggedIn', handleUserLogin)
+    window.addEventListener('userDisconnected', handleDisconnect)
+  })
   return (
     <>
-      <header className="sticky top-0 z-10 w-full h-28">
-        <nav className="h-full w-full bgcolor flex">
+      <header className="sticky top-0 z-10 w-full h-24">
+        <nav className="h-full w-full bgcolor flex items-center">
           <img className="p-5" src={logo} alt="" />
-          <ul className="absolute p-10 right-0 flex items-center space-x-5 text-white text-md font-Anton">
+          <ul className="absolute pr-5 right-0 flex items-center space-x-5 text-white text-md font-Anton">
             <li>
               <Link to="/">Home</Link>
             </li>
-            {handleConnected()}
+            {isLoggedIn ? (
+              <>
+                <li>
+                  <Link to="/profile">Profile</Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link to="/login">Login</Link>
+                </li>
+                <li>
+                  <Link to="/register">Register</Link>
+                </li>
+              </>
+            )}
             <input
               placeholder="Search in site"
               className="bgcolor font-roboto text-sm border bordercolor border-2 rounded-md py-1 px-2"
               type="search"
             />
-            {handlePP()}
+            {isLoggedIn && user.picture ? (
+              <>
+                <Link to="/profile">
+                  <img
+                    className="rounded-full cursor-pointer h-10 w-10"
+                    src={user.picture}
+                    alt=""
+                  />
+                </Link>
+              </>
+            ) : (
+              <></>
+            )}
           </ul>
         </nav>
       </header>
