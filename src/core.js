@@ -74,21 +74,56 @@ export const spotifyLogin = () => {
     })
 }
 
-export const getArtistInfo = (token, artistId, setStatus, setArtistInfo, setArtistInfo) => {
-  const artistUrl = `https://api.spotify.com/v1/artists/${artistId}`
-  setStatus(`getting data...`)
-  fetch(artistUrl, {
+export const fetchData = (url, headers) => {
+  return fetch(url, headers)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      return response.json()
+    })
+    .catch(error => {
+      console.error('Error fetching data', error)
+    })
+}
+
+export const fetchData = (url, headers) => {
+  return fetch(url, headers)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      return response.json()
+    })
+    .catch(error => {
+      console.error('Error fetching data', error)
+    })
+}
+
+export const getArtistInfo = (token, artistId, setStatus, setArtistInfo) => {
+  const artistInfo = { artist: null, lastAlbum: null, topTracks: null }
+  const headers = {
     method: 'GET',
     headers: {
       Authorization: token,
     },
-  })
-    .then(response => {
-      if (!response.ok) {
-        if (response.status == 429) return setStatus('Too many request (429)')
-        return setStatus(`fetch error ${response.status}`)
-      }
-      response.json().then(response => setArtistInfo(response))
+  }
+  const artistUrl = `https://api.spotify.com/v1/artists/${artistId}`
+  const albumUrl = `https://api.spotify.com/v1/artists/${artistId}/albums?limit=1`
+  const topTracksUrl = `https://api.spotify.com/v1/artists/${artistId}/top-tracks?country=FR`
+
+  setStatus(`getting data...`)
+
+  Promise.all([
+    fetchData(artistUrl, headers),
+    fetchData(albumUrl, headers),
+    fetchData(topTracksUrl, headers),
+  ])
+    .then(([artist, lastAlbum, topTracks]) => {
+      artistInfo.artist = artist
+      artistInfo.lastAlbum = lastAlbum
+      artistInfo.topTracks = topTracks
+      setArtistInfo(artistInfo)
     })
     .catch(error => {
       return setStatus(error.message)
