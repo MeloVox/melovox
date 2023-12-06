@@ -14,13 +14,15 @@ export const UserInfo = () => {
     const response = sessionStorage.getItem('user')
     const spotify = sessionStorage.getItem('spotify-login')
 
-    if (!response && !spotify) {
-      navigate('/login')
-      return
-    }
     if (response) {
       const { data } = JSON.parse(response)
       setUser(data)
+    }
+
+    if (!response && !spotify) {
+      console.log(response)
+      navigate('/login')
+      return
     }
   }, [navigate])
   const logout = () => {
