@@ -11,7 +11,6 @@ function App() {
     setItems(response)
   }
 
-
   return (
     <div className="mt-4 pt-72 w-full  text-white bg-black ">
       <div className="flex justify-center gap-6">
