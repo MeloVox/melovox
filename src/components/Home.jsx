@@ -36,7 +36,7 @@ function App() {
   }, [])
 
   async function search() {
-    console.log('Search for ' + searchInput)
+    const searchType = document.getElementById('select').value
 
     const searchParameters = {
       method: 'GET',
@@ -46,47 +46,53 @@ function App() {
       },
     }
 
-    //Récupère une liste d'artistes
-    const artistData = await fetch(
-      'https://api.spotify.com/v1/search?q=' + searchInput + '&type=artist',
-      searchParameters,
-    )
-      .then(response => response.json())
-      .then(data => data.artists.items)
-    setArtist(artistData)
-    console.log(artistData[0])
+    if (searchType === 'artist') {
+      const artistData = await fetch(
+        'https://api.spotify.com/v1/search?q=' + searchInput + '&type=artist',
+        searchParameters,
+      )
+        .then(response => response.json())
+        .then(data => data.artists.items)
 
-    //Récupère une liste d'albums par rapport à l'artiste [0]
-    await fetch(
-      'https://api.spotify.com/v1/artists/' +
-        artistData[0].id +
-        '/albums' +
-        '?include_groups=album&market=US&limit=50',
-      searchParameters,
-    )
-      .then(response => response.json())
-      .then(data => {
-        setAlbums(data.items)
+      setArtist(artistData)
+      console.log(artistData[0])
 
-        // Récupère une liste de chansons par rapport à l'artiste [0]
-        if (data.items.length > 0) {
-        fetch(
-            'https://api.spotify.com/v1/albums/' + data.items[0].id + '/tracks',
-            searchParameters,
-          )
-            .then(response => response.json())
-            .then(data => {
-              setSongs(data.items)
-            })
-        } else {
-          console.error('La liste des albums est vide.')
-        }
-      })
+      // Réinitialise les états pour les albums et les chansons
+      setAlbums([])
+      setSongs([])
+    } else if (searchType === 'album') {
+      const albumData = await fetch(
+        'https://api.spotify.com/v1/search?q=' + searchInput + '&type=album',
+        searchParameters,
+      )
+        .then(response => response.json())
+        .then(data => data.albums.items)
+
+      setAlbums(albumData)
+      console.log(albumData[0])
+
+      // Réinitialise les états pour les artistes et les chansons
+      setArtist([])
+      setSongs([])
+    } else if (searchType === 'song') {
+      const songData = await fetch(
+        'https://api.spotify.com/v1/search?q=' + searchInput + '&type=track',
+        searchParameters,
+      )
+        .then(response => response.json())
+        .then(data => data.tracks.items)
+
+      setSongs(songData)
+      console.log(songData[0])
+
+      // Réinitialise les états pour les artistes et les albums
+      setArtist([])
+      setAlbums([])
+    }
   }
 
   return (
-   
-    <div className="mt-40 pt-72 w-full  text-white bg-black ">
+    <div className="mt-4 pt-72 w-full  text-white bg-black ">
       {/* Recherche un artiste par le nom */}
       <div className="flex justify-center gap-6">
         <input
@@ -99,60 +105,92 @@ function App() {
           }}
           onChange={event => setSearchInput(event.target.value)}
         ></input>
-        <select defaultValue={""} id="select" name="select" className="block py-2.5 text-center px-0 w-36 text-sm bg-transparent border-b-2 border-gray-200 appearance-none border-black focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-  <option selected value="art" className="text-black">{"<"} -Selectionner-{">"}</option>
-  <option value="artist" className="text-black">Artist</option>
-  <option value="album" className="text-black">Album</option>
-</select>
+        <select
+          defaultValue={''}
+          id="select"
+          name="select"
+          className="block py-2.5 text-center px-0 w-36 text-sm bg-transparent border-b-2 border-gray-200 appearance-none border-black focus:outline-none focus:ring-0 focus:border-gray-200 peer"
+        >
+          <option selected value="art" className="text-black">
+            {'<'} -Selectionner-{'>'}
+          </option>
+          <option value="artist" className="text-black">
+            Artist
+          </option>
+          <option value="album" className="text-black">
+            Album
+          </option>
+          <option value="song" className="text-black">
+            Chanson
+          </option>
+        </select>
 
-        <button onClick={search}       className="relative border-2 text-white z-[2] flex items-center rounded-r bg-primary px-6 py-2.5 text-xs font-medium uppercase leading-tight  shadow-md transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
- >Rechercher </button>
+        <button
+          onClick={search}
+          className="relative border-2 text-white z-[2] flex items-center rounded-r bg-primary px-6 py-2.5 text-xs font-medium uppercase leading-tight  shadow-md transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
+        >
+          Rechercher{' '}
+        </button>
       </div>
-      
+
       <div className="flex-col gap-6 flex mt-8">
-
-          <div className="flex justify-center items-center gap-8 w-full">
-            <div className="bg-gradient-to-r from-red-400 to-red-300 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold"><div className="m-auto">Rap</div></div>
-            <div className="bg-gradient-to-r from-yellow-200 to-yellow-300 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">Techno</div>
-            <div className="bg-gradient-to-r from-green-200 to-green-300 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold"><div className="m-auto">Disco</div></div>
-            <div className="bg-gradient-to-r from-blue-700 to-blue-200 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">Jazz</div>
-
-            <div className="bg-gradient-to-r from-red-400 to-red-300 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold"><div className="m-auto">Metal</div></div>
-
-
+        <div className="flex justify-center items-center gap-8 w-full">
+          <div className="bg-gradient-to-r from-red-400 to-red-300 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            <div className="m-auto">Rap</div>
           </div>
-          <div className="flex justify-center items-center gap-8 w-full ">
-            <div className="bg-gradient-to-r from-green-200 to-blue-300 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold"><div className="m-auto">Raggae</div></div>
-            <div className="bg-gradient-to-r from-green-200 to-green-400 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">Chill</div>
-            <div className="bg-gradient-to-r from-red-400 to-red-200 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold"><div className="m-auto">K-Pop</div></div>
-            <div className="bg-gradient-to-r from-orange-200 to-orange-400 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold"><div className="m-auto">Lo-Fi</div></div>
-            <div className="bg-gradient-to-r from-green-200 to-green-400 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">Movies</div>
-            <div className="bg-gradient-to-r from-green-200 to-blue-400 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">Funk</div>
-
+          <div className="bg-gradient-to-r from-yellow-200 to-yellow-300 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            Techno
           </div>
-          
-          <div className="flex justify-center items-center gap-8 w-full ">
-            <div className="bg-gradient-to-r from-green-200 to-green-300 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold"><div className="m-auto">RnB</div></div>
-            <div className="bg-gradient-to-r from-blue-700 to-blue-200 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">Alternatif</div>
-            <div className="bg-gradient-to-r from-purple-500 to-yellow-200 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold"><div className="m-auto">Dub</div></div>
-            <div className="bg-gradient-to-r from-pink-400 to-pink-200 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">Funk</div>
-            <div className="bg-gradient-to-r from-blue-700 to-blue-200 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">Electro</div>
+          <div className="bg-gradient-to-r from-green-200 to-green-300 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            <div className="m-auto">Disco</div>
           </div>
-          
+          <div className="bg-gradient-to-r from-blue-700 to-blue-200 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            Jazz
+          </div>
 
-            
+          <div className="bg-gradient-to-r from-red-400 to-red-300 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            <div className="m-auto">Metal</div>
+          </div>
+        </div>
+        <div className="flex justify-center items-center gap-8 w-full ">
+          <div className="bg-gradient-to-r from-green-200 to-blue-300 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            <div className="m-auto">Raggae</div>
+          </div>
+          <div className="bg-gradient-to-r from-green-200 to-green-400 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            Chill
+          </div>
+          <div className="bg-gradient-to-r from-red-400 to-red-200 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            <div className="m-auto">K-Pop</div>
+          </div>
+          <div className="bg-gradient-to-r from-orange-200 to-orange-400 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            <div className="m-auto">Lo-Fi</div>
+          </div>
+          <div className="bg-gradient-to-r from-green-200 to-green-400 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            Movies
+          </div>
+          <div className="bg-gradient-to-r from-green-200 to-blue-400 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            Funk
+          </div>
+        </div>
 
-
-
-
-          
-
-
-
+        <div className="flex justify-center items-center gap-8 w-full ">
+          <div className="bg-gradient-to-r from-green-200 to-green-300 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            <div className="m-auto">RnB</div>
+          </div>
+          <div className="bg-gradient-to-r from-blue-700 to-blue-200 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            Alternatif
+          </div>
+          <div className="bg-gradient-to-r from-purple-500 to-yellow-200 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            <div className="m-auto">Dub</div>
+          </div>
+          <div className="bg-gradient-to-r from-pink-400 to-pink-200 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            Funk
+          </div>
+          <div className="bg-gradient-to-r from-blue-700 to-blue-200 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            Electro
+          </div>
+        </div>
       </div>
-
-
-
 
       <div className="flex space-x-20 justify-center">
         {artist &&
@@ -160,7 +198,8 @@ function App() {
           artist.slice(0, 6).map((singleArtist, index) => (
             <div key={index}>
               <a>{singleArtist.name}</a>
-              <img className="rounded-full"
+              <img
+                className="rounded-full"
                 style={{ width: '5em' }}
                 src={
                   singleArtist.images.length > 0
@@ -171,7 +210,9 @@ function App() {
             </div>
           ))}
       </div>
-      <div className="flex space-x-20 justify-center">        {albums &&
+      <div className="flex space-x-20 justify-center">
+        {' '}
+        {albums &&
           albums.length > 0 &&
           albums.slice(0, 6).map((album, i) => (
             <div key={i}>
@@ -197,9 +238,7 @@ function App() {
           ))}
       </div>
     </div>
-    
   )
-  
 }
 
 export default App
