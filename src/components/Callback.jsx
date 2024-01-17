@@ -9,11 +9,11 @@ const Callback = () => {
     const loginCode = searchParams.get('code')
     if (loginCode) {
       sessionStorage.setItem('spotify-login', loginCode)
+      const event = new CustomEvent('userLoggedIn')
+      window.dispatchEvent(event)
       navigate('/profile')
       return
     }
-    const event = new CustomEvent('userLoggedIn')
-    window.dispatchEvent(event)
     navigate('/login')
   }, [navigate, searchParams])
   return <></>
