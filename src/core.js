@@ -149,6 +149,19 @@ export const spotifyLogin = () => {
   window.location.href = authUrl.toString()
 }
 
+export const fetchData = (url, headers) => {
+  return fetch(url, headers)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      return response.json()
+    })
+    .catch(error => {
+      console.error('Error fetching data', error)
+    })
+}
+
 export const getArtistInfo = (token, artistId, setStatus, setArtistInfo) => {
   const artistInfo = { artist: null, lastAlbum: null, topTracks: null }
   const headers = {
