@@ -14,7 +14,6 @@ const Callback = () => {
       console.log(userSpotify)
       const event = new CustomEvent('userLoggedIn')
       window.dispatchEvent(event)
-
       navigate('/profile')
       return
     }
