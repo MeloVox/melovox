@@ -130,6 +130,7 @@ export const getArtistInfo = (token, artistId, setStatus, setArtistInfo) => {
   const artistUrl = `https://api.spotify.com/v1/artists/${artistId}`
   const albumUrl = `https://api.spotify.com/v1/artists/${artistId}/albums?limit=1`
   const topTracksUrl = `https://api.spotify.com/v1/artists/${artistId}/top-tracks?country=FR`
+  const albumsUrl = `https://api.spotify.com/v1/artists/${artistId}/albums?limit=50`
 
   setStatus(`getting data...`)
 
@@ -137,11 +138,19 @@ export const getArtistInfo = (token, artistId, setStatus, setArtistInfo) => {
     fetchData(artistUrl, headers),
     fetchData(albumUrl, headers),
     fetchData(topTracksUrl, headers),
+    fetchData(albumsUrl, headers),
   ])
-    .then(([artist, lastAlbum, topTracks]) => {
+    .then(([artist, lastAlbum, topTracks, albums]) => {
       artistInfo.artist = artist
       artistInfo.lastAlbum = lastAlbum
       artistInfo.topTracks = topTracks
+
+      const totalTracks = albums.items.reduce(
+        (sum, album) => sum + album.total_tracks,
+        0,
+      )
+      artistInfo.totalTracks = totalTracks
+
       setArtistInfo(artistInfo)
     })
     .catch(error => {
