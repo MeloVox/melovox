@@ -55,7 +55,7 @@ export const handleSpotify = setStatus => {
       response
         .json()
         .then(data =>
-          localStorage.setItem('spotify-token', JSON.stringify(data)),
+          sessionStorage.setItem('spotify-token', JSON.stringify(data)),
         )
     })
 }
