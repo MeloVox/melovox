@@ -8,9 +8,11 @@ const Layout = () => {
 
   useEffect(() => {
     const handleUserLogin = () => {
-      const { data } = JSON.parse(sessionStorage.getItem('user'))
-      setUser(data)
       setIsLoggedIn(true)
+      if (JSON.parse(sessionStorage.getItem('user'))) {
+        const { data } = JSON.parse(sessionStorage.getItem('user'))
+        setUser(data)
+      }
     }
 
     const handleDisconnect = () => {
@@ -51,12 +53,12 @@ const Layout = () => {
               className="bgcolor font-roboto text-sm border bordercolor border-2 rounded-md py-1 px-2"
               type="search"
             />
-            {isLoggedIn && user.picture ? (
+            {isLoggedIn ? (
               <>
                 <Link to="/profile">
                   <img
                     className="rounded-full cursor-pointer h-10 w-10"
-                    src={user.picture}
+                    src={user?.picture}
                     alt=""
                   />
                 </Link>
