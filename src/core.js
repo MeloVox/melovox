@@ -139,7 +139,6 @@ export const spotifyLogin = () => {
 
   authUrl.search = new URLSearchParams(params).toString()
   window.location.href = authUrl.toString()
-
 }
 
 export const fetchData = (url, headers) => {
