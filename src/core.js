@@ -33,6 +33,19 @@ export const authMelovoxAPI = ({ url, props, callback }) => {
     })
 }
 
+export const getSpotifyProfile = () => {
+  const spotify = sessionStorage.getItem('spotify-login')
+  fetch('https://api.spotify.com/v1/me', {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${spotify}`,
+    },
+  }).then(async response => {
+    if (!response) return
+    return await response.json()
+  })
+}
+
 export const handleSpotify = setStatus => {
   const authUrl = 'https://accounts.spotify.com/api/token'
   const spotify = `${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`
