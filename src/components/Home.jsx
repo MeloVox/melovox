@@ -1,99 +1,18 @@
-import { useState, useEffect } from 'react'
-
-//CLE SPOTIFY CLIENT ID ET CLIENT SECRET
-const CLIENT_ID = 'dc5a9c0f2475447b9959b26313b4d9f2'
-const CLIENT_SECRET = 'c8a1e011fc8b4cc2a2d2983eb647b7f4'
+import { useState } from 'react'
+import { spotifySearch } from '../core'
 
 function App() {
-  // Stocke la valeur de la barre de recherche
   const [searchInput, setSearchInput] = useState('')
-  // Stocke le token d'accès Spotify
-  const [accessToken, setAccessToken] = useState('')
-  // Stocke une liste d'artistes
-  const [artist, setArtist] = useState({})
-  // Stocke une liste de chansons
-  const [songs, setSongs] = useState([])
-  // Stocke une liste d'albums
-  const [albums, setAlbums] = useState([])
+  const [items, setItems] = useState({})
 
-  //Transmet les infos à Spotify
-  useEffect(() => {
-    const authParameters = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body:
-        'grant_type=client_credentials&client_id=' +
-        CLIENT_ID +
-        '&client_secret=' +
-        CLIENT_SECRET,
-    }
-
-    fetch('https://accounts.spotify.com/api/token', authParameters)
-      .then(result => result.json())
-      .then(data => setAccessToken(data.access_token))
-  }, [])
-
-  async function search() {
+  const search = async () => {
     const searchType = document.getElementById('select').value
-
-    const searchParameters = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + accessToken,
-      },
-    }
-
-    if (searchType === 'artist') {
-      const artistData = await fetch(
-        'https://api.spotify.com/v1/search?q=' + searchInput + '&type=artist',
-        searchParameters,
-      )
-        .then(response => response.json())
-        .then(data => data.artists.items)
-
-      setArtist(artistData)
-      console.log(artistData[0])
-
-      // Réinitialise les états pour les albums et les chansons
-      setAlbums([])
-      setSongs([])
-    } else if (searchType === 'album') {
-      const albumData = await fetch(
-        'https://api.spotify.com/v1/search?q=' + searchInput + '&type=album',
-        searchParameters,
-      )
-        .then(response => response.json())
-        .then(data => data.albums.items)
-
-      setAlbums(albumData)
-      console.log(albumData[0])
-
-      // Réinitialise les états pour les artistes et les chansons
-      setArtist([])
-      setSongs([])
-    } else if (searchType === 'song') {
-      const songData = await fetch(
-        'https://api.spotify.com/v1/search?q=' + searchInput + '&type=track',
-        searchParameters,
-      )
-        .then(response => response.json())
-        .then(data => data.tracks.items)
-
-      setSongs(songData)
-      console.log(songData[0])
-
-      // Réinitialise les états pour les artistes et les albums
-      setArtist([])
-      setAlbums([])
-    }
+    const response = await spotifySearch({ searchType, searchInput })
+    setItems(response)
   }
 
   return (
     <div className="mt-4 pt-72 w-full  text-white bg-black ">
-      {/* Recherche un artiste par le nom */}
       <div className="flex justify-center gap-6">
         <input
           placeholder="Chercher un album"
@@ -111,7 +30,7 @@ function App() {
           name="select"
           className="block py-2.5 text-center px-0 w-36 text-sm bg-transparent border-b-2 border-gray-200 appearance-none border-black focus:outline-none focus:ring-0 focus:border-gray-200 peer"
         >
-          <option selected value="art" className="text-black">
+          <option defaultValue={true} value="art" className="text-black">
             {'<'} -Selectionner-{'>'}
           </option>
           <option value="artist" className="text-black">
@@ -120,7 +39,7 @@ function App() {
           <option value="album" className="text-black">
             Album
           </option>
-          <option value="song" className="text-black">
+          <option value="track" className="text-black">
             Chanson
           </option>
         </select>
@@ -191,49 +110,25 @@ function App() {
           </div>
         </div>
       </div>
-
       <div className="flex space-x-20 justify-center">
-        {artist &&
-          artist.length > 0 &&
-          artist.slice(0, 6).map((singleArtist, index) => (
+        {items &&
+          items.length > 0 &&
+          items.slice(0, 6).map((item, index) => (
             <div key={index}>
-              <a>{singleArtist.name}</a>
-              <img
-                className="rounded-full"
-                style={{ width: '5em' }}
-                src={
-                  singleArtist.images.length > 0
-                    ? singleArtist.images[0].url
-                    : 'URL_PAR_DEFAUT_SI_AUCUNE_IMAGE'
-                }
-              ></img>
-            </div>
-          ))}
-      </div>
-      <div className="flex space-x-20 justify-center">
-        {' '}
-        {albums &&
-          albums.length > 0 &&
-          albums.slice(0, 6).map((album, i) => (
-            <div key={i}>
-              <a>{album.name}</a>
-              <img
-                style={{ width: '5em' }}
-                src={
-                  album.images.length > 0
-                    ? album.images[0].url
-                    : 'URL_PAR_DEFAUT_SI_AUCUNE_IMAGE'
-                }
-              ></img>
-            </div>
-          ))}
-      </div>
-      <div className="flex space-x-20 justify-center">
-        {songs &&
-          songs.length > 0 &&
-          songs.slice(0, 6).map((song, index) => (
-            <div key={index}>
-              <a>{song.name}</a>
+              <a>{item.name}</a>
+              {item.images !== undefined ? (
+                <img
+                  className="rounded-full"
+                  style={{ width: '5em' }}
+                  src={
+                    item.images.length > 0
+                      ? item.images[0].url
+                      : 'URL_PAR_DEFAUT_SI_AUCUNE_IMAGE'
+                  }
+                />
+              ) : (
+                ''
+              )}
             </div>
           ))}
       </div>
