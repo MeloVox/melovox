@@ -8,30 +8,33 @@ function Artist() {
   const [status, setStatus] = useState('')
 
   const formatNumber = number => {
-    if (number >= 1000000) {
-      return (
-        (number / 1000000).toLocaleString(undefined, {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        }) + ' M'
-      )
-    } else if (number >= 10000) {
-      return (
-        (number / 1000).toLocaleString(undefined, {
-          minimumFractionDigits: 0,
-          maximumFractionDigits: 0,
-        }) + ' K'
-      )
-    } else if (number >= 1000) {
-      return (
-        (number / 1000).toLocaleString(undefined, {
-          minimumFractionDigits: 0,
-          maximumFractionDigits: 1,
-        }) + ' K'
-      )
-    } else {
-      return number.toLocaleString()
+    let result
+    switch (true) {
+      case number >= 1000000:
+        result =
+          (number / 1000000).toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          }) + ' M'
+        break
+      case number >= 10000:
+        result =
+          (number / 1000).toLocaleString(undefined, {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+          }) + ' K'
+        break
+      case number >= 1000:
+        result =
+          (number / 1000).toLocaleString(undefined, {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 1,
+          }) + ' K'
+        break
+      default:
+        result = number.toLocaleString()
     }
+    return result
   }
 
   useEffect(() => {
