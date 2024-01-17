@@ -69,6 +69,11 @@ export const getSpotifyProfile = () => {
 }
 
 export const handleSpotify = setStatus => {
+  const storedToken = JSON.parse(sessionStorage.getItem('spotify-token'))
+  if (storedToken && storedToken.expires_at > Date.now()) {
+    return Promise.resolve()
+  }
+
   const authUrl = 'https://accounts.spotify.com/api/token'
   const spotify = `${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`
 
@@ -87,11 +92,14 @@ export const handleSpotify = setStatus => {
     })
     .then(response => {
       if (!response) return setStatus(`fetch error: check your connexion`)
-      response
-        .json()
-        .then(data =>
-          sessionStorage.setItem('spotify-token', JSON.stringify(data)),
-        )
+      response.json().then(data => {
+        if (data) {
+          data.expires_at = Date.now() + data.expires_in * 1000
+          sessionStorage.setItem('spotify-token', JSON.stringify(data))
+        } else {
+          setStatus('No data received from Spotify API')
+        }
+      })
     })
 }
 
