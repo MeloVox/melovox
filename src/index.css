@@ -2,9 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-.bgcolor {
-  background-color: #121212;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #121212;
+  color: #fff;  
+  margin: 0;
+  padding: 0;
+}
+
+/* .bgcolor {
+  background-color: #121212;
+} */
 
 .textspotify {
   color: #1db954;
@@ -62,4 +76,14 @@
 
 .font-Inter {
   font-family: 'Inter';
+}
+
+.spot {
+  position: absolute;
+  background-color: #0DD940;
+  border-radius: 50%;
+  opacity: 1;
+  width: 100px;
+  height: 100px;
+  filter: blur(15px);
 }
