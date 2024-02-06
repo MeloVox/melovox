@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import Presentation from "../../public/images/presentation.png";
 
 function Background() {
     useEffect(() => {
@@ -18,9 +19,9 @@ function Background() {
             // Générer une taille de spot aléatoire entre 75 et 150 pixels
             const spotSize = Math.floor(Math.random() * (150 - 75 + 1)) + 75;
 
-            const maxWidth = window.innerWidth - spotSize; 
-            const maxHeight = window.innerHeight - spotSize; 
-            
+            const maxWidth = window.innerWidth - spotSize;
+            const maxHeight = window.innerHeight - spotSize;
+
             // Générer des positions aléatoires à l'intérieur des limites de la fenêtre
             const randomLeft = Math.random() * maxWidth;
             const randomTop = Math.random() * maxHeight;
@@ -64,8 +65,6 @@ function Background() {
             spots.forEach((spot) => spot.remove());
         };
     }, []);
-
-    return null;
 }
 
 export default Background;

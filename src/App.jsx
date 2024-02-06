@@ -7,7 +7,7 @@ import Register from './components/Register.jsx'
 import Profile from './components/Profile.jsx'
 import Artist from './components/Artist.jsx'
 import Callback from './components/Callback.jsx'
-import Background from './components/Background.jsx'
+import About from './components/About.jsx'
 
 function App() {
   return (
@@ -15,14 +15,15 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* <Route path="/" element={<Layout />}> */}
-            <Route index element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/callback" element={<Callback />} />
-            <Route path="/artist/:artistId" element={<Artist />} />
-            <Route path="/background" element={<Background />} />
-            <Route path="*" element={<Notfound />} />
+          <Route index element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/callback" element={<Callback />} />
+          <Route path="/artist/:artistId" element={<Artist />} />
+          <Route path="/about" element={<About />} />
+
+          <Route path="*" element={<Notfound />} />
           {/* </Route> */}
         </Routes>
       </BrowserRouter>
