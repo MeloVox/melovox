@@ -1,71 +1,19 @@
 import { useState } from 'react'
-import { spotifySearch, handleSpotify } from '../core'
+import { spotifySearch } from '../core'
 
 function App() {
   const [searchInput, setSearchInput] = useState('')
   const [items, setItems] = useState({})
 
   const search = async () => {
-    handleSpotify()
     const searchType = document.getElementById('select').value
     const response = await spotifySearch({ searchType, searchInput })
     setItems(response)
   }
 
   return (
-    <div className="flex">
-      <div class="flex flex-col w-64 h-screen px-4 py-8 overflow-y-auto border-r mt-36 bg-gradient-to-t from-gray-600">
-        <h2 class="text-3xl font-semibold text-center text-gray-400">Menu</h2>
-
-
-        <div class="flex flex-col justify-between mt-6">
-          <aside>
-            <ul>
-              <li>
-                <a class="flex items-center px-4 py-2 text-white" href="#">
-                  <span class="mx-4 font-medium">Podcasts</span>
-                </a>
-              </li>
-
-              <li>
-                <a class="flex items-center px-4 py-2 mt-5 text-white" href="#">
-                  <span class="mx-4 font-medium">Albums</span>
-                </a>
-              </li>
-
-              <li>
-                <a class="flex items-center px-4 py-2 mt-5 text-white" href="#">
-                  <span class="mx-4 font-medium">Artistes</span>
-                </a>
-              </li>
-
-              <li>
-                <a class="flex items-center px-4 py-2 mt-5 text-white" href="#">
-                  <span class="mx-4 font-medium">Genres</span>
-                </a>
-              </li>
-
-              <li>
-                <a class="flex items-center px-4 py-2 mt-5 text-white" href="#">
-                <span class="mx-4 font-medium">Concerts</span>
-                </a>
-              </li>
-
-              <li>
-                <a class="flex items-center px-4 py-2 mt-5 text-white" href="#">
-                  <span class="mx-4 font-medium">Commentaires</span>
-                </a>
-              </li>
-
-            </ul>
-
-          </aside>
-          
-        </div>
-      </div>
-      <div class="w-full h-full p-4 m-8 overflow-y-auto">
-        <div class="grid items-center justify-center p-40 ">
-        <div className=" sticky flex justify-center gap-3">
+    <div className="mt-4 pt-72 w-full  text-white bg-black ">
+      <div className="flex justify-center gap-6">
         <input
           placeholder="Chercher un album"
           className="relative m-0 -mr-0.5 block min-w-0  rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
@@ -103,7 +51,65 @@ function App() {
           Rechercher{' '}
         </button>
       </div>
-      <p class="text-white text-2xl font-Rollicker">Artiste</p>
+
+      <div className="flex-col gap-6 flex mt-8">
+        <div className="flex justify-center items-center gap-8 w-full">
+          <div className="bg-gradient-to-r from-red-400 to-red-300 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            <div className="m-auto">Rap</div>
+          </div>
+          <div className="bg-gradient-to-r from-yellow-200 to-yellow-300 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            Techno
+          </div>
+          <div className="bg-gradient-to-r from-green-200 to-green-300 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            <div className="m-auto">Disco</div>
+          </div>
+          <div className="bg-gradient-to-r from-blue-700 to-blue-200 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            Jazz
+          </div>
+
+          <div className="bg-gradient-to-r from-red-400 to-red-300 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            <div className="m-auto">Metal</div>
+          </div>
+        </div>
+        <div className="flex justify-center items-center gap-8 w-full ">
+          <div className="bg-gradient-to-r from-green-200 to-blue-300 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            <div className="m-auto">Raggae</div>
+          </div>
+          <div className="bg-gradient-to-r from-green-200 to-green-400 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            Chill
+          </div>
+          <div className="bg-gradient-to-r from-red-400 to-red-200 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            <div className="m-auto">K-Pop</div>
+          </div>
+          <div className="bg-gradient-to-r from-orange-200 to-orange-400 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            <div className="m-auto">Lo-Fi</div>
+          </div>
+          <div className="bg-gradient-to-r from-green-200 to-green-400 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            Movies
+          </div>
+          <div className="bg-gradient-to-r from-green-200 to-blue-400 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            Funk
+          </div>
+        </div>
+
+        <div className="flex justify-center items-center gap-8 w-full ">
+          <div className="bg-gradient-to-r from-green-200 to-green-300 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            <div className="m-auto">RnB</div>
+          </div>
+          <div className="bg-gradient-to-r from-blue-700 to-blue-200 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            Alternatif
+          </div>
+          <div className="bg-gradient-to-r from-purple-500 to-yellow-200 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            <div className="m-auto">Dub</div>
+          </div>
+          <div className="bg-gradient-to-r from-pink-400 to-pink-200 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            Funk
+          </div>
+          <div className="bg-gradient-to-r from-blue-700 to-blue-200 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
+            Electro
+          </div>
+        </div>
+      </div>
       <div className="flex space-x-20 justify-center">
         {items &&
           items.length > 0 &&
@@ -126,8 +132,6 @@ function App() {
             </div>
           ))}
       </div>
-        </div>
-     
     </div>
 </div>
   )

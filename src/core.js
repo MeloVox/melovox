@@ -69,6 +69,11 @@ export const getSpotifyProfile = () => {
 }
 
 export const handleSpotify = setStatus => {
+  const storedToken = JSON.parse(sessionStorage.getItem('spotify-token'))
+  if (storedToken && storedToken.expires_at > Date.now()) {
+    return Promise.resolve()
+  }
+
   const authUrl = 'https://accounts.spotify.com/api/token'
   const spotify = `${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`
 
@@ -87,11 +92,14 @@ export const handleSpotify = setStatus => {
     })
     .then(response => {
       if (!response) return setStatus(`fetch error: check your connexion`)
-      response
-        .json()
-        .then(data =>
-          localStorage.setItem('spotify-token', JSON.stringify(data)),
-        )
+      response.json().then(data => {
+        if (data) {
+          data.expires_at = Date.now() + data.expires_in * 1000
+          sessionStorage.setItem('spotify-token', JSON.stringify(data))
+        } else {
+          setStatus('No data received from Spotify API')
+        }
+      })
     })
 }
 
@@ -141,21 +149,52 @@ export const spotifyLogin = () => {
   window.location.href = authUrl.toString()
 }
 
+export const fetchData = (url, headers) => {
+  return fetch(url, headers)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      return response.json()
+    })
+    .catch(error => {
+      console.error('Error fetching data', error)
+    })
+}
+
 export const getArtistInfo = (token, artistId, setStatus, setArtistInfo) => {
-  const artistUrl = `https://api.spotify.com/v1/artists/${artistId}`
-  setStatus(`getting data...`)
-  fetch(artistUrl, {
+  const artistInfo = { artist: null, lastAlbum: null, topTracks: null }
+  const headers = {
     method: 'GET',
     headers: {
       Authorization: token,
     },
-  })
-    .then(response => {
-      if (!response.ok) {
-        if (response.status == 429) return setStatus('Too many request (429)')
-        return setStatus(`fetch error ${response.status}`)
-      }
-      response.json().then(response => setArtistInfo(response))
+  }
+  const artistUrl = `https://api.spotify.com/v1/artists/${artistId}`
+  const albumUrl = `https://api.spotify.com/v1/artists/${artistId}/albums?limit=1`
+  const topTracksUrl = `https://api.spotify.com/v1/artists/${artistId}/top-tracks?country=FR`
+  const albumsUrl = `https://api.spotify.com/v1/artists/${artistId}/albums?limit=50`
+
+  setStatus(`getting data...`)
+
+  Promise.all([
+    fetchData(artistUrl, headers),
+    fetchData(albumUrl, headers),
+    fetchData(topTracksUrl, headers),
+    fetchData(albumsUrl, headers),
+  ])
+    .then(([artist, lastAlbum, topTracks, albums]) => {
+      artistInfo.artist = artist
+      artistInfo.lastAlbum = lastAlbum
+      artistInfo.topTracks = topTracks
+
+      const totalTracks = albums.items.reduce(
+        (sum, album) => sum + album.total_tracks,
+        0,
+      )
+      artistInfo.totalTracks = totalTracks
+
+      setArtistInfo(artistInfo)
     })
     .catch(error => {
       return setStatus(error.message)
