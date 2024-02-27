@@ -33,14 +33,11 @@ export const authMelovoxAPI = ({ url, props, callback }) => {
     })
 }
 
-export async function spotifySearch({ searchType, searchInput }) {
-  const accessToken = sessionStorage.getItem('spotify-token')
-
+export async function spotifySearch({ token, searchType, searchInput }) {
   const searchParameters = {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + accessToken,
+      Authorization: token,
     },
   }
 

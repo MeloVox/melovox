@@ -1,139 +1,144 @@
 import { useState } from 'react'
-import { spotifySearch } from '../core'
+import { spotifySearch, handleSpotify } from '../core'
 
 function App() {
   const [searchInput, setSearchInput] = useState('')
-  const [items, setItems] = useState({})
+  const [items, setItems] = useState([])
 
   const search = async () => {
-    const searchType = document.getElementById('select').value
-    const response = await spotifySearch({ searchType, searchInput })
-    setItems(response)
+    handleSpotify()
+    const response = sessionStorage.getItem('spotify-token')
+    if (response) {
+      const { token_type, access_token } = JSON.parse(response)
+      const token = `${token_type} ${access_token}`
+      const searchType = document.getElementById('select').value
+      const items = await spotifySearch({ token, searchInput, searchType })
+      setItems(items)
+    }
   }
 
   return (
-    <div className="mt-4 pt-72 w-full  text-white bg-black ">
-      <div className="flex justify-center gap-6">
-        <input
-          placeholder="Chercher un album"
-          className="relative m-0 -mr-0.5 block min-w-0  rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
-          onKeyUp={event => {
-            if (event.key === 'Enter') {
-              search()
-            }
-          }}
-          onChange={event => setSearchInput(event.target.value)}
-        ></input>
-        <select
-          defaultValue={''}
-          id="select"
-          name="select"
-          className="block py-2.5 text-center px-0 w-36 text-sm bg-transparent border-b-2 border-gray-200 appearance-none border-black focus:outline-none focus:ring-0 focus:border-gray-200 peer"
-        >
-          <option defaultValue={true} value="art" className="text-black">
-            {'<'} -Selectionner-{'>'}
-          </option>
-          <option value="artist" className="text-black">
-            Artist
-          </option>
-          <option value="album" className="text-black">
-            Album
-          </option>
-          <option value="track" className="text-black">
-            Chanson
-          </option>
-        </select>
-
-        <button
-          onClick={search}
-          className="relative border-2 text-white z-[2] flex items-center rounded-r bg-primary px-6 py-2.5 text-xs font-medium uppercase leading-tight  shadow-md transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
-        >
-          Rechercher{' '}
-        </button>
-      </div>
-
-      <div className="flex-col gap-6 flex mt-8">
-        <div className="flex justify-center items-center gap-8 w-full">
-          <div className="bg-gradient-to-r from-red-400 to-red-300 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
-            <div className="m-auto">Rap</div>
-          </div>
-          <div className="bg-gradient-to-r from-yellow-200 to-yellow-300 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
-            Techno
-          </div>
-          <div className="bg-gradient-to-r from-green-200 to-green-300 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
-            <div className="m-auto">Disco</div>
-          </div>
-          <div className="bg-gradient-to-r from-blue-700 to-blue-200 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
-            Jazz
-          </div>
-
-          <div className="bg-gradient-to-r from-red-400 to-red-300 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
-            <div className="m-auto">Metal</div>
-          </div>
-        </div>
-        <div className="flex justify-center items-center gap-8 w-full ">
-          <div className="bg-gradient-to-r from-green-200 to-blue-300 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
-            <div className="m-auto">Raggae</div>
-          </div>
-          <div className="bg-gradient-to-r from-green-200 to-green-400 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
-            Chill
-          </div>
-          <div className="bg-gradient-to-r from-red-400 to-red-200 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
-            <div className="m-auto">K-Pop</div>
-          </div>
-          <div className="bg-gradient-to-r from-orange-200 to-orange-400 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
-            <div className="m-auto">Lo-Fi</div>
-          </div>
-          <div className="bg-gradient-to-r from-green-200 to-green-400 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
-            Movies
-          </div>
-          <div className="bg-gradient-to-r from-green-200 to-blue-400 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
-            Funk
-          </div>
-        </div>
-
-        <div className="flex justify-center items-center gap-8 w-full ">
-          <div className="bg-gradient-to-r from-green-200 to-green-300 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
-            <div className="m-auto">RnB</div>
-          </div>
-          <div className="bg-gradient-to-r from-blue-700 to-blue-200 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
-            Alternatif
-          </div>
-          <div className="bg-gradient-to-r from-purple-500 to-yellow-200 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
-            <div className="m-auto">Dub</div>
-          </div>
-          <div className="bg-gradient-to-r from-pink-400 to-pink-200 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
-            Funk
-          </div>
-          <div className="bg-gradient-to-r from-blue-700 to-blue-200 w-36 h-36 rounded-full text-center items-center justify-center flex text-white text-xl font-bold">
-            Electro
-          </div>
+    <div className="flex mt-48">
+      <div className="w-64 h-screen px-4 py-8 overflow-y-auto border-r bg-gradient-to-t from-gray-600 ">
+        <h2 className="text-3xl font-semibold text-center text-gray-400">
+          Menu
+        </h2>
+        <div className="flex flex-col justify-between mt-6">
+          <aside>
+            <ul>
+              <li>
+                <a className="flex items-center px-4 py-2 text-white" href="#">
+                  <span className="mx-4 font-medium">Podcasts</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  className="flex items-center px-4 py-2 mt-5 text-white"
+                  href="#"
+                >
+                  <span className="mx-4 font-medium">Albums</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  className="flex items-center px-4 py-2 mt-5 text-white"
+                  href="#"
+                >
+                  <span className="mx-4 font-medium">Artistes</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  className="flex items-center px-4 py-2 mt-5 text-white"
+                  href="#"
+                >
+                  <span className="mx-4 font-medium">Genres</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  className="flex items-center px-4 py-2 mt-5 text-white"
+                  href="#"
+                >
+                  <span className="mx-4 font-medium">Concerts</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  className="flex items-center px-4 py-2 mt-5 text-white"
+                  href="#"
+                >
+                  <span className="mx-4 font-medium">Commentaires</span>
+                </a>
+              </li>
+            </ul>
+          </aside>
         </div>
       </div>
-      <div className="flex space-x-20 justify-center">
-        {items &&
-          items.length > 0 &&
-          items.slice(0, 6).map((item, index) => (
-            <div key={index}>
-              <a>{item.name}</a>
+
+      <div className="flex flex-col w-full h-full p-4 m-8 overflow-y-auto items-center">
+        <div className="flex justify-between gap-6 mb-6">
+          <div className="flex gap-6 w-full ">
+            <input
+              id="searchInput"
+              placeholder="Chercher un album"
+              className="relative block w-1/3 px-3 py-[0.25rem] text-base border border-solid border-neutral-300 rounded-l focus:outline-none focus:border-primary h-8"
+              onChange={event => setSearchInput(event.target.value)}
+            />
+            <select
+              defaultValue={''}
+              id="select"
+              name="select"
+              className="block py-2.5 text-center bg-transparent border-b-2 border-gray-200 appearance-none border-black focus:outline-none focus:ring-0 focus:border-gray-200"
+            >
+              <option defaultValue={true} value="art" className="text-black">
+                {'<'} -Selectionner-{'>'}
+              </option>
+              <option value="artist" className="text-black">
+                Artist
+              </option>
+              <option value="album" className="text-black">
+                Album
+              </option>
+              <option value="track" className="text-black">
+                Chanson
+              </option>
+            </select>
+            <button
+              onClick={search}
+              className="border border-solid border-black px-6 py-2.5 bg-primary text-white rounded-r hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary"
+            >
+              Rechercher
+            </button>
+          </div>
+          <p className="text-white text-2xl font-Rollicker">Artiste</p>
+        </div>
+
+        <div className="flex justify-center flex-wrap gap-4 mt-4">
+          {items.slice(0, 6).map((item, index) => (
+            <div key={index} className="flex flex-col items-center">
               {item.images !== undefined ? (
-                <img
-                  className="rounded-full"
-                  style={{ width: '5em' }}
-                  src={
-                    item.images.length > 0
-                      ? item.images[0].url
-                      : 'URL_PAR_DEFAUT_SI_AUCUNE_IMAGE'
-                  }
-                />
+                <div className="cd-image">
+                  <img
+                    className="rounded-full"
+                    src={
+                      item.images.length > 0
+                        ? item.images[0].url
+                        : 'URL_PAR_DEFAUT_SI_AUCUNE_IMAGE'
+                    }
+                    alt={item.name}
+                  />
+                  <div className="cd-hole"></div>
+                </div>
               ) : (
                 ''
               )}
+              <a className="text-center">{item.name}</a>
             </div>
           ))}
+        </div>
       </div>
     </div>
-</div>
   )
 }
 

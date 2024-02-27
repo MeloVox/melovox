@@ -63,3 +63,24 @@
 .font-Inter {
   font-family: 'Inter';
 }
+
+.cd-image {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border: 4px solid #ccc; /* Couleur de la bordure du CD */
+  border-radius: 50%; /* Pour donner une forme ronde */
+  overflow: hidden; /* Pour cacher les parties de l'image en dehors du cercle */
+}
+
+.cd-hole {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px; /* Diamètre du trou */
+  height: 40px;
+  border-radius: 50%; /* Pour donner une forme ronde */
+  background-color: transparent; /* Couleur transparente */
+  border: 4px solid #ccc; /* Couleur de la bordure du trou */
+}
