@@ -8,6 +8,7 @@ import Profile from './components/Profile.jsx'
 import Artist from './components/Artist.jsx'
 import Callback from './components/Callback.jsx'
 import About from './components/About.jsx'
+import Background from './components/Background.jsx'
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* <Route path="/" element={<Layout />}> */}
-          <Route index element={<Home />} />
+          <Route index element={<Background />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile />} />

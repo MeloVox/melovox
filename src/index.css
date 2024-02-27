@@ -37,6 +37,10 @@ body {
   color: rgba(255, 255, 255, 0.31);
 }
 
+.btnlog:hover {
+  background-color: #3c4bde;
+}
+
 .font-roboto {
   font-family:
     system-ui,
@@ -67,6 +71,11 @@ body {
   src: url('./assets/Inter-VariableFont.ttf');
 }
 
+@font-face {
+  font-family: 'Marcellus';
+  src: url('./assets/Marcellus-Regular.ttf');
+}
+
 .font-Rollicker {
   font-family: 'Rollicker';
 }
@@ -79,12 +88,16 @@ body {
   font-family: 'Inter';
 }
 
+.font-Marcellus {
+  font-family: 'Marcellus';
+}
+
 .spot {
   position: absolute;
   background-color: #0dd940;
   border-radius: 50%;
   opacity: 1;
-  filter: blur(15px);
+  filter: blur(35px);
 }
 
 .containerPresentation {
