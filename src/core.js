@@ -33,7 +33,7 @@ export const authMelovoxAPI = ({ url, props, callback }) => {
     })
 }
 
-export async function spotifySearch({ token, searchType, searchInput }) {
+export async function spotifySearch({ token, searchInput }) {
   const searchParameters = {
     method: 'GET',
     headers: {
@@ -42,12 +42,14 @@ export async function spotifySearch({ token, searchType, searchInput }) {
   }
 
   return fetch(
-    `https://api.spotify.com/v1/search?q=${searchInput}&type=${searchType}`,
+    `https://api.spotify.com/v1/search?q=${searchInput}&type=artist,album,track`,
     searchParameters,
   ).then(response =>
     response.json().then(data => {
-      const nomProprietes = Object.keys(data)
-      return data[nomProprietes].items
+      const items = ['artists', 'albums', 'tracks'].flatMap(
+        type => data[type].items,
+      )
+      return items
     }),
   )
 }
