@@ -17,65 +17,14 @@ function App() {
     }
   }
 
+  const handleKeyPress = event => {
+    if (event.key === 'Enter') {
+      search()
+    }
+  }
+
   return (
     <div className="flex mt-10 ">
-      {/* <div className="w-64 h-screen px-4 py-8 overflow-y-auto border-r bg-gradient-to-t from-gray-600 ">
-        <h2 className="text-3xl font-semibold text-center text-gray-400">
-          Menu
-        </h2>
-        <div className="flex flex-col justify-between mt-6">
-          <aside>
-            <ul>
-              <li>
-                <a className="flex items-center px-4 py-2 text-white" href="#">
-                  <span className="mx-4 font-medium">Podcasts</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  className="flex items-center px-4 py-2 mt-5 text-white"
-                  href="#"
-                >
-                  <span className="mx-4 font-medium">Albums</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  className="flex items-center px-4 py-2 mt-5 text-white"
-                  href="#"
-                >
-                  <span className="mx-4 font-medium">Artistes</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  className="flex items-center px-4 py-2 mt-5 text-white"
-                  href="#"
-                >
-                  <span className="mx-4 font-medium">Genres</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  className="flex items-center px-4 py-2 mt-5 text-white"
-                  href="#"
-                >
-                  <span className="mx-4 font-medium">Concerts</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  className="flex items-center px-4 py-2 mt-5 text-white"
-                  href="#"
-                >
-                  <span className="mx-4 font-medium">Commentaires</span>
-                </a>
-              </li>
-            </ul>
-          </aside>
-        </div>
-      </div> */}
-
       <div className="flex flex-col w-full h-full p-4 m-8 overflow-y-auto items-center">
         <div className="flex justify-between gap-6 mb-6 mt-10">
           <div className="flex gap-6 w-full">
@@ -84,6 +33,7 @@ function App() {
               placeholder="Chercher un album"
               className="relative block w-1/3 px-3 py-[0.25rem] text-base border border-solid border-neutral-300 rounded-l focus:outline-none focus:border-primary h-8"
               onChange={event => setSearchInput(event.target.value)}
+              onKeyDown={handleKeyPress} // Ajout du gestionnaire d'événements onKeyDown
             />
             <button
               onClick={search}
@@ -118,7 +68,13 @@ function App() {
             </div>
           ))}
         </div>
-        <div className="bg-gradient-to-r from-indigo-500 via-purple-500 w-full mt-36 h-60">
+        <div
+          className={
+            items.length > 0
+              ? 'bg-gradient-to-r from-indigo-500 via-purple-500 w-full mt-20 h-60'
+              : 'hidden'
+          }
+        >
           <div>
             <p className="text-white text-2xl font-Rollicker">Pop</p>
           </div>

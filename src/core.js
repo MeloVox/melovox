@@ -1,6 +1,6 @@
 import { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, API } from '../logs.js'
 import querystring from 'querystring'
-import { Buffer } from 'buffer/'
+import { Buffer } from 'buffer'
 
 export const authMelovoxAPI = ({ url, props, callback }) => {
   const { navigate, setMessage } = callback
