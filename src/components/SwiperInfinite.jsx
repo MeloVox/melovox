@@ -27,7 +27,7 @@ const SwiperInfinite = () => {
         effect="coverflow"
         centeredSlides={true}
         slidesPerView={5}
-        spaceBetween={30}
+        spaceBetween={15}
         className="swiper-container"
         initialSlide={middleIndex}
         coverflowEffect={{
