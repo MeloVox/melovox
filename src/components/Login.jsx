@@ -1,30 +1,15 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { authMelovoxAPI, spotifyLogin } from '../core'
-import { useGoogleLogin, GoogleLogin } from '@react-oauth/google'
+import { GoogleLogin } from '@react-oauth/google'
 import logo_spotify from '../assets/logo_spotify.png'
 import Background from './Background'
-import register from '../assets/register.png'
-import logo_google from '../assets/Google_logo.png'
 
 function Login() {
   const [message, setMessage] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
-
-  const login = useGoogleLogin({
-    onSuccess: credentialResponse =>
-      authMelovoxAPI({
-        url: `api/handlegoogle`,
-        props: credentialResponse,
-        callback: { setMessage, navigate },
-      }),
-    flow: 'auth-code',
-    onError: () => {
-      console.log('Login Failed')
-    },
-  })
 
   useEffect(() => {
     const response = sessionStorage.getItem('user')

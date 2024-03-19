@@ -13,12 +13,13 @@ export const authMelovoxAPI = ({ url, props, callback }) => {
   }
   fetch(`${API}/${url}`, params)
     .catch(err => {
-      if (err instanceof TypeError)
-        return setMessage(`API offline: login not supported`)
+      if (err instanceof TypeError) {
+        return setMessage('API offline: login not supported')
+      }
       return setMessage(err.toString())
     })
     .then(reponse => {
-      if (!reponse.ok) return setMessage(`API offline: login not supported`)
+      if (!reponse.ok) return setMessage('API offline: login not supported')
       reponse.json().then(response => {
         const { message, data } = response
         setMessage(message)
@@ -27,7 +28,6 @@ export const authMelovoxAPI = ({ url, props, callback }) => {
           const event = new CustomEvent('userLoggedIn')
           window.dispatchEvent(event)
           navigate('/profile')
-          return
         }
       })
     })
@@ -201,7 +201,7 @@ export const getArtistInfo = (token, artistId, setStatus, setArtistInfo) => {
   const topTracksUrl = `https://api.spotify.com/v1/artists/${artistId}/top-tracks?country=FR`
   const albumsUrl = `https://api.spotify.com/v1/artists/${artistId}/albums?limit=50`
 
-  setStatus(`getting data...`)
+  setStatus('getting data...')
 
   Promise.all([
     fetchData(artistUrl, headers),
