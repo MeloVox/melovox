@@ -149,8 +149,16 @@ body {
   height: 20vw;
 }
 
+.swiperListContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid red;
+  position: relative;
+}
+
 .swiper {
-  width: 90%;
+  width: 100%;
   height: auto;
 }
 

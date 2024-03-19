@@ -31,43 +31,44 @@ function SwiperList() {
 
   return (
     <>
-      <Swiper
-        loop={true}
-        ref={swiperRef}
-        slidesPerView={5}
-        spaceBetween={2}
-        className="mySwiper"
-        navigation={{
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        }}
-        modules={[Navigation]}
-      >
-        {images.map((image, index) => (
-          <SwiperSlide
-            key={index}
-            onMouseEnter={() => handleImageHover(index)}
-            onMouseLeave={() => handleImageHover(null)}
-          >
-            <div className="imageContainer">
-              <img
-                src={image}
-                alt={`Slide ${index + 1}`}
-                onClick={() => handleImageClick(index)}
-              />
-              {hoveredSlideIndex === index && (
-                <div className="infoOverlay">
-                  <p>Nom de l'album {index + 1}</p>
-                  <p>Artiste</p>
-                  <a href="https://www.google.com">Voir plus</a>
-                </div>
-              )}
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-      <div className="swiper-button-prev"></div>
-      <div className="swiper-button-next"></div>
+      <div className='swiperListContainer'>
+        <Swiper
+          loop={true}
+          ref={swiperRef}
+          slidesPerView={5}
+          spaceBetween={2}
+          // navigation={{
+          //   nextEl: '.swiper-button-next',
+          //   prevEl: '.swiper-button-prev',
+          // }}
+          modules={[Navigation]}
+        >
+          {images.map((image, index) => (
+            <SwiperSlide
+              key={index}
+              onMouseEnter={() => handleImageHover(index)}
+              onMouseLeave={() => handleImageHover(null)}
+            >
+              <div className="imageContainer">
+                <img
+                  src={image}
+                  alt={`Slide ${index + 1}`}
+                  onClick={() => handleImageClick(index)}
+                />
+                {hoveredSlideIndex === index && (
+                  <div className="infoOverlay">
+                    <p>Nom de l'album {index + 1}</p>
+                    <p>Artiste</p>
+                    <a href="https://www.google.com">Voir plus</a>
+                  </div>
+                )}
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+          {/* <div className="swiper-button-prev"></div>
+          <div className="swiper-button-next"></div> */}
+      </div>
     </>
   )
 }
