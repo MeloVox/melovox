@@ -8,7 +8,7 @@ import TestSpotify from '../assets/logo_spotify.png'
 import Dua from '../assets/dua.webp'
 import { ArrowBackOutline, ArrowForwardOutline } from 'react-ionicons'
 
-const SwiperInfinite = () => {
+const SwiperDisk = () => {
   const images = [
     TestSpotify,
     Dua,
@@ -68,4 +68,4 @@ const SwiperInfinite = () => {
   )
 }
 
-export default SwiperInfinite
+export default SwiperDisk
