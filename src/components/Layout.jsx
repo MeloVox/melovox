@@ -1,22 +1,30 @@
 import { Outlet, Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import logo from '../assets/logo.svg'
+import { getSpotifyProfile } from '../core'
 
 const Layout = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [user, setUser] = useState(null)
+  const getUser = () => JSON.parse(sessionStorage.getItem('user'))?.data
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    sessionStorage.getItem('isconnected'),
+  )
+  const [user, setUser] = useState(getUser)
 
   useEffect(() => {
     const handleUserLogin = () => {
+      sessionStorage.setItem('isconnected', true)
       setIsLoggedIn(true)
-      if (JSON.parse(sessionStorage.getItem('user'))) {
-        const { data } = JSON.parse(sessionStorage.getItem('user'))
-        setUser(data)
+      if (getUser) {
+        setUser(getUser)
+      } else {
+        const profile = getSpotifyProfile()
+        console.log(profile)
       }
     }
 
     const handleDisconnect = () => {
-      setUser(null)
+      sessionStorage.setItem('isconnected', false)
+      setUser(undefined)
       setIsLoggedIn(false)
     }
 
@@ -26,7 +34,7 @@ const Layout = () => {
   return (
     <>
       <header className="sticky top-0 z-10 w-full h-24">
-        <nav className="h-full w-full bgcolor flex items-center">
+        <nav className="h-full w-full bg-transparent flex items-center">
           <img className="p-5" src={logo} alt="" />
           <ul className="absolute pr-5 right-0 flex items-center space-x-5 text-white text-md font-Anton">
             <li>
@@ -53,7 +61,7 @@ const Layout = () => {
               className="bgcolor font-roboto text-sm border bordercolor border-2 rounded-md py-1 px-2"
               type="search"
             />
-            {isLoggedIn ? (
+            {isLoggedIn && user ? (
               <>
                 <Link to="/profile">
                   <img

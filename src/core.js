@@ -55,7 +55,7 @@ export async function spotifySearch({ token, searchInput }) {
 }
 
 export const getSpotifyProfile = () => {
-  const spotify = sessionStorage.getItem('spotify-login')
+  const spotify = sessionStorage.getItem('spotify-auth')
   fetch('https://api.spotify.com/v1/me', {
     method: 'GET',
     headers: {
@@ -100,6 +100,33 @@ export const handleSpotify = setStatus => {
         }
       })
     })
+}
+
+export const getAuthToken = loginCode => {
+  const authUrl = 'https://accounts.spotify.com/api/token'
+  const spotify = `${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`
+
+  fetch(authUrl, {
+    method: 'POST',
+    headers: {
+      Authorization: `Basic ${Buffer.from(spotify).toString('base64')}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    form: {
+      code: loginCode,
+      redirect_uri: 'http://localhost:5173/callback',
+      grant_type: 'authorization_code',
+    },
+    body: querystring.stringify({
+      grant_type: 'client_credentials',
+    }),
+  }).then(response => {
+    if (!response) return
+    response.json().then(data => {
+      console.log(data)
+      localStorage.setItem('spotify-auth', JSON.stringify(data))
+    })
+  })
 }
 
 export const spotifyLogin = () => {
