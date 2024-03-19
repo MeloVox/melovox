@@ -18,6 +18,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* <Route path="/" element={<Test />}> */}
+            <Route path="/test" element={<Test />} />
             <Route path="/Arrow" element={<SwiperArrow />} />
             <Route path="/Infinite" element={<SwiperInfinite />} />
             <Route index element={<Background />} />

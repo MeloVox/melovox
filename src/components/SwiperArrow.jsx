@@ -39,12 +39,7 @@ function SwiperArrow() {
                 }}
                 modules={[Navigation]}
             >
-                {/* {albums.map((album, index) => (
-                    <SwiperSlide key={index}>
-                        <img src={album.imageURL} alt={`Album ${index + 1}`} />
-                        <button onClick={() => handleAlbumClick(album)}>Voir l'album</button>
-                    </SwiperSlide>
-                ))} */}
+            
 
 
                 {images.map((image, index) => (
