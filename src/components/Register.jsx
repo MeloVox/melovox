@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
-import { GoogleLogin } from '@react-oauth/google'
+import { GoogleLogin, useGoogleLogin } from '@react-oauth/google'
 import { useNavigate, Link } from 'react-router-dom'
 import { authMelovoxAPI, spotifyLogin } from '../core.js'
 import logo_spotify from '../assets/logo_spotify.png'
 import Background from './Background'
 import register from '../assets/register.png'
+import logo_google from '../assets/Google_logo.png'
 
 function Register() {
   const [message, setMessage] = useState('')
@@ -29,11 +30,8 @@ function Register() {
         className="h-screen w-full flex flex-col justify-center items-center space-y-10 bgcolor text-white"
         style={{ zIndex: 2 }}
       >
-        <h1
-          className="w-fit text-3xl font-Marcellus"
-          style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)' }}
-        >
-          Avec <span style={{ color: '#D340AA' }}>Melovox</span>, partage ton
+        <h1 className="w-fit text-3xl font-Anton mt-20 mb-10">
+          Avec <span style={{ color: '#D340AA' }}>Mélovox</span>, partage ton
           opinion sur les titres les plus écoutés !
         </h1>
         <div className="flex w-full justify-center">
@@ -44,16 +42,9 @@ function Register() {
               style={{ filter: 'drop-shadow(0px 0px 5px white)' }}
             />
           </div>
-          <div
-            className="flex w-[35%] flex-col p-7 ml-10"
-            style={{
-              backgroundColor: 'rgba(251, 251, 251, 0.2)',
-              borderRadius: '33px',
-              boxShadow: '0px 0px 5px white',
-            }}
-          >
+          <div className="flex w-[40%] flex-col ml-10 bgLoginForm justify-end items-center pt-10">
             <form
-              className="flex flex-col space-y-5"
+              className="flex flex-col space-y-5 w-[85%]"
               onSubmit={e => {
                 e.preventDefault()
                 authMelovoxAPI({
@@ -65,13 +56,13 @@ function Register() {
             >
               <div className="flex flex-col space-y-2">
                 <label className="font-Inter font-semibold" htmlFor="">
-                  Adresse mail ou nom d'utilisateur
+                  E-mail ou identifiant
                 </label>
                 <input
                   value={email}
                   onChange={e => setEmail(e.target.value)}
-                  placeholder="Adresse mail ou nom d'utilisateur"
-                  className="px-4 py-1 font-Inter text-white rounded-full bgbox h-10 border border-white"
+                  placeholder="E-mail ou identifiant"
+                  className="px-4 py-1 font-Inter text-white rounded-full bg-transparent h-10 border border-white"
                   type="mail"
                 />
               </div>
@@ -81,12 +72,12 @@ function Register() {
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                   placeholder="Mot de passe"
-                  className="px-4 py-1 font-Inter text-white rounded-full bgbox h-10 border border-white"
+                  className="px-4 py-1 font-Inter text-white rounded-full bg-transparent h-10 border border-white"
                   type="password"
                 />
               </div>
-              <span className="text-white font-Inter text-sm underline cursor-pointer flex justify-end">
-                Politique de données
+              <span className="text-gray-400 font-Inter text-sm underline cursor-pointer flex justify-start">
+                Mot de passe oublié ?
               </span>
               <div className="w-full flex justify-center items-center">
                 <button
@@ -98,40 +89,59 @@ function Register() {
               </div>
               <p className="w-full text-center text-sm">{message}</p>
             </form>
-            <hr className="w-full my-5" />
 
-            <div className="w-full flex flex-col space-y-5 justify-center items-center">
-              <div className="w-fit space-y-5">
-                <GoogleLogin
-                  shape="circle"
-                  onSuccess={credentialResponse =>
-                    authMelovoxAPI({
-                      url: `api/handlegoogle`,
-                      props: credentialResponse,
-                      callback: { setMessage, navigate },
-                    })
-                  }
-                  onError={() => {
-                    console.log('Login Failed')
-                  }}
-                  useOneTap
-                />
+            <div className="w-full flex flex-col space-y-5 justify-center items-center border-t border-neutral-400 pt-5">
+              <div className="w-[85%] space-y-5">
+                <div className="hidden">
+                  <GoogleLogin
+                    onSuccess={credentialResponse =>
+                      authMelovoxAPI({
+                        url: `api/handlegoogle`,
+                        props: credentialResponse,
+                        callback: { setMessage, navigate },
+                      })
+                    }
+                    onError={() => {
+                      console.log('Login Failed')
+                    }}
+                    useOneTap={true}
+                  />
+                </div>
+                <div className="w-full flex justify-center items-center">
+                  <div
+                    onClick={useGoogleLogin({
+                      onSuccess: credentialResponse =>
+                        authMelovoxAPI({
+                          url: `api/handlegoogle`,
+                          props: credentialResponse,
+                          callback: { setMessage, navigate },
+                        }),
+                      flow: 'auth-code',
+                      onError: () => {
+                        console.log('Login Failed')
+                      },
+                    })}
+                    className="w-full text-sm flex space-x-2 p-2 justify-center items-center rounded-full cursor-pointer bg-transparent border transition-all"
+                  >
+                    <img src={logo_google} className="w-4" />
+                    <p className="w-fit font-Inter font-medium">
+                      Se connecter avec Google
+                    </p>
+                  </div>
+                </div>
                 <div
                   onClick={spotifyLogin}
-                  className="w-full text-sm flex space-x-2 p-1 justify-center items-center rounded-full cursor-pointer bg-neutral-800 transition-all hover:bg-neutral-700"
+                  className="w-full text-sm flex space-x-2 p-2 justify-center items-center rounded-full cursor-pointer border border-white bg-transparent transition-all"
                 >
-                  <p className="absolute w-fit textspotify font-Inter font-medium">
-                    Continuer avec Spotify
+                  <img src={logo_spotify} className="w-4" />
+                  <p className="w-fit font-Inter font-medium">
+                    Se connecter avec Spotify
                   </p>
-                  <div className="w-full flex justify-start">
-                    <img src={logo_spotify} className="w-8" />
-                  </div>
                 </div>
               </div>
             </div>
-            <hr className="w-full my-5" />
-            <div className="w-full flex justify-center items-center">
-              <span className="textcolor font-Inter text-sm">
+            <div className="w-full flex justify-center items-center border-t border-neutral-400 mt-10">
+              <span className="textcolor font-Inter text-sm my-5">
                 J'ai déjà un compte.
                 <Link
                   className="ml-2 text-[#D340AA] font-bold underline cursor-pointer"
