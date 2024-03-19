@@ -38,8 +38,16 @@ function Login() {
   return (
     <>
       <Background />
-      <div className="h-screen w-full flex flex-col text-white space-y-10 justify-center items-center bgcolor" style={{ zIndex: 2 }}>
-        <h1 className="w-fit text-4xl font-Marcellus" style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)' }}>Ravi de te revoir !</h1>
+      <div
+        className="h-screen w-full flex flex-col text-white space-y-10 justify-center items-center bgcolor"
+        style={{ zIndex: 2 }}
+      >
+        <h1
+          className="w-fit text-4xl font-Marcellus"
+          style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)' }}
+        >
+          Ravi de te revoir !
+        </h1>
         <div className="flex w-full justify-center">
           <div className="flex w-[30%] flex-col space-y-10">
             <div className="w-full flex flex-col space-y-5 justify-center items-center">

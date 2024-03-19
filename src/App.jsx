@@ -18,18 +18,18 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* <Route path="/" element={<Test />}> */}
-            <Route path="/test" element={<Test />} />
-            <Route path="/Arrow" element={<SwiperArrow />} />
-            <Route path="/Infinite" element={<SwiperInfinite />} />
-            <Route index element={<Background />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/callback" element={<Callback />} />
-            <Route path="/artist/:artistId" element={<Artist />} />
-            <Route path="/about" element={<About />} />
+          <Route path="/test" element={<Test />} />
+          <Route path="/Arrow" element={<SwiperArrow />} />
+          <Route path="/Infinite" element={<SwiperInfinite />} />
+          <Route index element={<Background />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/callback" element={<Callback />} />
+          <Route path="/artist/:artistId" element={<Artist />} />
+          <Route path="/about" element={<About />} />
 
-            <Route path="*" element={<Notfound />} />
+          <Route path="*" element={<Notfound />} />
           {/* </Route> */}
         </Routes>
       </BrowserRouter>

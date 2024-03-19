@@ -25,13 +25,33 @@ function Register() {
   return (
     <>
       <Background />
-      <div className="h-screen w-full flex flex-col justify-center items-center space-y-10 bgcolor text-white" style={{ zIndex: 2 }}>
-        <h1 className="w-fit text-3xl font-Marcellus" style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)' }}>Avec <span style={{ color: "#D340AA" }}>Melovox</span>, partage ton opinion sur les titres les plus écoutés !</h1>
+      <div
+        className="h-screen w-full flex flex-col justify-center items-center space-y-10 bgcolor text-white"
+        style={{ zIndex: 2 }}
+      >
+        <h1
+          className="w-fit text-3xl font-Marcellus"
+          style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)' }}
+        >
+          Avec <span style={{ color: '#D340AA' }}>Melovox</span>, partage ton
+          opinion sur les titres les plus écoutés !
+        </h1>
         <div className="flex w-full justify-center">
           <div className="flex flex-col justify-center items-center w-[40%] mr-10">
-            <img src={register} className="w-full h-auto" style={{ filter: "drop-shadow(0px 0px 5px white)" }} />
+            <img
+              src={register}
+              className="w-full h-auto"
+              style={{ filter: 'drop-shadow(0px 0px 5px white)' }}
+            />
           </div>
-          <div className="flex w-[35%] flex-col p-7 ml-10" style={{ backgroundColor: "rgba(251, 251, 251, 0.2)", borderRadius: "33px", boxShadow: "0px 0px 5px white" }}>
+          <div
+            className="flex w-[35%] flex-col p-7 ml-10"
+            style={{
+              backgroundColor: 'rgba(251, 251, 251, 0.2)',
+              borderRadius: '33px',
+              boxShadow: '0px 0px 5px white',
+            }}
+          >
             <form
               className="flex flex-col space-y-5"
               onSubmit={e => {
@@ -122,7 +142,6 @@ function Register() {
               </span>
             </div>
           </div>
-
         </div>
       </div>
     </>

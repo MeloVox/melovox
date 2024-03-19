@@ -1,55 +1,46 @@
-import { useEffect } from 'react';
-import { CloseOutline } from 'react-ionicons';
-
+import { useEffect } from 'react'
+import { CloseOutline } from 'react-ionicons'
 
 const Modal = ({ open, onClose, children }) => {
-    useEffect(() => {
-        const handleKeyDown = (e) => {
-            if (e.key === 'Escape') {
-                onClose();
-            }
-        };
+  useEffect(() => {
+    const handleKeyDown = e => {
+      if (e.key === 'Escape') {
+        onClose()
+      }
+    }
 
+    if (open) {
+      document.addEventListener('keydown', handleKeyDown)
+    }
 
-        if (open) {
-            document.addEventListener('keydown', handleKeyDown);
-        }
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [open, onClose])
 
-
-        return () => {
-            document.removeEventListener('keydown', handleKeyDown);
-        };
-    }, [open, onClose]);
-
-
-    return (
-        <div
-            onClick={onClose}
-            className={`fixed inset-0 flex justify-center items-center transition-colors
-                ${open ? "visible bg-black/20" : "invisible"}
+  return (
+    <div
+      onClick={onClose}
+      className={`fixed inset-0 flex justify-center items-center transition-colors
+                ${open ? 'visible bg-black/20' : 'invisible'}
             `}
-        >
-            <div
-                onClick={(e) => e.stopPropagation()}
-                className={`bg-white rounded-xl shadow p-6 transition-all
-                    ${open ? "scale-100 opacity-100" : "scale-125 opacity-0"}
+    >
+      <div
+        onClick={e => e.stopPropagation()}
+        className={`bg-white rounded-xl shadow p-6 transition-all
+                    ${open ? 'scale-100 opacity-100' : 'scale-125 opacity-0'}
                 `}
-            >
-                <button
-                    onClick={onClose}
-                    className="absolute top-2 right-2 p-1 rounded-lg text-gray-400 bg-white hover:bg-gray-50 hover:text-gray-600"
-                >
-                    <CloseOutline
-                        color={'#000000'}
-                        height="20px"
-                        width="20px"
-                    />
-                </button>
-                {children}
-            </div>
-        </div>
-    );
-};
+      >
+        <button
+          onClick={onClose}
+          className="absolute top-2 right-2 p-1 rounded-lg text-gray-400 bg-white hover:bg-gray-50 hover:text-gray-600"
+        >
+          <CloseOutline color={'#000000'} height="20px" width="20px" />
+        </button>
+        {children}
+      </div>
+    </div>
+  )
+}
 
-
-export default Modal;
+export default Modal
