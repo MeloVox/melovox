@@ -11,6 +11,7 @@ import Callback from './components/Callback.jsx'
 import About from './components/About.jsx'
 import SwiperList from './components/SwiperList.jsx'
 import SwiperDisk from './components/SwiperDisk.jsx'
+import Genre from './components/Genre.jsx'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/test" element={<Test />} />
             <Route path="/swiperlist" element={<SwiperList />} />
             <Route path="/swiperdisk" element={<SwiperDisk />} />
+            <Route path="/genre" element={<Genre />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<Profile />} />
