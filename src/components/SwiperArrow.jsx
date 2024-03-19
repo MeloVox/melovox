@@ -6,7 +6,7 @@ import { Navigation } from 'swiper/modules'
 import TestSpotify from '../assets/logo_spotify.png'
 import Dua from '../assets/dua.webp'
 
-function SwiperArrow() {
+function SwiperList() {
   const swiperRef = useRef(null)
   const [hoveredSlideIndex, setHoveredSlideIndex] = useState(null)
 
@@ -72,4 +72,4 @@ function SwiperArrow() {
   )
 }
 
-export default SwiperArrow
+export default SwiperList
