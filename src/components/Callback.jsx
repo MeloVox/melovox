@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { getSpotifyProfile } from '../core'
+import { getAuthToken, getSpotifyProfile } from '../core'
 
 const Callback = () => {
   const [searchParams] = useSearchParams()
@@ -10,6 +10,7 @@ const Callback = () => {
     const loginCode = searchParams.get('code')
     if (loginCode) {
       sessionStorage.setItem('spotify-login', loginCode)
+      getAuthToken(loginCode)
       const userSpotify = getSpotifyProfile()
       console.log(userSpotify)
       const event = new CustomEvent('userLoggedIn')
