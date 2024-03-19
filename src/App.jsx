@@ -1,15 +1,14 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Login from './components/Login.jsx'
-import Layout from './components/Layout.jsx'
 import Test from './components/Test.jsx'
 import Home from './components/Home.jsx'
+import Layout from './components/Layout.jsx'
 import Notfound from './components/404.jsx'
 import Register from './components/Register.jsx'
 import Profile from './components/Profile.jsx'
 import Artist from './components/Artist.jsx'
 import Callback from './components/Callback.jsx'
 import About from './components/About.jsx'
-import Background from './components/Background.jsx'
 import SwiperArrow from './components/SwiperArrow.jsx'
 import SwiperInfinite from './components/SwiperInfinite.jsx'
 
@@ -19,11 +18,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
+            <Route path="/" element={<Home />} />
             <Route path="/test" element={<Test />} />
             <Route path="/Arrow" element={<SwiperArrow />} />
             <Route path="/Infinite" element={<SwiperInfinite />} />
-            <Route index element={<Background />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<Profile />} />
@@ -32,7 +30,6 @@ function App() {
             <Route path="/about" element={<About />} />
 
             <Route path="*" element={<Notfound />} />
-            {/* </Route> */}
           </Route>
         </Routes>
       </BrowserRouter>
