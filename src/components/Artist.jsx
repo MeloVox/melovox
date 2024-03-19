@@ -38,13 +38,26 @@ function Artist() {
   }
 
   useEffect(() => {
-    handleSpotify()
-    const response = sessionStorage.getItem('spotify-token')
-    if (response) {
-      const { token_type, access_token } = JSON.parse(response)
-      const token = `${token_type} ${access_token}`
-      getArtistInfo(token, artistId, setStatus, setArtistInfo)
+    const fetchData = async () => {
+      await handleSpotify()
+      const updatedResponse = await new Promise(resolve => {
+        const intervalId = setInterval(() => {
+          const response = sessionStorage.getItem('spotify-token')
+          if (response) {
+            clearInterval(intervalId)
+            resolve(response)
+          }
+        }, 100)
+      })
+
+      if (updatedResponse) {
+        const { token_type, access_token } = JSON.parse(updatedResponse)
+        const token = `${token_type} ${access_token}`
+        getArtistInfo(token, artistId, setStatus, setArtistInfo)
+      }
     }
+
+    fetchData()
   }, [artistId])
 
   if (!artistInfo) {

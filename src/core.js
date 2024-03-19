@@ -1,6 +1,6 @@
 import { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, API } from '../logs.js'
 import querystring from 'querystring'
-import { Buffer } from 'buffer/'
+import { Buffer } from 'buffer'
 
 export const authMelovoxAPI = ({ url, props, callback }) => {
   const { navigate, setMessage } = callback
@@ -33,24 +33,23 @@ export const authMelovoxAPI = ({ url, props, callback }) => {
     })
 }
 
-export async function spotifySearch({ searchType, searchInput }) {
-  const accessToken = sessionStorage.getItem('spotify-token')
-
+export async function spotifySearch({ token, searchInput }) {
   const searchParameters = {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + accessToken,
+      Authorization: token,
     },
   }
 
   return fetch(
-    `https://api.spotify.com/v1/search?q=${searchInput}&type=${searchType}`,
+    `https://api.spotify.com/v1/search?q=${searchInput}&type=artist,album,track`,
     searchParameters,
   ).then(response =>
     response.json().then(data => {
-      const nomProprietes = Object.keys(data)
-      return data[nomProprietes].items
+      const items = ['artists', 'albums', 'tracks'].flatMap(
+        type => data[type].items,
+      )
+      return items
     }),
   )
 }
@@ -69,6 +68,11 @@ export const getSpotifyProfile = () => {
 }
 
 export const handleSpotify = setStatus => {
+  const storedToken = JSON.parse(sessionStorage.getItem('spotify-token'))
+  if (storedToken && storedToken.expires_at > Date.now()) {
+    return Promise.resolve()
+  }
+
   const authUrl = 'https://accounts.spotify.com/api/token'
   const spotify = `${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`
 
@@ -87,11 +91,14 @@ export const handleSpotify = setStatus => {
     })
     .then(response => {
       if (!response) return setStatus(`fetch error: check your connexion`)
-      response
-        .json()
-        .then(data =>
-          sessionStorage.setItem('spotify-token', JSON.stringify(data)),
-        )
+      response.json().then(data => {
+        if (data) {
+          data.expires_at = Date.now() + data.expires_in * 1000
+          sessionStorage.setItem('spotify-token', JSON.stringify(data))
+        } else {
+          setStatus('No data received from Spotify API')
+        }
+      })
     })
 }
 
