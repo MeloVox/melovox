@@ -14,6 +14,7 @@ function Background() {
             const spot = document.createElement('div');
             spot.className = 'spot';
             spot.style.backgroundColor = getRandomColor();
+            spot.style.zIndex = -1;
 
             // Générer une taille de spot aléatoire entre 75 et 150 pixels
             const spotSize = Math.floor(Math.random() * (150 - 75 + 1)) + 75;
