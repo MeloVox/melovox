@@ -8,6 +8,7 @@ import Register from './components/Register.jsx'
 import Profile from './components/Profile.jsx'
 import Artist from './components/Artist.jsx'
 import Callback from './components/Callback.jsx'
+import Background from './components/Background.jsx'
 import About from './components/About.jsx'
 import Background from './components/Background.jsx'
 import SwiperArrow from './components/SwiperArrow.jsx'
@@ -18,7 +19,7 @@ function App() {
     <div className="h-screen w-full flex flex-col justify-center items-center bgcolor">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout />}>
+          {/* <Route path="/" element={<Layout />}> */}
             <Route index element={<Home />} />
             <Route path="/test" element={<Test />} />
             <Route path="/Arrow" element={<SwiperArrow />} />
@@ -29,11 +30,12 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/callback" element={<Callback />} />
             <Route path="/artist/:artistId" element={<Artist />} />
+            <Route path="/background" element={<Background />} />
             <Route path="/about" element={<About />} />
 
             <Route path="*" element={<Notfound />} />
             {/* </Route> */}
-          </Route>
+          {/* </Route> */}
         </Routes>
       </BrowserRouter>
     </div>
