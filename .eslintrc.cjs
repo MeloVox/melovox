@@ -1,16 +1,34 @@
 module.exports = {
-  root: true,
-  env: { browser: true, es2020: true },
+  env: {
+    browser: true,
+    es2021: true,
+  },
+  settings: { react: { version: '18.2' } },
   extends: [
     'eslint:recommended',
+    'plugin:react/recommended',
     'plugin:react/recommended',
     'plugin:react/jsx-runtime',
     'plugin:react-hooks/recommended',
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs'],
-  parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
-  settings: { react: { version: '18.2' } },
-  plugins: ['react-refresh'],
+
+  overrides: [
+    {
+      env: {
+        node: true,
+      },
+      files: ['.eslintrc.{js,cjs,json}'],
+      parserOptions: {
+        sourceType: 'script',
+      },
+    },
+  ],
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+  },
+  ignorePatterns: ['dist', '.eslintrc.cjs', '.eslintrc.json'],
+  plugins: ['react'],
   rules: {
     camelcase: 'off',
     'no-var': 'error',
@@ -21,9 +39,6 @@ module.exports = {
     'prefer-object-spread': 'error',
     'prefer-destructuring': 'error',
     'prefer-numeric-literals': 'error',
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
-    ],
+    'react/no-unescaped-entities': 0,
   },
 }
