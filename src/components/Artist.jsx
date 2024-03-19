@@ -58,55 +58,129 @@ function Artist() {
   return (
     console.log(artistInfo),
     (
-      <div className="flex w-full bg-black text-white font-Rollicker">
-        <div className="w-[40%] bg-[#188481]">
+      <div className="flex w-full mt-[30rem] bg-black text-white">
+        <div className="w-[40%] bg-[#1D2DB6]">
           <div className="p-[15px]">
             <img
-              className="rounded-[20px] border-4 border-white mr-auto ml-auto"
+              className="rounded-[20px] mr-auto ml-auto mt-10"
               src={artistInfo.artist.images[1].url}
             />
           </div>
-          <div className="text-center text-[60px]">
+          <div className="text-center text-[60px] font-Rollicker">
             {artistInfo.artist.name}
           </div>
           <div className="flex flex-wrap">
-            <div className="w-[100%] flex justify-around text-center">
+            <div className="w-[100%] flex justify-center text-center">
               <div
-                className="w-[40%] min-h-[15vh] max-h-[15vh]"
+                className="w-[37%] min-h-[15vh] max-h-[15vh] flex justify-center flex-col"
                 style={{ backgroundColor: 'rgba(255, 255, 255, 0.45)' }}
               >
-                <div>{formatNumber(artistInfo.artist.followers.total)}</div>
-                <div>Followers</div>
+                <div className="font-Anton">
+                  {formatNumber(artistInfo.artist.followers.total)}
+                </div>
+                <div className="text-black text-[10px] font-Roboto font-bold">
+                  Followers
+                </div>
               </div>
               <div
-                className="w-[40%] min-h-[15vh] max-h-[15vh]"
+                className="w-[37%] min-h-[15vh] max-h-[15vh] flex justify-center flex-col ml-[2vh]"
                 style={{ backgroundColor: 'rgba(255, 255, 255, 0.45)' }}
               >
-                <div>TODO</div>
-                <div>De commentaires</div>
+                <div className="font-Anton">TODO</div>
+                <div className="text-black text-[10px] font-Roboto font-bold">
+                  Commentaires
+                </div>
               </div>
             </div>
-            <div className="w-[100%] flex justify-around mt-[2vh] text-center ">
+            <div className="w-[100%] flex justify-center mt-[2vh] text-center items-center">
               <div
-                className="w-[40%] min-h-[15vh] max-h-[15vh]"
+                className="w-[37%] min-h-[15vh] max-h-[15vh] flex justify-center flex-col"
                 style={{ backgroundColor: 'rgba(255, 255, 255, 0.45)' }}
               >
-                <div>
+                <div className="font-Anton">
                   {artistInfo.topTracks.tracks[0].name.split('(')[0].trim()}
                 </div>
-                <div>PAS LINFO</div>
+                <div className="text-black text-[10px] font-Roboto font-bold">
+                  Titre le plus écouté
+                </div>
               </div>
               <div
-                className="w-[40%] min-h-[15vh] max-h-[15vh]"
+                className="w-[37%] min-h-[15vh] max-h-[15vh] flex justify-center flex-col ml-[2vh]"
                 style={{ backgroundColor: 'rgba(255, 255, 255, 0.45)' }}
               >
-                <div>{artistInfo.totalTracks}</div>
-                <div>Titre le plus populaire</div>
+                <div className="font-Anton">{artistInfo.totalTracks}</div>
+                <div className="text-black text-[10px] font-Roboto font-bold">
+                  Titres
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div className="font-Anton text-[22px] mt-5 mb-3 ml-12">
+              Commentaires récents{' '}
+            </div>
+          </div>
+          <div className="h-[25vh]">
+            <div className="bg-bubble-comment bg-no-repeat bg-cover w-[286px] h-[105px] m-auto text-[12px] font-Roboto flex items-center justify-center">
+              <div className="w-[80%] h-[60%] leading-[17px]">
+                Lorem ipsum dolor sit amet consectetur. Id eget convallis donec
+                pellentesque sagittis. Lacus ultricies ...
+              </div>
+            </div>
+            <div className="flex justify-between w-[80%] m-auto">
+              <img
+                className="rounded-full w-[40px] h-[40px]"
+                src={artistInfo.artist.images[1].url}
+              />
+              <div className="text-[10px] mt-6">Voir plus</div>
+            </div>
+          </div>
+        </div>
+        <div className="w-[60%]">
+          <div className="font-Rollicker text-[40px] ml-5">Sons populaires</div>
+          <div className="flex flex-wrap">
+            <div className="w-[100%] flex justify-center text-center">
+              <div className="w-[45%] h-[400px] flex flex-col">
+                <img
+                  className="rounded-full h-[250px] w-[250px] border-4 border-[#0DD940]"
+                  src={artistInfo.topTracks.tracks[0].album.images[1].url}
+                />
+                <div className="text-left font-Anton text-2xl mt-5">
+                  {artistInfo.topTracks.tracks[0].name.split('(')[0].trim()}
+                </div>
+              </div>
+              <div className="w-[45%] h-[400px] flex flex-col">
+                <img
+                  className="rounded-full h-[250px] w-[250px] border-4 border-[#0DD940]"
+                  src={artistInfo.topTracks.tracks[1].album.images[1].url}
+                />
+                <div className="text-left font-Anton text-2xl mt-5">
+                  {artistInfo.topTracks.tracks[1].name.split('(')[0].trim()}
+                </div>
+              </div>
+            </div>
+            <div className="w-[100%] flex justify-center mt-[2vh] text-center items-center">
+              <div className="w-[45%] h-[400px] flex flex-col">
+                <img
+                  className="rounded-full h-[250px] w-[250px] border-4 border-[#0DD940]"
+                  src={artistInfo.topTracks.tracks[2].album.images[1].url}
+                />
+                <div className="text-left font-Anton text-2xl mt-5">
+                  {artistInfo.topTracks.tracks[2].name.split('(')[0].trim()}
+                </div>
+              </div>
+              <div className="w-[45%] h-[400px] flex flex-col">
+                <img
+                  className="rounded-full h-[250px] w-[250px] border-4 border-[#0DD940]"
+                  src={artistInfo.topTracks.tracks[3].album.images[1].url}
+                />
+                <div className="text-left font-Anton text-2xl mt-5">
+                  {artistInfo.topTracks.tracks[3].name.split('(')[0].trim()}
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="w-[60%]">2</div>
       </div>
     )
   )
