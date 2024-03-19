@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react'
 import Presentation from '../../public/images/presentation.png'
 import Background from './Background'
 

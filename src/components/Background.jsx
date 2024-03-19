@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import Presentation from '../../public/images/presentation.png'
+import { useEffect } from 'react'
 
 function Background() {
   useEffect(() => {

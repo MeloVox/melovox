@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { CloseOutline } from 'react-ionicons'
 
-const Modal = ({ open, onClose, children }) => {
+const Modal = (open, onClose, children) => {
   useEffect(() => {
     const handleKeyDown = e => {
       if (e.key === 'Escape') {
