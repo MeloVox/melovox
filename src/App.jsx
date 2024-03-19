@@ -9,8 +9,8 @@ import Profile from './components/Profile.jsx'
 import Artist from './components/Artist.jsx'
 import Callback from './components/Callback.jsx'
 import About from './components/About.jsx'
-import SwiperArrow from './components/SwiperArrow.jsx'
-import SwiperInfinite from './components/SwiperInfinite.jsx'
+import SwiperList from './components/SwiperList.jsx'
+import SwiperDisk from './components/SwiperDisk.jsx'
 
 function App() {
   return (
@@ -20,8 +20,8 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="/test" element={<Test />} />
-            <Route path="/Arrow" element={<SwiperArrow />} />
-            <Route path="/Infinite" element={<SwiperInfinite />} />
+            <Route path="/swiperlist" element={<SwiperList />} />
+            <Route path="/swiperdisk" element={<SwiperDisk />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<Profile />} />
