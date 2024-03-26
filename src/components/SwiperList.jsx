@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/navigation'
-import { Navigation } from 'swiper/modules'
+import { Navigation, Mousewheel } from 'swiper/modules'
 import TestSpotify from '../assets/logo_spotify.png'
 import Dua from '../assets/dua.webp'
 
@@ -31,7 +31,7 @@ function SwiperList() {
 
   return (
     <>
-      <div className='swiperListContainer'>
+      <div className="swiperListContainer">
         <Swiper
           loop={true}
           ref={swiperRef}
@@ -41,7 +41,8 @@ function SwiperList() {
           //   nextEl: '.swiper-button-next',
           //   prevEl: '.swiper-button-prev',
           // }}
-          modules={[Navigation]}
+          modules={[Navigation, Mousewheel]}
+          mousewheel={{ invert: true }} // invert pour inverser la direction de la molette
         >
           {images.map((image, index) => (
             <SwiperSlide
@@ -66,7 +67,7 @@ function SwiperList() {
             </SwiperSlide>
           ))}
         </Swiper>
-          {/* <div className="swiper-button-prev"></div>
+        {/* <div className="swiper-button-prev"></div>
           <div className="swiper-button-next"></div> */}
       </div>
     </>

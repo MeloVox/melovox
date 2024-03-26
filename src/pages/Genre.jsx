@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { spotifySearch, handleSpotify } from '../core'
+import SwiperDisk from '../components/SwiperDisk'
 
 function App() {
   const [searchInput, setSearchInput] = useState('')
@@ -44,31 +45,9 @@ function App() {
           </div>
           <p className="text-white text-2xl font-Rollicker">Artiste</p>
         </div>
+        <SwiperDisk images={items} />
 
-        <div className="flex justify-center flex-wrap gap-4 mt-30">
-          {items.slice(0, 5).map((item, index) => (
-            <div key={index} className="flex flex-col items-center">
-              {item.images !== undefined ? (
-                <div className="cd-image">
-                  <img
-                    className="rounded-full"
-                    src={
-                      item.images.length > 0
-                        ? item.images[0].url
-                        : 'URL_PAR_DEFAUT_SI_AUCUNE_IMAGE'
-                    }
-                    alt={item.name}
-                  />
-                  <div className="cd-hole"></div>
-                </div>
-              ) : (
-                ''
-              )}
-              <a className="text-center text-white">{item.name}</a>
-            </div>
-          ))}
-        </div>
-        <div
+        {/* <div
           className={
             items.length > 0
               ? 'bg-gradient-to-r from-indigo-500 via-purple-500 w-full mt-20 h-60'
@@ -109,7 +88,7 @@ function App() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   )

@@ -1,17 +1,16 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Login from './components/Login.jsx'
-import Test from './components/Test.jsx'
-import Home from './components/Home.jsx'
-import Layout from './components/Layout.jsx'
-import Notfound from './components/404.jsx'
-import Register from './components/Register.jsx'
-import Profile from './components/Profile.jsx'
-import Artist from './components/Artist.jsx'
-import Callback from './components/Callback.jsx'
-import About from './components/About.jsx'
+import Layout from './components/Layout'
+import Callback from './components/Callback'
 import SwiperList from './components/SwiperList.jsx'
-import SwiperDisk from './components/SwiperDisk.jsx'
-import Genre from './components/Genre.jsx'
+
+import Login from './pages/Login'
+import Test from './pages/Test'
+import Notfound from './pages/404'
+import Register from './pages/Register'
+import Profile from './pages/Profile'
+import Artist from './pages/Artist'
+import About from './pages/About'
+import Genre from './pages/Genre'
 
 function App() {
   return (
@@ -19,10 +18,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route path="/" element={<Home />} />
             <Route path="/test" element={<Test />} />
             <Route path="/swiperlist" element={<SwiperList />} />
-            <Route path="/swiperdisk" element={<SwiperDisk />} />
             <Route path="/genre" element={<Genre />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
