@@ -105,13 +105,14 @@ body {
 }
 
 .containerPresentation {
-  position: absolute;
+  position: relative;
   left: 5vw;
   display: flex;
   justify-content: center;
   z-index: 2;
   flex-direction: column;
   gap: 1vw;
+  width: fit-content;
 }
 
 .titlePresentation {
@@ -124,10 +125,11 @@ body {
 .generalPresentation {
   display: flex;
   z-index: 2;
-  width: 40vw;
+  width: 35vw;
   padding: 1vw 2vw 1vw 2vw;
-  background-color: rgba(251, 251, 251, 0.3);
+  background-color: rgba(251, 251, 251, 0.2);
   border-radius: 33px;
+  box-shadow: white 0px 0px 5px;
 }
 
 .textPresentation {

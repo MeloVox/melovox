@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Modal from './Modal'
+import Modal from '../components/Modal'
 import TestSpotify from '../assets/logo_spotify.png'
 
 const Test = () => {

@@ -3,7 +3,7 @@ import { GoogleLogin, useGoogleLogin } from '@react-oauth/google'
 import { useNavigate, Link } from 'react-router-dom'
 import { authMelovoxAPI, spotifyLogin } from '../core.js'
 import logo_spotify from '../assets/logo_spotify.png'
-import Background from './Background'
+import Background from '../components/Background'
 import register from '../assets/register.png'
 import logo_google from '../assets/Google_logo.png'
 
