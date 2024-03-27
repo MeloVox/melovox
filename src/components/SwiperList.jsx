@@ -3,23 +3,12 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import { Navigation, Mousewheel } from 'swiper/modules'
-import TestSpotify from '../assets/logo_spotify.png'
-import Dua from '../assets/dua.webp'
+import noimage from '../assets/noimage.png'
+import PropTypes from 'prop-types' // Import de PropTypes
 
-function SwiperList() {
+function SwiperList({ images }) {
   const swiperRef = useRef(null)
   const [hoveredSlideIndex, setHoveredSlideIndex] = useState(null)
-
-  const images = [
-    TestSpotify,
-    Dua,
-    Dua,
-    Dua,
-    Dua,
-    TestSpotify,
-    TestSpotify,
-    Dua,
-  ]
 
   const handleImageHover = index => {
     setHoveredSlideIndex(index)
@@ -42,9 +31,9 @@ function SwiperList() {
           //   prevEl: '.swiper-button-prev',
           // }}
           modules={[Navigation, Mousewheel]}
-          mousewheel={{ invert: true }} // invert pour inverser la direction de la molette
+          mousewheel={{ invert: true }}
         >
-          {images.map((image, index) => (
+          {images.map((item, index) => (
             <SwiperSlide
               key={index}
               onMouseEnter={() => handleImageHover(index)}
@@ -52,15 +41,20 @@ function SwiperList() {
             >
               <div className="imageContainer">
                 <img
-                  src={image}
+                  src={
+                    item.images && item.images.length > 0
+                      ? item.images[0].url
+                      : noimage
+                  }
                   alt={`Slide ${index + 1}`}
                   onClick={() => handleImageClick(index)}
+                  className="swiperImage"
                 />
                 {hoveredSlideIndex === index && (
                   <div className="infoOverlay">
-                    <p>Nom de l'album {index + 1}</p>
-                    <p>Artiste</p>
-                    <a href="https://www.google.com">Voir plus</a>
+                    <p>{item.name}</p>
+                    <p>{item.artists[0].name}</p>
+                    <a href={item.name}>Voir plus</a>
                   </div>
                 )}
               </div>
@@ -72,6 +66,21 @@ function SwiperList() {
       </div>
     </>
   )
+}
+
+// Définition des PropTypes
+SwiperList.propTypes = {
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      images: PropTypes.array.isRequired,
+      name: PropTypes.string.isRequired,
+      artists: PropTypes.arrayOf(
+        PropTypes.shape({
+          name: PropTypes.string.isRequired,
+        }),
+      ).isRequired,
+    }),
+  ).isRequired,
 }
 
 export default SwiperList

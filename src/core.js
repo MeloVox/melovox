@@ -46,9 +46,8 @@ export async function spotifySearch({ token, searchInput }) {
     searchParameters,
   ).then(response =>
     response.json().then(data => {
-      const items = ['artists', 'albums', 'tracks'].flatMap(
-        type => data[type].items,
-      )
+      // const items = ['artists', 'albums', 'tracks'].flatMap(
+      const items = ['albums'].flatMap(type => data[type].items)
       return items
     }),
   )
