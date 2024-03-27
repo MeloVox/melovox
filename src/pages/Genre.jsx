@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { spotifySearch, handleSpotify } from '../core'
-import SwiperDisk from '../components/SwiperDisk'
+import SwiperList from '../components/SwiperList'
 
 function App() {
   const [searchInput, setSearchInput] = useState('')
@@ -45,50 +45,7 @@ function App() {
           </div>
           <p className="text-white text-2xl font-Rollicker">Artiste</p>
         </div>
-        <SwiperDisk images={items} />
-
-        {/* <div
-          className={
-            items.length > 0
-              ? 'bg-gradient-to-r from-indigo-500 via-purple-500 w-full mt-20 h-60'
-              : 'hidden'
-          }
-        >
-          <div>
-            <p className="text-white text-2xl font-Rollicker">Pop</p>
-          </div>
-          <div>
-            <div>
-              <div className="flex justify-center gap-4">
-                {items.slice(0, 7).map((item, index) => (
-                  <div
-                    key={index}
-                    className="flex flex-col items-center bg-stone-900  w-40"
-                  >
-                    {item.images !== undefined ? (
-                      <div>
-                        <img
-                          className="object-scale-down h-24 w-20"
-                          src={
-                            item.images.length > 0
-                              ? item.images[0].url
-                              : 'URL_PAR_DEFAUT_SI_AUCUNE_IMAGE'
-                          }
-                          alt={item.name}
-                        />
-                        <div></div>
-                      </div>
-                    ) : (
-                      ''
-                    )}
-                    <a className="text-center text-white">{item.name}</a>
-                    <a className="text-center ">⭐⭐⭐⭐⭐</a>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div> */}
+        <SwiperList images={items} />
       </div>
     </div>
   )
