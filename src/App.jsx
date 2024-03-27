@@ -1,8 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import Callback from './components/Callback'
-import SwiperList from './components/SwiperList.jsx'
-
 import Login from './pages/Login'
 import Test from './pages/Test'
 import Notfound from './pages/404'
@@ -19,7 +17,6 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route path="/test" element={<Test />} />
-            <Route path="/swiperlist" element={<SwiperList />} />
             <Route path="/genre" element={<Genre />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
@@ -27,7 +24,6 @@ function App() {
             <Route path="/callback" element={<Callback />} />
             <Route path="/artist/:artistId" element={<Artist />} />
             <Route path="/about" element={<About />} />
-
             <Route path="*" element={<Notfound />} />
           </Route>
         </Routes>
