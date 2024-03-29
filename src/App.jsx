@@ -9,6 +9,7 @@ import Profile from './pages/Profile'
 import Artist from './pages/Artist'
 import About from './pages/About'
 import Genre from './pages/Genre'
+import TestComments from './pages/TestComments'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route path="/test" element={<Test />} />
+            <Route path="/testcomments" element={<TestComments />} />
             <Route path="/genre" element={<Genre />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
