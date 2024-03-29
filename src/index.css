@@ -234,8 +234,7 @@ body {
 .imageContainer-infiniteslide {
   width: 100%;
   position: relative;
-  -webkit-box-reflect: below 0px
-    linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
+  -webkit-box-reflect: below 0px linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
 }
 
 .imageContainer-infiniteslide:before {
@@ -338,4 +337,30 @@ body {
 
 .swiper-pagination .swiper-pagination-bullet-active {
   background-color: red;
+}
+
+#modal-list {
+  max-width: 1000px;
+  max-height: 80vh;
+  padding: 2rem;
+
+  ::-webkit-scrollbar {
+    width: 5px;
+    /* Largeur de la barre de défilement */
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    /* Couleur de fond de la barre de défilement */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: black;
+    /* Couleur du curseur de la barre de défilement */
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    /* Couleur du curseur de la barre de défilement au survol */
+  }
 }
