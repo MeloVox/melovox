@@ -10,7 +10,7 @@ import {
   Mousewheel,
 } from 'swiper/modules'
 import { ArrowBackOutline, ArrowForwardOutline } from 'react-ionicons'
-import noimage from '../assets/noimage.png'
+import noimage from '../../assets/noimage.png'
 import PropTypes from 'prop-types'
 
 const SwiperDisk = ({ images }) => {

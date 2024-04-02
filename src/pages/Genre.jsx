@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { spotifySearch, handleSpotify } from '../core'
-import SwiperList from '../components/SwiperList'
+import SwiperDisk from '../components/Swiper/SwiperDisk'
 
 function App() {
   const [searchInput, setSearchInput] = useState('')
@@ -45,7 +45,7 @@ function App() {
           </div>
           <p className="text-white text-2xl font-Rollicker">Artiste</p>
         </div>
-        <SwiperList images={items} />
+        <SwiperDisk images={items} />
       </div>
     </div>
   )

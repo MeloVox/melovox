@@ -1,5 +1,5 @@
-import Presentation from '../../src/assets/presentation.png'
-import Background from '../components/Background'
+import Presentation from '../../../src/assets/presentation.png'
+import Background from '../../components/Background/Background'
 
 function About() {
   return (

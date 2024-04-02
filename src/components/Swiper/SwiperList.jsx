@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import { Navigation, Mousewheel } from 'swiper/modules'
-import noimage from '../assets/noimage.png'
+import noimage from '../../assets/noimage.png'
 import PropTypes from 'prop-types' // Import de PropTypes
 
 function SwiperList({ images }) {

@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { authMelovoxAPI, spotifyLogin } from '../core'
 import { GoogleLogin } from '@react-oauth/google'
 import logo_spotify from '../assets/logo_spotify.png'
-import Background from '../components/Background'
+import Background from '../components/Background/Background'
 
 function Login() {
   const [message, setMessage] = useState('')

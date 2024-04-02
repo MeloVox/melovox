@@ -1,13 +1,13 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Layout from './components/Layout'
-import Callback from './components/Callback'
+import HeaderFooter from './components/HeaderFooter/HeaderFooter'
+import Callback from './pages/Callback'
 import Login from './pages/Login'
 import Test from './pages/Test'
 import Notfound from './pages/404'
 import Register from './pages/Register'
 import Profile from './pages/Profile'
 import Artist from './pages/Artist'
-import About from './pages/About'
+import About from './pages/About/About'
 import Genre from './pages/Genre'
 import TestComments from './pages/TestComments'
 
@@ -16,7 +16,7 @@ function App() {
     <div className="h-screen w-full flex flex-col justify-center items-center bgcolor">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout />}>
+          <Route path="/" element={<HeaderFooter />}>
             <Route path="/test" element={<Test />} />
             <Route path="/testcomments" element={<TestComments />} />
             <Route path="/genre" element={<Genre />} />
