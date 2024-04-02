@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import ModalRate from '../components/ModalRate'
-import Comment from '../components/Comment'
+import ModalRate from '../components/Modal/ModalRate'
+import Comment from '../components/Comment/Comment'
 
 const Test = () => {
   const [open, setOpen] = useState(false)

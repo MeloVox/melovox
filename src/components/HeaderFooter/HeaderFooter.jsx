@@ -1,8 +1,8 @@
 import { Outlet, Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import logo from '../assets/logo.svg'
+import logo from '../../assets/logo.svg'
 
-const Layout = () => {
+const HeaderFooter = () => {
   const getUser = () => JSON.parse(sessionStorage.getItem('user'))?.data
   const getSpotify = () => JSON.parse(sessionStorage.getItem('spotify-user'))
   const [isLoggedIn, setIsLoggedIn] = useState(
@@ -107,4 +107,4 @@ const Layout = () => {
   )
 }
 
-export default Layout
+export default HeaderFooter

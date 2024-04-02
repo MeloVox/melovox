@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import ModalList from '../components/ModalList'
+import ModalList from '../components/Modal/ModalList'
 
 const TestComments = () => {
   const [open, setOpen] = useState(false)

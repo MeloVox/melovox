@@ -1,154 +1,8 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* SwiperList */
 
-#root {
+.swiper {
   width: 100%;
-}
-
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: #121212;
-  color: #fff;
-  margin: 0;
-  z-index: 1;
-  padding: 0;
-}
-
-.bgLoginForm {
-  background-color: rgba(251, 251, 251, 0.2);
-  border-radius: 33px;
-  box-shadow: 0px 0px 5px white;
-}
-
-/* .bgcolor {
-  background-color: #121212;
-} */
-
-.textspotify {
-  color: #1db954;
-}
-
-.bgbox {
-  background-color: #75767a;
-}
-
-.bordercolor {
-  border-color: rgba(80, 80, 80, 0.3);
-}
-
-.textcolor {
-  color: rgba(255, 255, 255, 0.31);
-}
-
-.btnlog:hover {
-  background-color: #3c4bde;
-}
-
-.font-roboto {
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    'Open Sans',
-    'Helvetica Neue',
-    sans-serif;
-}
-
-@font-face {
-  font-family: 'Rollicker';
-  src: url('./assets/Rollicker.ttf');
-}
-
-@font-face {
-  font-family: 'Anton';
-  src: url('./assets/Anton-Regular.ttf');
-}
-
-@font-face {
-  font-family: 'Inter';
-  src: url('./assets/Inter-VariableFont.ttf');
-}
-
-@font-face {
-  font-family: 'Marcellus';
-  src: url('./assets/Marcellus-Regular.ttf');
-}
-
-.font-Rollicker {
-  font-family: 'Rollicker';
-}
-
-.font-Anton {
-  font-family: 'Anton';
-}
-
-.font-Inter {
-  font-family: 'Inter';
-}
-
-.font-Marcellus {
-  font-family: 'Marcellus';
-}
-
-.spot {
-  position: absolute;
-  background-color: #0dd940;
-  border-radius: 50%;
-  opacity: 1;
-  filter: blur(35px);
-}
-
-.containerPresentation {
-  position: relative;
-  left: 5vw;
-  display: flex;
-  justify-content: center;
-  z-index: 2;
-  flex-direction: column;
-  gap: 1vw;
-  width: fit-content;
-}
-
-.titlePresentation {
-  display: flex;
-  font-family: 'Anton';
-  font-size: 48px;
-  width: 30vw;
-}
-
-.generalPresentation {
-  display: flex;
-  z-index: 2;
-  width: 35vw;
-  padding: 1vw 2vw 1vw 2vw;
-  background-color: rgba(251, 251, 251, 0.2);
-  border-radius: 33px;
-  box-shadow: white 0px 0px 5px;
-}
-
-.textPresentation {
-  font-family: 'Inter';
-  font-size: 16px;
-  width: 100%;
-  color: white;
-}
-
-.imagePresentation {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  z-index: 2;
-}
-
-.imgPres {
-  width: 20vw;
-  height: 20vw;
+  height: auto;
 }
 
 .swiperListContainer {
@@ -159,11 +13,6 @@ body {
   position: relative;
   height: 30rem;
   width: 100%;
-}
-
-.swiper {
-  width: 100%;
-  height: auto;
 }
 
 .swiper-slide {
@@ -219,7 +68,8 @@ body {
   opacity: 1;
 }
 
-/* Infinite Slide */
+/* SwiperDisk */
+
 .swiper-container {
   height: 30rem;
   width: 100%;
@@ -238,7 +88,8 @@ body {
 .imageContainer-infiniteslide {
   width: 100%;
   position: relative;
-  -webkit-box-reflect: below 0px linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
+  -webkit-box-reflect: below 0px
+    linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
 }
 
 .imageContainer-infiniteslide:before {
@@ -341,30 +192,4 @@ body {
 
 .swiper-pagination .swiper-pagination-bullet-active {
   background-color: red;
-}
-
-#modal-list {
-  max-width: 1000px;
-  max-height: 80vh;
-  padding: 2rem;
-
-  ::-webkit-scrollbar {
-    width: 5px;
-    /* Largeur de la barre de défilement */
-  }
-
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    /* Couleur de fond de la barre de défilement */
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: black;
-    /* Couleur du curseur de la barre de défilement */
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555;
-    /* Couleur du curseur de la barre de défilement au survol */
-  }
 }

@@ -1,0 +1,56 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@import 'fonts';
+
+@import './../components/Background/Background';
+@import './../components/Comment/Comment';
+@import './../components/HeaderFooter/HeaderFooter';
+@import './../components/Modal/Modal';
+@import './../components/Swiper/Swiper';
+
+@import './../pages/About/About';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #121212;
+  color: #fff;
+  margin: 0;
+  z-index: 1;
+  padding: 0;
+}
+
+/* Tailwind CSS */
+
+/* .bgcolor {
+  background-color: #121212;
+} */
+
+.textspotify {
+  color: #1db954;
+}
+
+.bgbox {
+  background-color: rgba(80, 80, 80, 0.3);
+}
+
+.bordercolor {
+  border-color: rgba(80, 80, 80, 0.3);
+}
+
+.textcolor {
+  color: rgba(255, 255, 255, 0.31);
+}
+
+.btnlog:hover {
+  background-color: #3c4bde;
+}
+
+/* Fin Tailwind CSS */
