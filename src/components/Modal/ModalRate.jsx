@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { CloseOutline } from 'react-ionicons'
 import TestSpotify from '../../assets/logo_spotify.png'
 import Comment from '../Comment/Comment'
@@ -10,12 +10,11 @@ const ModalRate = ({ open, onClose }) => {
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState('')
   const [postTime, setPostTime] = useState(null)
+  const textareaRef = useRef(null)
 
   const handleRatingChange = value => {
     setRating(value)
   }
-
-  console.log(rating, 'rating comment')
 
   const handleCommentChange = e => {
     setComment(e.target.value)
@@ -27,6 +26,14 @@ const ModalRate = ({ open, onClose }) => {
     setPostTime(new Date())
     onClose()
   }
+
+  useEffect(() => {
+    if (open) {
+      setTimeout(() => {
+        textareaRef.current.focus()
+      }, 100)
+    }
+  }, [open])
 
   return (
     <>
@@ -74,6 +81,7 @@ const ModalRate = ({ open, onClose }) => {
               onChange={handleCommentChange}
               className="w-full h-40 mt-4 p-2 border border-gray-300 rounded-md resize-none text-black"
               placeholder="Laisser parler votre imagination"
+              ref={textareaRef}
             />
             <div className="flex justify-center mt-4">
               <button
