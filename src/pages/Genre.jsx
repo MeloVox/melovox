@@ -34,7 +34,7 @@ function App() {
               placeholder="Chercher un album"
               className="relative block w-1/3 px-3 py-[0.25rem] text-base border border-solid border-neutral-300 rounded-l focus:outline-none focus:border-primary h-8"
               onChange={event => setSearchInput(event.target.value)}
-              onKeyDown={handleKeyPress} // Ajout du gestionnaire d'événements onKeyDown
+              onKeyDown={handleKeyPress}
             />
             <button
               onClick={search}
