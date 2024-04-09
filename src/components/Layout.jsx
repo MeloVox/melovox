@@ -36,7 +36,7 @@ const Layout = () => {
       <header className="sticky top-0 z-10 w-full h-24">
         <nav className="h-full w-full bg-transparent flex items-center">
           <img className="p-5" src={logo} alt="" />
-          <ul className="absolute pr-5 right-0 flex items-center space-x-5 text-white text-md font-Anton">
+          <ul className="hidden md:flex absolute pr-5 right-0 flex items-center space-x-5 text-white text-md font-Anton">
             <li>
               <Link to="/">Home</Link>
             </li>
@@ -77,18 +77,18 @@ const Layout = () => {
           </ul>
         </nav>
       </header>
-      <div className="w-full">
+      <div className="w-full mb-20">
         <Outlet />
       </div>
       <footer className="w-full h-28 bgcolor flex justify-center items-center">
-        <ul className="p-10 flex items-center space-x-20 text-white text-md font-Anton">
-          <li>
+        <ul className="p-10 flex items-center text-white text-md font-Anton">
+          <li className="ml-10">
             <Link to="/about">About Us</Link>
           </li>
-          <li>
+          <li className="ml-10">
             <Link to="/contact">Contact</Link>
           </li>
-          <li>
+          <li className="mx-10">
             <Link to="/policy">Privacy Policiy</Link>
           </li>
           <li>
