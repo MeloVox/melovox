@@ -8,7 +8,17 @@ const Callback = () => {
 
   useEffect(() => {
     const loginCode = searchParams.get('code')
+    const error = searchParams.get('error')
+
+    if (error) {
+      const event = new CustomEvent('userDisconnected')
+      window.dispatchEvent(event)
+      navigate('/login')
+      return
+    }
+
     if (loginCode) {
+      console.log(loginCode)
       sessionStorage.setItem('spotify-login', loginCode)
       getAuthToken(loginCode)
       const userSpotify = getSpotifyProfile()
