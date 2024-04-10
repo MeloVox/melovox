@@ -10,6 +10,7 @@ import Artist from './pages/Artist'
 import About from './pages/About/About'
 import Genre from './pages/Genre'
 import TestComments from './pages/TestComments'
+import Contact from './pages/Contact'
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="/callback" element={<Callback />} />
             <Route path="/artist/:artistId" element={<Artist />} />
             <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="*" element={<Notfound />} />
           </Route>
         </Routes>
