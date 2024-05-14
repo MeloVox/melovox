@@ -149,6 +149,7 @@ function Artist() {
           onClose={handleCloseModal}
           albumCover={artistInfo.artist.images[1].url}
           albumName={artistInfo.artist.name}
+          artistId={artistId}
         />
       </div>
     )
