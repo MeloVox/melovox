@@ -1,11 +1,22 @@
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { getArtistInfo, handleSpotify } from '../core.js'
+import ModalRate from '../components/Modal/ModalRate'
 
 function Artist() {
   const { artistId } = useParams()
   const [artistInfo, setArtistInfo] = useState(null)
   const [status, setStatus] = useState('')
+
+  const [open, setOpen] = useState(false)
+
+  const handleOpenModal = () => {
+    setOpen(true)
+  }
+
+  const handleCloseModal = () => {
+    setOpen(false)
+  }
 
   const formatNumber = number => {
     let result
@@ -76,7 +87,7 @@ function Artist() {
           <div className="p-[15px]">
             <img
               className="rounded-[20px] border-4 border-white mr-auto ml-auto"
-              src={artistInfo.artist.images[1].url}
+              src={artistInfo.artist.images[0].url}
             />
           </div>
           <div className="text-center text-[60px]">
@@ -120,6 +131,25 @@ function Artist() {
           </div>
         </div>
         <div className="w-[60%]">2</div>
+        <button
+          onClick={handleOpenModal}
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            color: 'red',
+            width: 'fit-content',
+            padding: '3px',
+            border: '1px solid red',
+          }}
+        >
+          Noter l'artiste
+        </button>
+        <ModalRate
+          open={open}
+          onClose={handleCloseModal}
+          albumCover={artistInfo.artist.images[1].url}
+          albumName={artistInfo.artist.name}
+        />
       </div>
     )
   )

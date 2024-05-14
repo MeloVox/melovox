@@ -6,6 +6,7 @@ import {
   PauseCircleOutline,
   ArrowBackCircleOutline,
 } from 'react-ionicons'
+import ModalRate from '../components/Modal/ModalRate'
 
 function Album() {
   const { albumId } = useParams()
@@ -16,6 +17,16 @@ function Album() {
   const [isPlayerVisible, setIsPlayerVisible] = useState(false)
   const [progress, setProgress] = useState(0)
   const [currentTrackPosition, setCurrentTrackPosition] = useState(0)
+
+  const [open, setOpen] = useState(false)
+
+  const handleOpenModal = () => {
+    setOpen(true)
+  }
+
+  const handleCloseModal = () => {
+    setOpen(false)
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -184,6 +195,25 @@ function Album() {
           )}
         </div>
       )}
+      <button
+        onClick={handleOpenModal}
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          color: 'red',
+          width: 'fit-content',
+          padding: '3px',
+          border: '1px solid red',
+        }}
+      >
+        Noter l'album
+      </button>
+      <ModalRate
+        open={open}
+        onClose={handleCloseModal}
+        albumCover={albumInfo.album.images[0].url}
+        albumName={albumInfo.album.name}
+      />
     </div>
   )
 }

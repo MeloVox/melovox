@@ -1,15 +1,13 @@
 import { useState, useRef, useEffect } from 'react'
 import { CloseOutline } from 'react-ionicons'
-import TestSpotify from '../../assets/logo_spotify.png'
-import Comment from '../Comment/Comment'
 import Rating from 'react-rating'
 import { StarOutline, Star } from 'react-ionicons'
 import PropTypes from 'prop-types'
+import axios from 'axios'
 
-const ModalRate = ({ open, onClose }) => {
+const ModalRate = ({ open, onClose, albumCover, albumName }) => {
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState('')
-  const [postTime, setPostTime] = useState(null)
   const textareaRef = useRef(null)
 
   const handleRatingChange = value => {
@@ -20,11 +18,17 @@ const ModalRate = ({ open, onClose }) => {
     setComment(e.target.value)
   }
 
-  const handleSubmit = () => {
-    console.log('Note :', rating)
-    console.log('Commentaire :', comment)
-    setPostTime(new Date())
-    onClose()
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post('/api/createReview', {
+        rating,
+        comment,
+      })
+      console.log(response.data.message)
+      onClose()
+    } catch (error) {
+      console.error('Erreur lors de la soumission de la critique :', error)
+    }
   }
 
   useEffect(() => {
@@ -58,7 +62,7 @@ const ModalRate = ({ open, onClose }) => {
           <div className="text-center w-96">
             <div className="flex justify-between items-center">
               <img
-                src={TestSpotify}
+                src={albumCover}
                 alt="Couverture de l'album"
                 className="w-16 h-16"
               />
@@ -74,7 +78,9 @@ const ModalRate = ({ open, onClose }) => {
                 fractions={2}
               />
             </div>
-            <p className="text-gray-500 mt-2">Écrivez votre critique ici :</p>
+            <p className="text-gray-500 mt-2">
+              Écrivez votre critique pour <b>{albumName}</b> ici :
+            </p>
 
             <textarea
               value={comment}
@@ -100,23 +106,15 @@ const ModalRate = ({ open, onClose }) => {
           </div>
         </div>
       </div>
-      {/* Afficher le commentaire avec l'heure du post */}
-      {postTime && (
-        <Comment
-          comment={comment}
-          rating={rating}
-          profilePicture={TestSpotify}
-          date={postTime}
-        />
-      )}
     </>
   )
 }
 
-// Validation des types des props
 ModalRate.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  albumCover: PropTypes.string.isRequired,
+  albumName: PropTypes.string.isRequired,
 }
 
 export default ModalRate
