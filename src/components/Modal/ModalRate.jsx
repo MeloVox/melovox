@@ -3,7 +3,6 @@ import { CloseOutline } from 'react-ionicons'
 import Rating from 'react-rating'
 import { StarOutline, Star } from 'react-ionicons'
 import PropTypes from 'prop-types'
-import axios from 'axios'
 
 const ModalRate = ({ open, onClose, albumCover, albumName, artistId }) => {
   const [rating, setRating] = useState(0)
@@ -20,16 +19,23 @@ const ModalRate = ({ open, onClose, albumCover, albumName, artistId }) => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post(
-        'http://localhost:3333/api/createReview',
-        {
+      const response = await fetch('http://127.0.0.1:3333/api/createReview', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
           userId: 1,
           albumId: artistId,
           rating,
           comment,
-        },
-      )
-      console.log(response.data.message)
+        }),
+      })
+      if (!response.ok) {
+        throw new Error('Erreur lors de la soumission de la critique')
+      }
+      const responseData = await response.json()
+      console.log(responseData.message)
       onClose()
     } catch (error) {
       console.error('Erreur lors de la soumission de la critique :', error)
