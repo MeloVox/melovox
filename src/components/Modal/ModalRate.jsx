@@ -5,7 +5,7 @@ import { StarOutline, Star } from 'react-ionicons'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 
-const ModalRate = ({ open, onClose, albumCover, albumName }) => {
+const ModalRate = ({ open, onClose, albumCover, albumName, artistId }) => {
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState('')
   const textareaRef = useRef(null)
@@ -20,10 +20,15 @@ const ModalRate = ({ open, onClose, albumCover, albumName }) => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post('/api/createReview', {
-        rating,
-        comment,
-      })
+      const response = await axios.post(
+        'http://localhost:3333/api/createReview',
+        {
+          userId: 1,
+          albumId: artistId,
+          rating,
+          comment,
+        },
+      )
       console.log(response.data.message)
       onClose()
     } catch (error) {
@@ -115,6 +120,7 @@ ModalRate.propTypes = {
   onClose: PropTypes.func.isRequired,
   albumCover: PropTypes.string.isRequired,
   albumName: PropTypes.string.isRequired,
+  artistId: PropTypes.number.isRequired,
 }
 
 export default ModalRate
