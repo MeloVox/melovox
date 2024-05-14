@@ -9,6 +9,7 @@ import Profile from './pages/Profile'
 import Artist from './pages/Artist'
 import About from './pages/About/About'
 import Genre from './pages/Genre'
+import Album from './pages/Album'
 import TestComments from './pages/TestComments'
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/callback" element={<Callback />} />
             <Route path="/artist/:artistId" element={<Artist />} />
+            <Route path="/album/:albumId" element={<Album />} />
             <Route path="/about" element={<About />} />
             <Route path="*" element={<Notfound />} />
           </Route>

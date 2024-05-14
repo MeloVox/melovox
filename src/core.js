@@ -249,3 +249,31 @@ export const getArtistInfo = (token, artistId, setStatus, setArtistInfo) => {
       return setStatus(error.message)
     })
 }
+
+export const getAlbumInfo = (token, albumId, setStatus, setAlbumInfo) => {
+  const albumInfo = { album: null, artistName: null, tracks: [] }
+  const headers = {
+    method: 'GET',
+    headers: {
+      Authorization: token,
+    },
+  }
+  const albumUrl = `https://api.spotify.com/v1/albums/${albumId}`
+
+  setStatus('getting data...')
+
+  fetchData(albumUrl, headers)
+    .then(album => {
+      albumInfo.album = album
+      albumInfo.artistName = album.artists[0].name
+      albumInfo.tracks = album.tracks.items.map(track => ({
+        name: track.name,
+        duration_ms: track.duration_ms,
+        preview_url: track.preview_url,
+      }))
+      setAlbumInfo(albumInfo)
+    })
+    .catch(error => {
+      setStatus(error.message)
+    })
+}
