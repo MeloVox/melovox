@@ -1,9 +1,22 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ModalRate from '../components/Modal/ModalRate'
 import Comment from '../components/Comment/Comment'
 
 const Test = () => {
   const [open, setOpen] = useState(false)
+  const [user, setUser] = useState([])
+
+  console.log(user)
+
+  useEffect(() => {
+    const response = sessionStorage.getItem('user')
+
+    if (response) {
+      const { data } = JSON.parse(response)
+      setUser(data)
+      console.log(data.id)
+    }
+  }, [])
 
   const handleOpenModal = () => {
     setOpen(true)
