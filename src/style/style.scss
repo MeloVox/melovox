@@ -9,13 +9,13 @@
 @import './../components/HeaderFooter/HeaderFooter';
 @import './../components/Modal/Modal';
 @import './../components/Swiper/Swiper';
-
 @import './../pages/About/About';
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  outline: 1px solid red;
 }
 
 body {

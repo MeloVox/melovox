@@ -8,6 +8,19 @@ const ModalRate = ({ open, onClose, albumCover, albumName, artistId }) => {
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState('')
   const textareaRef = useRef(null)
+  const [userId, setUserId] = useState(null)
+
+  useEffect(() => {
+    const response = sessionStorage.getItem('user')
+
+    if (response) {
+      const { data } = JSON.parse(response)
+      setUserId(data.id)
+    }
+  }, [])
+
+  console.log(userId)
+  console.log(artistId)
 
   const handleRatingChange = value => {
     setRating(value)
@@ -19,14 +32,14 @@ const ModalRate = ({ open, onClose, albumCover, albumName, artistId }) => {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:3333/api/createReview', {
+      const response = await fetch('http://localhost:3333/api/createReview', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userId: 1,
-          albumId: artistId,
+          userId,
+          music: artistId,
           rating,
           comment,
         }),
