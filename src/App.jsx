@@ -11,6 +11,7 @@ import Genre from './pages/Genre'
 import Album from './pages/Album'
 import TestComments from './pages/TestComments'
 import Navbar from './components/Navbar/Navbar'
+import Footer from './components/Footer/Footer'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/navbar" element={<Navbar />} />
+          <Route path="/footer" element={<Footer />} />
           <Route path="/test" element={<Test />} />
           <Route path="/testcomments" element={<TestComments />} />
           <Route path="/genre" element={<Genre />} />
