@@ -9,9 +9,6 @@
 @import './../components/HeaderFooter/HeaderFooter';
 @import './../components/Modal/Modal';
 @import './../components/Swiper/Swiper';
-@import './../pages/About/About';
-
-@import './../components/Navbar/Navbar';
 
 * {
   margin: 0;
@@ -56,3 +53,7 @@ body {
 }
 
 /* Fin Tailwind CSS */
+
+li a:hover {
+  color: red;
+}
