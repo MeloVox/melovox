@@ -19,9 +19,6 @@ const ModalRate = ({ open, onClose, albumCover, albumName, artistId }) => {
     }
   }, [])
 
-  console.log(userId)
-  console.log(artistId)
-
   const handleRatingChange = value => {
     setRating(value)
   }
@@ -39,7 +36,8 @@ const ModalRate = ({ open, onClose, albumCover, albumName, artistId }) => {
         },
         body: JSON.stringify({
           userId,
-          music: artistId,
+          album: albumName,
+          artist: artistId,
           rating,
           comment,
         }),
