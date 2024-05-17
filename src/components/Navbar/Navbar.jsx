@@ -73,7 +73,7 @@ const Header = () => {
                 <Link to="/">Accueil</Link>
               </li>
               <li className="md:ml-8 md:my-0 my-7 font-semibold">
-                <Link to="/profile">Rechercher</Link>
+                <Link to="/genre">Rechercher</Link>
               </li>
               <li className="md:ml-8 md:my-0 my-7 font-semibold">
                 <Link to="/login">Se connecter</Link>
