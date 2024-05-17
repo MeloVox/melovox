@@ -4,7 +4,8 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import { Navigation, Mousewheel } from 'swiper/modules'
 import noimage from '../../assets/noimage.png'
-import PropTypes from 'prop-types' // Import de PropTypes
+import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 function SwiperList({ images }) {
   const swiperRef = useRef(null)
@@ -17,6 +18,8 @@ function SwiperList({ images }) {
   const handleImageClick = index => {
     console.log("Clic sur l'image " + index)
   }
+
+  console.log(images)
 
   return (
     <>
@@ -54,7 +57,7 @@ function SwiperList({ images }) {
                   <div className="infoOverlay">
                     <p>{item.name}</p>
                     <p>{item.artists[0].name}</p>
-                    <a href={item.name}>Voir plus</a>
+                    <Link to={`/album/${item.id}`}>Voir plus</Link>
                   </div>
                 )}
               </div>
