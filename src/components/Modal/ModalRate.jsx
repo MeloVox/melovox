@@ -64,7 +64,7 @@ const ModalRate = ({ open, onClose, albumCover, albumName, artistId }) => {
   }, [open])
 
   return (
-    <>
+    <div className="z-50">
       <div
         onClick={onClose}
         className={`fixed inset-0 flex justify-center items-center transition-colors
@@ -130,7 +130,7 @@ const ModalRate = ({ open, onClose, albumCover, albumName, artistId }) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
