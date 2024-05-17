@@ -1,16 +1,19 @@
-import Presentation from '../../../src/assets/presentation.png'
-import Background from '../../components/Background/Background'
+import Presentation from '../../src/assets/presentation.png'
+import Background from '../components/Background/Background'
+import Navbar from '../components/Navbar/Navbar'
+import Footer from '../components/Footer/Footer'
 
 const About = () => {
   return (
     <>
+      <Navbar />
       <Background />
 
       <div
-        className="flex justify-center items-center w-screen h-screen"
+        className="flex items-center w-screen h-full"
         style={{ border: '2px solid red' }}
       >
-        <div className="bg-white bg-opacity-20 rounded-lg shadow-md p-6 text-white md:mt-4">
+        <div className="w-1/2 bg-white bg-opacity-20 rounded-lg shadow-md p-6 text-white md:mt-4">
           <h1 className="text-3xl font-bold mb-8">Qui sommes-nous ?</h1>
           <div className="flex flex-col md:flex-row">
             <div className="md:w-1/2 md:pr-4 mb-4 md:mb-0">
@@ -31,6 +34,7 @@ const About = () => {
           alt="Presentation"
         />
       </div>
+      <Footer />
     </>
   )
 }
