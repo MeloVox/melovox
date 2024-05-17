@@ -6,7 +6,7 @@ import Notfound from './pages/404'
 import Register from './pages/Register'
 import Profile from './pages/Profile'
 import Artist from './pages/Artist'
-import About from './pages/About/About'
+import About from './pages/About'
 import Genre from './pages/Genre'
 import Album from './pages/Album'
 import TestComments from './pages/TestComments'
@@ -18,6 +18,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+          <Route path="/about" element={<About />} />
           <Route path="/navbar" element={<Navbar />} />
           <Route path="/footer" element={<Footer />} />
           <Route path="/test" element={<Test />} />
@@ -29,7 +30,6 @@ function App() {
           <Route path="/callback" element={<Callback />} />
           <Route path="/artist/:artistId" element={<Artist />} />
           <Route path="/album/:albumId" element={<Album />} />
-          <Route path="/about" element={<About />} />
           <Route path="*" element={<Notfound />} />
         </Routes>
       </BrowserRouter>
