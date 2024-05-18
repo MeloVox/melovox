@@ -101,11 +101,13 @@ const ModalList = ({
                       />
                     )}
                   </button>
-                  <p className="font-semibold text-lg">{comment.author}</p>
-                  <p className="mt-2">{comment.content}</p>
+                  <p className="font-semibold text-lg">
+                    Utilisateur: {comment.userId}
+                  </p>
+                  <p className="mt-2">{comment.comment}</p>
                   <p className="text-sm text-gray-600">
-                    Note : {comment.rate} - Date :{' '}
-                    {new Date(comment.date).toLocaleString()}
+                    Note : {comment.rating} - Date :{' '}
+                    {new Date(comment.createdAt).toLocaleString()}
                   </p>
                   {comment.numDeletedReplies && (
                     <p className="text-sm text-red-600 mt-2">

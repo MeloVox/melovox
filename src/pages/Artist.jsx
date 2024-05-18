@@ -2,18 +2,23 @@ import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { getArtistInfo, handleSpotify } from '../core.js'
 import ModalRate from '../components/Modal/ModalRate'
+import ModalList from '../components/Modal/ModalList'
 import Navbar from '../components/Navbar/Navbar'
 import Footer from '../components/Footer/Footer'
+import { Link } from 'react-router-dom'
 
 function Artist() {
   const { artistId } = useParams()
   const [artistInfo, setArtistInfo] = useState(null)
+  const [albums, setAlbums] = useState([])
   const [status, setStatus] = useState('')
   const [artistReviews, setArtistReviews] = useState([])
   const [averageRating, setAverageRating] = useState()
 
   // console.log(artistId)
   console.log(artistReviews)
+  console.log(artistInfo)
+  console.log(albums)
 
   const [open, setOpen] = useState(false)
 
@@ -24,6 +29,8 @@ function Artist() {
   const handleCloseModal = () => {
     setOpen(false)
   }
+
+  const latestReview = artistReviews.length > 0 ? artistReviews[0] : null
 
   const fetchArtistReviews = async () => {
     try {
@@ -96,7 +103,7 @@ function Artist() {
       if (updatedResponse) {
         const { token_type, access_token } = JSON.parse(updatedResponse)
         const token = `${token_type} ${access_token}`
-        getArtistInfo(token, artistId, setStatus, setArtistInfo)
+        getArtistInfo(token, artistId, setStatus, setArtistInfo, setAlbums)
       }
     }
 
@@ -116,94 +123,124 @@ function Artist() {
     (
       <>
         <Navbar />
-        <div
-          className="flex flex-col md:flex-row w-full bg-black text-white font-Rollicker"
-          style={{ border: '2px solid red' }}
-        >
-          <div className="md:w-2/6 bg-[#1D2DB6]">
-            <div
-              className="p-[15px]"
-              style={{
-                border: '2px solid red',
-              }}
-            >
+        <div className="flex flex-col h-screen md:flex-row w-full bg-black text-white font-Rollicker">
+          <div className="flex h-screen pb-14 flex-col p-[15px] md:w-1/4 bg-[#1D2DB6]">
+            <div className="flex flex-col items-center">
               <img
-                className="rounded-[20px] border-4 border-white mr-auto ml-auto w-[40%]"
+                className="rounded-[20px] w-[80%] h-[80%] object-cover"
                 src={artistInfo.artist.images[0].url}
               />
-              <div className="text-center text-[35px]">
-                {artistInfo.artist.name}
+              <div className="text-[25px]">{artistInfo.artist.name}</div>
+              <div>
+                <div className="text-[20px]">Note moyenne : </div>
+                <div className="text-[25px] text-center">{averageRating}⭐</div>
               </div>
             </div>
 
-            <div className="flex flex-wrap">
-              <div className="w-[100%] flex justify-around text-center">
-                <div
-                  className="w-[40%] min-h-[15vh] max-h-[15vh]"
-                  style={{ backgroundColor: 'rgba(255, 255, 255, 0.45)' }}
-                >
-                  <div>{formatNumber(artistInfo.artist.followers.total)}</div>
-                  <div>Followers</div>
+            <div className="flex flex-col items-center mt-[15px] text-center">
+              <div className="w-[100%] flex h-[15vh] justify-around">
+                <div className="flex w-[40%] flex-col bg-white-45 justify-center">
+                  <div className="text-[20px]">
+                    {formatNumber(artistInfo.artist.followers.total)}
+                  </div>
+                  <div className="text-[15px]">followers</div>
                 </div>
-                <div
-                  className="w-[40%] min-h-[15vh] max-h-[15vh]"
-                  style={{ backgroundColor: 'rgba(255, 255, 255, 0.45)' }}
-                >
-                  <div>TODO</div>
-                  <div>De commentaires</div>
+                <div className="flex flex-col w-[40%] bg-white-45 justify-center">
+                  <div className="text-[20px]">
+                    {formatNumber(artistInfo.totalTracks)}
+                  </div>
+                  <div className="text-[15px]">titres</div>
                 </div>
               </div>
-              <div className="w-[100%] flex justify-around mt-[2vh] text-center ">
-                <div
-                  className="w-[40%] min-h-[15vh] max-h-[15vh]"
-                  style={{ backgroundColor: 'rgba(255, 255, 255, 0.45)' }}
-                >
-                  <div>
-                    {artistInfo.topTracks.tracks[0].name.split('(')[0].trim()}
-                  </div>
-                  <div>PAS LINFO</div>
+
+              <div className="w-[100%] flex h-[15vh] justify-around mt-[15px] ">
+                <div className="flex w-[40%] flex-col bg-white-45 justify-center">
+                  <div className="text-[20px]"></div>
+                  <div className="text-[15px]">le plus ecoute</div>
                 </div>
-                <div
-                  className="w-[40%] min-h-[15vh] max-h-[15vh]"
-                  style={{ backgroundColor: 'rgba(255, 255, 255, 0.45)' }}
-                >
-                  <div>{artistInfo.totalTracks}</div>
-                  <div className="reviews">
-                    <h2>Critiques de l'artiste</h2>
-                    <p>Note moyenne : {averageRating}</p>
-                    {artistReviews.map(review => (
-                      <div key={review.id} className="review">
-                        <p>Rating: {review.rating}</p>
-                        <p>Commentaire: {review.comment}</p>
-                      </div>
-                    ))}
-                  </div>
+                <div className="flex w-[40%] flex-col bg-white-45 justify-center">
+                  <div className="text-[20px]">{artistReviews.length}</div>
+                  <div className="text-[15px]">critique(s)</div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="">2</div>
-          <button
-            onClick={handleOpenModal}
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              color: 'red',
-              width: 'fit-content',
-              padding: '3px',
-              border: '1px solid red',
-            }}
-          >
-            Noter l'artiste
-          </button>
-          <ModalRate
-            open={open}
-            onClose={handleCloseModal}
-            albumCover={artistInfo.artist.images[1].url}
-            albumName={artistInfo.artist.name}
-            artistId={artistId}
-            fetchArtistReviews={fetchArtistReviews}
-          />
+
+          <div className="flex flex-col md:w-3/4 p-[15px]">
+            <div className="text-[25px] mb-4">Critiques sur l'artiste</div>
+
+            <div className="flex flex-row items-left mt-[15px]">
+              <div
+                className="flex flex-col items-left mt-[15px]"
+                style={{ border: '2px solid red' }}
+              >
+                <div className="text-[20px]">Poster une critique?</div>
+                <button
+                  onClick={handleOpenModal}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    color: 'red',
+                    width: 'fit-content',
+                    justifyContent: 'center',
+                    padding: '10px',
+                    border: '1px solid red',
+                  }}
+                >
+                  Noter l'artiste
+                </button>
+                <ModalRate
+                  open={open}
+                  onClose={handleCloseModal}
+                  albumCover={artistInfo.artist.images[1].url}
+                  albumName={artistInfo.artist.name}
+                  artistId={artistId}
+                  fetchArtistReviews={fetchArtistReviews}
+                />
+              </div>
+              <div
+                className="flex flex-col items-left mt-[15px]"
+                style={{ border: '2px solid red' }}
+              >
+                <div className="text-[20px]">Derniere critique :</div>
+                {latestReview && (
+                  <div key={latestReview.id} className="review">
+                    <p>Rating: {latestReview.rating}</p>
+                    <p>Commentaire: {latestReview.comment}</p>
+                  </div>
+                )}
+                <button onClick={handleOpenModal}>Voir plus</button>
+              </div>
+            </div>
+
+            <ModalList
+              open={open}
+              onClose={handleCloseModal}
+              comments={artistReviews}
+              onDeleteComment={artistReviews.id}
+            />
+
+            <div className="text-[25px] mt-8 mb-4">Albums de l'artiste</div>
+            <div
+              className="overflow-y-auto max-h-[70vh]"
+              style={{ border: '2px solid red' }}
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                {albums.map(album => (
+                  <Link key={album.id} to={`/album/${album.id}`}>
+                    <div className="flex flex-col items-center">
+                      <img
+                        className="rounded-[10px] w-full h-[auto] object-cover"
+                        src={album.images[0].url}
+                        alt={album.name}
+                      />
+                      <div className="text-[12px] mt-2">{album.name}</div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
         <Footer />
       </>

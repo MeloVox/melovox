@@ -231,7 +231,13 @@ export const fetchData = (url, headers) => {
     })
 }
 
-export const getArtistInfo = (token, artistId, setStatus, setArtistInfo) => {
+export const getArtistInfo = (
+  token,
+  artistId,
+  setStatus,
+  setArtistInfo,
+  setAlbums,
+) => {
   const artistInfo = { artist: null, lastAlbum: null, topTracks: null }
   const headers = {
     method: 'GET',
@@ -264,11 +270,32 @@ export const getArtistInfo = (token, artistId, setStatus, setArtistInfo) => {
       artistInfo.totalTracks = totalTracks
 
       setArtistInfo(artistInfo)
+      setAlbums(albums.items)
     })
     .catch(error => {
       return setStatus(error.message)
     })
 }
+
+// export const getAlbums = (token, artistId, setStatus, setAlbums) => {
+//   const headers = {
+//     method: 'GET',
+//     headers: {
+//       Authorization: token,
+//     },
+//   }
+//   const albumsUrl = `https://api.spotify.com/v1/artists/${artistId}/albums?limit=50`
+
+//   setStatus('getting data...')
+
+//   fetchData(albumsUrl, headers)
+//     .then(albums => {
+//       setAlbums(albums.items)
+//     })
+//     .catch(error => {
+//       setStatus(error.message)
+//     })
+// }
 
 export const getAlbumInfo = (token, albumId, setStatus, setAlbumInfo) => {
   const albumInfo = { album: null, artistName: null, tracks: [] }
