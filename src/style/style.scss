@@ -61,3 +61,20 @@ li a:hover {
 button svg:hover {
   color: #3c4bde;
 }
+
+/* Pour les navigateurs WebKit (Safari, Chrome, etc.) */
+::-webkit-scrollbar {
+  width: 5px; /* Largeur de la barre de défilement */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Couleur de fond de la piste de défilement */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3c4bde; /* Couleur de la poignée de défilement */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3c4bde; /* Couleur de la poignée de défilement au survol */
+}
