@@ -14,6 +14,7 @@ import {
   ArrowBackOutline,
   ArrowForwardOutline,
   AddCircleOutline,
+  AccessibilityOutline,
 } from 'react-ionicons'
 import noimage from '../../assets/noimage.png'
 import PropTypes from 'prop-types'
@@ -81,18 +82,31 @@ const SwiperDisk = ({ images }) => {
                 position: 'absolute',
                 bottom: '0',
                 right: '0',
-                backgroundColor: 'rgba(0, 0, 0, 0.5)',
                 padding: '10px',
               }}
             >
               <button onClick={() => handleOpenModal(item)}>
-                <AddCircleOutline
-                  color={'#222224'}
-                  height="30px"
-                  width="30px"
-                />
+                <AddCircleOutline color={'white'} height="30px" width="30px" />
               </button>
-              <Link to={`/album/${item.id}`}></Link>
+            </div>
+            <div
+              className=""
+              style={{
+                position: 'absolute',
+                bottom: '0',
+                left: '0',
+                padding: '10px',
+              }}
+            >
+              <button>
+                <Link to={`/artist/${item.id}`}>
+                  <AccessibilityOutline
+                    color={'white'}
+                    height="30px"
+                    width="30px"
+                  />
+                </Link>
+              </button>
             </div>
           </SwiperSlide>
         ))}

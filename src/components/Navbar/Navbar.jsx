@@ -38,8 +38,8 @@ const Header = () => {
   const [open, setOpen] = useState(false)
 
   return (
-    <div className="h-16 shadow-md w-full top-0 left-0 text-black">
-      <div className="h-full md:flex items-center justify-between bg-white py-4 md:px-10 px-7">
+    <div className="h-16 shadow-md w-full top-0 left-0 text-white">
+      <div className="h-full md:flex items-center justify-between py-4 md:px-10 px-7">
         <div className="h-full justify-between font-bold text-2xl cursor-pointer flex items-center gap-1">
           <img className="w-auto h-14" src={logo} alt="Logo Melovox" />
           <div
@@ -51,7 +51,7 @@ const Header = () => {
         </div>
 
         <ul
-          className={`md:flex md:items-center md:pb-0 absolute md:static bg-white md:z-auto z-[0] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${
+          className={`md:flex md:items-center md:pb-0 absolute md:static md:z-auto z-[0] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${
             open ? 'top-16' : 'top-[-490px]'
           }`}
         >
