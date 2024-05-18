@@ -18,6 +18,7 @@ const Profile = () => {
     if (response) {
       const { data } = JSON.parse(response)
       setUser(data)
+      console.log(data)
     }
 
     if (spotify) {
