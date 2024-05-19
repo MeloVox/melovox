@@ -4,8 +4,10 @@ import { getArtistInfo, handleSpotify } from '../core.js'
 import ModalRate from '../components/Modal/ModalRate'
 import ModalList from '../components/Modal/ModalList'
 import Navbar from '../components/Navbar/Navbar'
-import Footer from '../components/Footer/Footer'
+// import Footer from '../components/Footer/Footer'
 import { Link } from 'react-router-dom'
+import Rating from 'react-rating'
+import { StarOutline, Star } from 'react-ionicons'
 
 function Artist() {
   const { artistId } = useParams()
@@ -14,20 +16,28 @@ function Artist() {
   const [status, setStatus] = useState('')
   const [artistReviews, setArtistReviews] = useState([])
   const [averageRating, setAverageRating] = useState()
+  const [openList, setOpenList] = useState(false)
+  const [openModalRate, setOpenModalRate] = useState(false)
 
-  // console.log(artistId)
+  console.log(artistId)
   console.log(artistReviews)
-  console.log(artistInfo)
-  console.log(albums)
+  // console.log("artistInfo" + artistInfo)
+  // console.log("album"  + albums)
 
-  const [open, setOpen] = useState(false)
-
-  const handleOpenModal = () => {
-    setOpen(true)
+  const handleOpenModalRate = () => {
+    setOpenModalRate(true)
   }
 
-  const handleCloseModal = () => {
-    setOpen(false)
+  const handleCloseModalRate = () => {
+    setOpenModalRate(false)
+  }
+
+  const handleOpenList = () => {
+    setOpenList(true)
+  }
+
+  const handleCloseList = () => {
+    setOpenList(false)
   }
 
   const latestReview = artistReviews.length > 0 ? artistReviews[0] : null
@@ -35,7 +45,7 @@ function Artist() {
   const fetchArtistReviews = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3333/api/getReviews?artist=${artistId}`,
+        `http://localhost:3333/api/getReviews?idArtist=${artistId}`,
       )
       if (!response.ok) {
         throw new Error(
@@ -130,11 +140,33 @@ function Artist() {
                 className="rounded-[20px] w-[80%] h-[80%] object-cover"
                 src={artistInfo.artist.images[0].url}
               />
-              <div className="text-[25px]">{artistInfo.artist.name}</div>
-              <div>
-                <div className="text-[20px]">Note moyenne : </div>
-                <div className="text-[25px] text-center">{averageRating}⭐</div>
+              <div className="text-[25px] text-center">
+                {artistInfo.artist.name}
               </div>
+              {artistReviews.length > 0 && (
+                <div>
+                  <div className="text-[20px]">Note moyenne : </div>
+                  <div className="flex flex-col text-[20px] text-center">
+                    <div>{averageRating.toFixed(2)}/5</div>
+                    <div>
+                      <Rating
+                        initialRating={averageRating}
+                        emptySymbol={
+                          <StarOutline
+                            color={'#D1D5DB'}
+                            height="20px"
+                            width="20px"
+                          />
+                        }
+                        fullSymbol={
+                          <Star color={'#F59E0B'} height="20px" width="20px" />
+                        }
+                        readonly
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="flex flex-col items-center mt-[15px] text-center">
@@ -167,70 +199,90 @@ function Artist() {
           </div>
 
           <div className="flex flex-col md:w-3/4 p-[15px]">
-            <div className="text-[25px] mb-4">Critiques sur l'artiste</div>
+            <div className="text-[25px] mb-3">Critiques sur l'artiste</div>
 
-            <div className="flex flex-row items-left mt-[15px]">
-              <div
-                className="flex flex-col items-left mt-[15px]"
-                style={{ border: '2px solid red' }}
-              >
-                <div className="text-[20px]">Poster une critique?</div>
+            <div className="flex justify-between border">
+              <div className="flex flex-1 flex-col justify-center items-center h-[30vh] border-r border-white-1 bg-[#1D2DB6]">
+                <div className="text-[25px]">Derniere critique :</div>
+
+                {latestReview ? (
+                  <>
+                    <div className="flex flex-col w-[80%] border border-white-1 p-4">
+                      <div className="text-[20px]">
+                        Utilisateur: {latestReview.userId}
+                      </div>
+                      <div className="text-[16px]">
+                        <Rating
+                          initialRating={latestReview.rating}
+                          emptySymbol={
+                            <StarOutline
+                              color={'#D1D5DB'}
+                              height="20px"
+                              width="20px"
+                            />
+                          }
+                          fullSymbol={
+                            <Star
+                              color={'#F59E0B'}
+                              height="20px"
+                              width="20px"
+                            />
+                          }
+                          readonly
+                        />
+                      </div>
+                      <div className="text-[16px]">
+                        Commentaire: {latestReview.comment}
+                      </div>
+                    </div>
+                    <button
+                      onClick={handleOpenList}
+                      className="text-red-500 border border-red-500 px-4 py-2 rounded-md bg-white hover:bg-red-500 hover:text-white mt-4"
+                    >
+                      Voir plus
+                    </button>
+                  </>
+                ) : (
+                  <div className="text-[20px] italic">
+                    Aucune critique pour le moment
+                  </div>
+                )}
+              </div>
+
+              <div className="flex flex-1 flex-col justify-center items-center h-[30vh] border-l border-white-1 bg-[#3c4bde]">
+                <div className="text-[25px]">Poster une critique?</div>
                 <button
-                  onClick={handleOpenModal}
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    color: 'red',
-                    width: 'fit-content',
-                    justifyContent: 'center',
-                    padding: '10px',
-                    border: '1px solid red',
-                  }}
+                  onClick={handleOpenModalRate}
+                  className="text-red-500 border border-red-500 px-4 py-2 rounded-md bg-white hover:bg-red-500 hover:text-white mt-4"
                 >
                   Noter l'artiste
                 </button>
                 <ModalRate
-                  open={open}
-                  onClose={handleCloseModal}
+                  open={openModalRate}
+                  onClose={handleCloseModalRate}
                   albumCover={artistInfo.artist.images[1].url}
-                  albumName={artistInfo.artist.name}
+                  artistName={artistInfo.artist.name}
                   artistId={artistId}
                   fetchArtistReviews={fetchArtistReviews}
                 />
               </div>
-              <div
-                className="flex flex-col items-left mt-[15px]"
-                style={{ border: '2px solid red' }}
-              >
-                <div className="text-[20px]">Derniere critique :</div>
-                {latestReview && (
-                  <div key={latestReview.id} className="review">
-                    <p>Rating: {latestReview.rating}</p>
-                    <p>Commentaire: {latestReview.comment}</p>
-                  </div>
-                )}
-                <button onClick={handleOpenModal}>Voir plus</button>
-              </div>
             </div>
 
             <ModalList
-              open={open}
-              onClose={handleCloseModal}
+              open={openList}
+              onClose={handleCloseList}
               comments={artistReviews}
               onDeleteComment={artistReviews.id}
             />
 
-            <div className="text-[25px] mt-8 mb-4">Albums de l'artiste</div>
-            <div
-              className="overflow-y-auto max-h-[70vh]"
-              style={{ border: '2px solid red' }}
-            >
+            <div className="text-[25px] mt-6 mb-3">Albums de l'artiste</div>
+            <div className="overflow-y-auto h-[100vh]">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                 {albums.map(album => (
                   <Link key={album.id} to={`/album/${album.id}`}>
                     <div className="flex flex-col items-center">
                       <img
-                        className="rounded-[10px] w-full h-[auto] object-cover"
+                        className="rounded-[10px] w-[85%] h-[85%] object-cover"
                         src={album.images[0].url}
                         alt={album.name}
                       />
@@ -242,7 +294,7 @@ function Artist() {
             </div>
           </div>
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </>
     )
   )

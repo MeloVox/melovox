@@ -8,23 +8,33 @@ const ModalRate = ({
   open,
   onClose,
   albumCover,
+  artistName,
   albumName,
+  albumId,
   artistId,
   fetchArtistReviews,
+  // fetchAlbumReviews,
 }) => {
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState('')
   const textareaRef = useRef(null)
+  const [error, setError] = useState('')
   const [userId, setUserId] = useState(null)
+  const [userPhoto, setUserPhoto] = useState(null)
 
   useEffect(() => {
     const response = sessionStorage.getItem('user')
 
     if (response) {
       const { data } = JSON.parse(response)
+      console.log(data)
+
       setUserId(data.id)
+      setUserPhoto(data.photo)
     }
   }, [])
+
+  console.log(userPhoto)
 
   const handleRatingChange = value => {
     setRating(value)
@@ -35,6 +45,19 @@ const ModalRate = ({
   }
 
   const handleSubmit = async () => {
+    if (!userId) {
+      setError('Veuillez vous connecter pour soumettre une critique.')
+      return
+    }
+    if (rating === 0) {
+      setError('Veuillez attribuer une note supérieure à 0.')
+      return
+    }
+    if (!comment.trim()) {
+      setError('Veuillez laisser un commentaire.')
+      return
+    }
+
     try {
       const response = await fetch('http://localhost:3333/api/createReview', {
         method: 'POST',
@@ -43,10 +66,14 @@ const ModalRate = ({
         },
         body: JSON.stringify({
           userId,
-          album: albumName,
-          artist: artistId,
+          idArtist: artistId,
+          idAlbum: albumId,
+          idMusic: null,
+          artistName,
+          albumName,
           rating,
           comment,
+          userPhoto,
         }),
       })
       if (!response.ok) {
@@ -56,6 +83,7 @@ const ModalRate = ({
       console.log(responseData.message)
       onClose()
       fetchArtistReviews()
+      // fetchAlbumReviews()
     } catch (error) {
       console.error('Erreur lors de la soumission de la critique :', error)
     }
@@ -72,7 +100,7 @@ const ModalRate = ({
   return (
     <div
       className={`fixed inset-0 z-50 flex justify-center items-center transition-colors ${
-        open ? 'visible bg-black/60' : 'invisible'
+        open ? 'visible bg-black/80' : 'invisible'
       }`}
     >
       <div onClick={onClose} className="fixed inset-0" />
@@ -106,7 +134,7 @@ const ModalRate = ({
             />
           </div>
           <p className="text-gray-500">
-            Ecrivez votre critique pour <b>{albumName}</b> ici :
+            Ecrivez votre critique pour <b>{albumName || artistName}</b> ici :
           </p>
           <textarea
             value={comment}
@@ -115,6 +143,7 @@ const ModalRate = ({
             placeholder="Laisser parler votre imagination"
             ref={textareaRef}
           />
+          {error && <p className="text-red-500 mt-2">{error}</p>}
           <div className="flex justify-center mt-4">
             <button
               onClick={handleSubmit}
@@ -142,6 +171,9 @@ ModalRate.propTypes = {
   albumName: PropTypes.string.isRequired,
   artistId: PropTypes.number.isRequired,
   fetchArtistReviews: PropTypes.func.isRequired,
+  fetchAlbumReviews: PropTypes.func.isRequired,
+  artistName: PropTypes.string.isRequired,
+  albumId: PropTypes.number.isRequired,
 }
 
 export default ModalRate

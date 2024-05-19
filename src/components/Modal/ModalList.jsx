@@ -26,6 +26,7 @@ const ModalList = ({
       setReplyingTo(null)
     }
   }
+  console.log(comments)
 
   const handleToggleReply = commentId => {
     if (replyingTo === commentId) {
@@ -40,7 +41,7 @@ const ModalList = ({
       <div
         onClick={onClose}
         className={`fixed inset-0 flex justify-center items-center transition-colors text-black
-                  ${open ? 'visible bg-black/60' : 'invisible'}
+                  ${open ? 'visible bg-black/80' : 'invisible'}
               `}
       >
         <div

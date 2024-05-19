@@ -41,18 +41,26 @@ const Header = () => {
     <div className="h-16 shadow-md w-full top-0 left-0 text-white">
       <div className="h-full md:flex items-center justify-between py-4 md:px-10 px-7">
         <div className="h-full justify-between font-bold text-2xl cursor-pointer flex items-center gap-1">
-          <img className="w-auto h-14" src={logo} alt="Logo Melovox" />
+          <Link to="/">
+            {' '}
+            <img className="w-auto h-14" src={logo} alt="Logo Melovox" />
+          </Link>
+
           <div
             onClick={() => setOpen(!open)}
             className="items-center right-0 top-0  cursor-pointer md:hidden w-fit h-fit"
           >
-            {open ? <CloseOutline /> : <MenuOutline />}
+            {open ? (
+              <CloseOutline color={'white'} />
+            ) : (
+              <MenuOutline color={'white'} />
+            )}
           </div>
         </div>
 
         <ul
           className={`md:flex md:items-center md:pb-0 absolute md:static md:z-auto z-[0] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${
-            open ? 'top-16' : 'top-[-490px]'
+            open ? 'top-16 bg-black' : 'top-[-490px]'
           }`}
         >
           {isLoggedIn ? (
@@ -62,9 +70,6 @@ const Header = () => {
               </li>
               <li className="md:ml-8 md:my-0 my-7 font-semibold">
                 <Link to="/genre">Rechercher</Link>
-              </li>
-              <li className="md:ml-8 md:my-0 my-7 font-semibold">
-                <Link to="/profile">Profil</Link>
               </li>
             </>
           ) : (
@@ -93,9 +98,8 @@ const Header = () => {
               <li className="md:ml-8 md:my-0 my-7 font-semibold">
                 <Link to="/profile">
                   <img
-                    className="rounded-full cursor-pointer h-10 w-10"
-                    src={user?.picture}
-                    alt=""
+                    className="rounded-full cursor-pointer h-10 w-10 bg-white"
+                    src={user?.photo}
                   />
                 </Link>
               </li>
