@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Callback from './pages/Callback'
 import Login from './pages/Login'
+import Home from './pages/Home'
 import Test from './pages/Test'
 import Notfound from './pages/404'
 import Register from './pages/Register'
@@ -18,6 +19,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/navbar" element={<Navbar />} />
           <Route path="/footer" element={<Footer />} />
