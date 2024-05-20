@@ -12,8 +12,7 @@ const ModalRate = ({
   albumName,
   albumId,
   artistId,
-  fetchArtistReviews,
-  // fetchAlbumReviews,
+  fetchReviews,
 }) => {
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState('')
@@ -28,7 +27,6 @@ const ModalRate = ({
     if (response) {
       const { data } = JSON.parse(response)
       console.log(data)
-
       setUserId(data.id)
       setUserPhoto(data.photo)
     }
@@ -73,7 +71,6 @@ const ModalRate = ({
           albumName,
           rating,
           comment,
-          userPhoto,
         }),
       })
       if (!response.ok) {
@@ -82,8 +79,7 @@ const ModalRate = ({
       const responseData = await response.json()
       console.log(responseData.message)
       onClose()
-      fetchArtistReviews()
-      // fetchAlbumReviews()
+      fetchReviews()
     } catch (error) {
       console.error('Erreur lors de la soumission de la critique :', error)
     }
@@ -170,8 +166,7 @@ ModalRate.propTypes = {
   albumCover: PropTypes.string.isRequired,
   albumName: PropTypes.string.isRequired,
   artistId: PropTypes.number.isRequired,
-  fetchArtistReviews: PropTypes.func.isRequired,
-  fetchAlbumReviews: PropTypes.func.isRequired,
+  fetchReviews: PropTypes.func.isRequired,
   artistName: PropTypes.string.isRequired,
   albumId: PropTypes.number.isRequired,
 }

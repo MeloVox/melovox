@@ -4,7 +4,7 @@ import { getArtistInfo, handleSpotify } from '../core.js'
 import ModalRate from '../components/Modal/ModalRate'
 import ModalList from '../components/Modal/ModalList'
 import Navbar from '../components/Navbar/Navbar'
-// import Footer from '../components/Footer/Footer'
+import Footer from '../components/Footer/Footer'
 import { Link } from 'react-router-dom'
 import Rating from 'react-rating'
 import { StarOutline, Star } from 'react-ionicons'
@@ -42,7 +42,7 @@ function Artist() {
 
   const latestReview = artistReviews.length > 0 ? artistReviews[0] : null
 
-  const fetchArtistReviews = async () => {
+  const fetchReviews = async () => {
     try {
       const response = await fetch(
         `http://localhost:3333/api/getReviews?idArtist=${artistId}`,
@@ -64,7 +64,7 @@ function Artist() {
   }
 
   useEffect(() => {
-    fetchArtistReviews()
+    fetchReviews()
   }, [artistId])
 
   const formatNumber = number => {
@@ -187,8 +187,15 @@ function Artist() {
 
               <div className="w-[100%] flex h-[15vh] justify-around mt-[15px] ">
                 <div className="flex w-[40%] flex-col bg-white-45 justify-center">
-                  <div className="text-[20px]"></div>
-                  <div className="text-[15px]">le plus ecoute</div>
+                  <div className="text-[15px]">titre le plus ecoute</div>
+                  <div className="text-[20px]">
+                    <Link
+                      to={`/album/${artistInfo.topTracks.tracks[0].album.id}`}
+                      className="text-white underline hover:text-red-500"
+                    >
+                      {artistInfo.topTracks.tracks[0].name}
+                    </Link>
+                  </div>
                 </div>
                 <div className="flex w-[40%] flex-col bg-white-45 justify-center">
                   <div className="text-[20px]">{artistReviews.length}</div>
@@ -263,7 +270,7 @@ function Artist() {
                   albumCover={artistInfo.artist.images[1].url}
                   artistName={artistInfo.artist.name}
                   artistId={artistId}
-                  fetchArtistReviews={fetchArtistReviews}
+                  fetchReviews={fetchReviews}
                 />
               </div>
             </div>
@@ -294,7 +301,7 @@ function Artist() {
             </div>
           </div>
         </div>
-        {/* <Footer /> */}
+        <Footer />
       </>
     )
   )

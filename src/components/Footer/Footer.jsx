@@ -9,13 +9,13 @@ const Footer = () => {
             <Link to="/about">A Propos</Link>
           </li>
           <li className="py-2 px-4 text-center md:text-left">
-            <Link to="/contact">Nous contacter</Link>
+            <a href="mailto:melovox@gmail.com">Nous contacter</a>
           </li>
           <li className="py-2 px-4 text-center md:text-left">
-            <Link to="/policy">Politique de confidentialité</Link>
+            <Link to="">Politique de confidentialité</Link>
           </li>
           <li className="py-2 px-4 text-center md:text-left">
-            <Link to="/tos">Conditions d'utilisation</Link>
+            <Link to="">Conditions d'utilisation</Link>
           </li>
         </ul>
       </div>

@@ -18,6 +18,11 @@ const Profile = () => {
   const [userPhoto, setUserPhoto] = useState(null)
   const navigate = useNavigate()
   const [image, setImage] = useState([])
+  const [displayedReviews, setDisplayedReviews] = useState(5)
+
+  const loadMoreReviews = () => {
+    setDisplayedReviews(prev => prev + 5)
+  }
 
   useEffect(() => {
     const response = sessionStorage.getItem('user')
@@ -153,7 +158,7 @@ const Profile = () => {
               </h3>
               {userReviews.length > 0 ? (
                 <ul className="mt-2 space-y-4">
-                  {userReviews.map(review => (
+                  {userReviews.slice(0, displayedReviews).map(review => (
                     <li
                       key={review.id}
                       className="p-4 bg-white rounded-lg shadow-md mb-4 md:mb-0"
@@ -201,6 +206,14 @@ const Profile = () => {
                       </div>
                     </li>
                   ))}
+                  {totalReviews > displayedReviews && (
+                    <button
+                      onClick={loadMoreReviews}
+                      className="bg-blue-500 text-white py-2 px-4 rounded mt-4"
+                    >
+                      Charger 5 de plus
+                    </button>
+                  )}
                 </ul>
               ) : (
                 <p className="text-center mt-4 italic">
