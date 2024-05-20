@@ -7,6 +7,12 @@ import {
   ArrowBackCircleOutline,
 } from 'react-ionicons'
 import ModalRate from '../components/Modal/ModalRate'
+import ModalList from '../components/Modal/ModalList'
+import Rating from 'react-rating'
+import { StarOutline, Star } from 'react-ionicons'
+import Navbar from '../components/Navbar/Navbar'
+import Footer from '../components/Footer/Footer'
+import { Link } from 'react-router-dom'
 
 function Album() {
   const { albumId } = useParams()
@@ -17,9 +23,9 @@ function Album() {
   const [isPlayerVisible, setIsPlayerVisible] = useState(false)
   const [progress, setProgress] = useState(0)
   const [currentTrackPosition, setCurrentTrackPosition] = useState(0)
-  // const [albumReviews, setAlbumReviews] = useState([])
-  // const [averageRating, setAverageRating] = useState()
-  // const [openList, setOpenList] = useState(false)
+  const [albumReviews, setAlbumReviews] = useState([])
+  const [averageRating, setAverageRating] = useState()
+  const [openList, setOpenList] = useState(false)
   const [openModalRate, setOpenModalRate] = useState(false)
 
   const handleOpenModalRate = () => {
@@ -30,17 +36,17 @@ function Album() {
     setOpenModalRate(false)
   }
 
-  // const handleOpenList = () => {
-  //   setOpenList(true)
-  // }
+  const handleOpenList = () => {
+    setOpenList(true)
+  }
 
-  // const handleCloseList = () => {
-  //   setOpenList(false)
-  // }
+  const handleCloseList = () => {
+    setOpenList(false)
+  }
 
-  // const latestReview = albumReviews.length > 0 ? albumReviews[0] : null
+  const latestReview = albumReviews.length > 0 ? albumReviews[0] : null
 
-  const fetchAlbumReviews = async () => {
+  const fetchReviews = async () => {
     try {
       const response = await fetch(
         `http://localhost:3333/api/getReviews?idAlbum=${albumId}`,
@@ -52,8 +58,8 @@ function Album() {
       }
       const responseData = await response.json()
       console.log(responseData)
-      // setAlbumReviews(responseData.reviews)
-      // setAverageRating(responseData.averageRating)
+      setAlbumReviews(responseData.reviews)
+      setAverageRating(responseData.averageRating)
     } catch (error) {
       console.error(
         "Erreur lors de la récupération des critiques de l'artiste :",
@@ -63,7 +69,7 @@ function Album() {
   }
 
   useEffect(() => {
-    fetchAlbumReviews()
+    fetchReviews()
   }, [albumId])
 
   useEffect(() => {
@@ -172,42 +178,178 @@ function Album() {
     console.log(albumInfo),
     (
       <>
-        <div className="flex flex-col md:flex-row w-full bg-black text-white font-Rollicker">
-          <div className="md:w-1/2 bg-[#188481]">
-            <div className="text-center text-4xl mb-4">
-              {albumInfo.album.name}
-            </div>
-            <div className="text-center mb-4">
+        <Navbar />
+        <div className="flex flex-col h-screen md:flex-row w-full bg-black text-white font-Anton">
+          <div className="flex h-screen pb-14 flex-col p-[15px] md:w-1/4 bg-[#1D2DB6]">
+            <div className="flex flex-col items-center">
               <img
-                className="rounded-[20px] border-4 border-white mx-auto"
+                className="rounded-[20px] w-[80%] h-[80%] object-cover"
                 src={albumInfo.album.images[0].url}
                 alt={albumInfo.album.name}
               />
-            </div>
-            <div className="text-center text-2xl mb-4">
-              {albumInfo.artistName}
-            </div>
-          </div>
-          <div className="md:w-1/2 bg-[#188481]">
-            <div className="p-4">
-              <div className="text-xl mb-2">Liste des pistes :</div>
-              <ul>
-                {albumInfo.tracks.map((track, index) => (
-                  <li key={index} className="mb-4">
-                    <div
-                      className="text-lg font-bold cursor-pointer"
-                      onClick={() =>
-                        handlePreview(track.preview_url, track.name)
-                      }
-                    >
-                      {track.name}
+              <div className="text-[25px] text-center">
+                {albumInfo.album.name}
+              </div>
+              <div className="text-[20px] text-center">
+                <Link
+                  to={`/artist/${albumInfo.album.artists[0].id}`}
+                  className="text-white underline hover:text-red-500"
+                >
+                  Artiste : {albumInfo.artistName}
+                </Link>
+              </div>
+              {albumReviews.length > 0 && (
+                <div>
+                  <div className="text-[20px]">Note moyenne : </div>
+                  <div className="flex flex-col text-[20px] text-center">
+                    <div>{averageRating.toFixed(2)}/5</div>
+                    <div>
+                      <Rating
+                        initialRating={averageRating}
+                        emptySymbol={
+                          <StarOutline
+                            color={'#D1D5DB'}
+                            height="20px"
+                            width="20px"
+                          />
+                        }
+                        fullSymbol={
+                          <Star color={'#F59E0B'} height="20px" width="20px" />
+                        }
+                        readonly
+                      />
                     </div>
-                    <div>Durée : {formatDuration(track.duration_ms)}</div>
-                  </li>
-                ))}
-              </ul>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="flex flex-col items-center mt-[15px] text-center">
+              <div className="w-[100%] flex h-[15vh] justify-around">
+                <div className="flex flex-col w-[40%] bg-white-45 justify-center">
+                  <div className="text-[15px]">date de sortie</div>
+                  <div className="text-[20px]">
+                    {albumInfo.album.release_date}
+                  </div>
+                </div>
+                <div className="flex w-[40%] flex-col bg-white-45 justify-center">
+                  <div className="text-[20px]">
+                    {albumInfo.album.total_tracks}
+                  </div>
+                  <div className="text-[15px]">titres</div>
+                </div>
+              </div>
+
+              <div className="w-[100%] flex h-[15vh] justify-around mt-[15px] ">
+                <div className="flex w-[40%] flex-col bg-white-45 justify-center">
+                  <div className="text-[15px]">Label</div>
+                  <div className="text-[10px] text-center">
+                    {albumInfo.album.label ? albumInfo.album.label : 'N/A'}
+                  </div>
+                </div>
+                <div className="flex w-[40%] flex-col bg-white-45 justify-center">
+                  <div className="text-[15px]">Duree </div>
+                  <div className="text-[20px]">
+                    {formatDuration(
+                      albumInfo.album.tracks.items.reduce(
+                        (sum, track) => sum + track.duration_ms,
+                        0,
+                      ),
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+
+          <div className="flex flex-col md:w-3/4 p-[15px]">
+            <div className="text-[25px] mb-3">Critiques sur l'album</div>
+            <div className="flex justify-between border">
+              <div className="flex flex-1 flex-col justify-center items-center h-[30vh] border-r border-white-1 bg-[#1D2DB6]">
+                <div className="text-[25px]">Derniere critique :</div>
+                {latestReview ? (
+                  <>
+                    <div className="flex flex-col w-[80%] border border-white-1 p-4">
+                      <div className="text-[20px]">
+                        Utilisateur: {latestReview.userId}
+                      </div>
+                      <div className="text-[16px]">
+                        <Rating
+                          initialRating={latestReview.rating}
+                          emptySymbol={
+                            <StarOutline
+                              color={'#D1D5DB'}
+                              height="20px"
+                              width="20px"
+                            />
+                          }
+                          fullSymbol={
+                            <Star
+                              color={'#F59E0B'}
+                              height="20px"
+                              width="20px"
+                            />
+                          }
+                          readonly
+                        />
+                      </div>
+                      <div className="text-[16px]">
+                        Commentaire: {latestReview.comment}
+                      </div>
+                    </div>
+                    <button
+                      onClick={handleOpenList}
+                      className="text-red-500 border border-red-500 px-4 py-2 rounded-md bg-white hover:bg-red-500 hover:text-white mt-4"
+                    >
+                      Voir plus
+                    </button>
+                  </>
+                ) : (
+                  <div className="text-[20px] italic">
+                    Aucune critique pour le moment
+                  </div>
+                )}
+              </div>
+              <div className="flex flex-1 flex-col justify-center items-center h-[30vh] border-l border-white-1 bg-[#3c4bde]">
+                <div className="text-[25px]">Poster une critique?</div>
+                <button
+                  onClick={handleOpenModalRate}
+                  className="text-red-500 border border-red-500 px-4 py-2 rounded-md bg-white hover:bg-red-500 hover:text-white mt-4"
+                >
+                  Noter l'album
+                </button>
+                <ModalRate
+                  open={openModalRate}
+                  onClose={handleCloseModalRate}
+                  albumCover={albumInfo.album.images[0].url}
+                  albumName={albumInfo.album.name}
+                  albumId={albumId}
+                  fetchReviews={fetchReviews}
+                />
+              </div>
+            </div>
+
+            <ModalList
+              open={openList}
+              onClose={handleCloseList}
+              comments={albumReviews}
+              onDeleteComment={albumReviews.id}
+            />
+            <div className="text-[25px] mt-4">Titres</div>
+            <ul className="overflow-y-auto">
+              {albumInfo.tracks.map((track, index) => (
+                <li key={index} className="mb-4">
+                  <div
+                    className="flex justify-between items-center p-4 border-b border-white-1 cursor-pointer hover:bg-[#1D2DB6]"
+                    onClick={() => handlePreview(track.preview_url, track.name)}
+                  >
+                    {track.name}
+                    <div>Duree : {formatDuration(track.duration_ms)}</div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           {isPlayerVisible && (
             <div className="fixed bottom-0 left-0 right-0 bg-gray-900 p-4 text-center">
               {currentTrack && (
@@ -242,28 +384,8 @@ function Album() {
               )}
             </div>
           )}
-          <button
-            onClick={handleOpenModalRate}
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              color: 'red',
-              width: 'fit-content',
-              padding: '3px',
-              border: '1px solid red',
-            }}
-          >
-            Noter l'album
-          </button>
-          <ModalRate
-            open={openModalRate}
-            onClose={handleCloseModalRate}
-            albumCover={albumInfo.album.images[0].url}
-            albumName={albumInfo.album.name}
-            albumId={albumId}
-            fetchAlbumReviews={fetchAlbumReviews}
-          />
         </div>
+        <Footer />
       </>
     )
   )

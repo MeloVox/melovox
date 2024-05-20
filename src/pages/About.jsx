@@ -9,22 +9,18 @@ const About = () => {
       <Navbar />
       <Background />
 
-      <div
-        className="flex items-center w-screen h-full"
-        style={{ border: '2px solid red' }}
-      >
-        <div className="w-1/2 bg-white bg-opacity-20 rounded-lg shadow-md p-6 text-white md:mt-4">
-          <h1 className="text-3xl font-bold mb-8">Qui sommes-nous ?</h1>
+      <div className="flex items-center w-full h-screen">
+        <div className="w-1/2 bg-white bg-opacity-20 rounded-lg shadow-md ml-10 p-6 text-[30px] text-white md:mt-4">
+          <h1 className="font-bold mb-8 text-[40px]">Qui sommes-nous ?</h1>
           <div className="flex flex-col md:flex-row">
-            <div className="md:w-1/2 md:pr-4 mb-4 md:mb-0">
-              <h2 className="text-xl font-semibold">Présentation</h2>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
+            <div className="w-full text-[25px]">
+              <div className="text-[35px] font-semibold">Présentation</div>
+              Melovox est un projet Ydays visant à créer une application web de
+              critique musicale. Notre objectif est de permettre aux
+              utilisateurs de partager leurs avis sur les albums de leurs
+              artistes préférés. Nous souhaitons également offrir une plateforme
+              de découverte musicale en recommandant des albums en fonction des
+              goûts de chacun.
             </div>
           </div>
         </div>

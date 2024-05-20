@@ -15,6 +15,11 @@ const Profile = () => {
   const [userId, setUserId] = useState(null)
   const [userPhoto, setUserPhoto] = useState(null)
   const navigate = useNavigate()
+  const [displayedReviews, setDisplayedReviews] = useState(5)
+
+  const loadMoreReviews = () => {
+    setDisplayedReviews(prev => prev + 5)
+  }
 
   useEffect(() => {
     const response = sessionStorage.getItem('user')
@@ -74,7 +79,7 @@ const Profile = () => {
       <div className="flex flex-col items-center w-full min-h-screen text-white bg-[e5e5e5]">
         <div className="w-full bg-[#1D2DB6] p-8 rounded-lg mb-8 flex flex-col md:flex-row items-center justify-center">
           <img
-            className="rounded-full w-[150px] h-[150px] mb-4 md:mb-0 mx-auto md:mx-0 md:mr-8"
+            className="rounded-full w-[150px] h-[150px] mb-4 md:mb-0 mx-auto md:mx-0 md:mr-8 bg-white"
             src={userPhoto}
             alt="User Profile"
           />
@@ -137,7 +142,7 @@ const Profile = () => {
               </h3>
               {userReviews.length > 0 ? (
                 <ul className="mt-2 space-y-4">
-                  {userReviews.map(review => (
+                  {userReviews.slice(0, displayedReviews).map(review => (
                     <li
                       key={review.id}
                       className="p-4 bg-white rounded-lg shadow-md mb-4 md:mb-0"
@@ -185,6 +190,14 @@ const Profile = () => {
                       </div>
                     </li>
                   ))}
+                  {totalReviews > displayedReviews && (
+                    <button
+                      onClick={loadMoreReviews}
+                      className="bg-blue-500 text-white py-2 px-4 rounded mt-4"
+                    >
+                      Charger 5 de plus
+                    </button>
+                  )}
                 </ul>
               ) : (
                 <p className="text-center mt-4 italic">
