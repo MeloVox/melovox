@@ -32,7 +32,7 @@ function Login() {
         className="h-screen w-full flex flex-col justify-center items-center space-y-10 bgcolor text-white"
         style={{ zIndex: 2 }}
       >
-        <h1 className="w-full text-center text-3xl font-Anton mt-48 md:mt-38 mb-10">
+        <h1 className="w-full text-center text-3xl font-Anton mt-10 md:mt-10 mb-10">
           Ravi de te revoir sur{' '}
           <span style={{ color: '#D340AA' }}>Mélovox</span> !
         </h1>

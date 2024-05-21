@@ -46,7 +46,7 @@ const HeaderFooter = () => {
           <ul className="hidden md:flex absolute pr-5 right-0 flex items-center space-x-5 text-white text-md font-Anton">
             <li>
               <Link to="/">Home</Link>
-            </li> 
+            </li>
             {isLoggedIn ? (
               <>
                 <li>
