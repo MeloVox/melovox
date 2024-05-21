@@ -7,6 +7,7 @@ import Rating from 'react-rating'
 import { Star, StarOutline } from 'react-ionicons'
 import Navbar from '../components/Navbar/Navbar'
 import Footer from '../components/Footer/Footer'
+import Background from '../components/Background/Background'
 
 const Profile = () => {
   const [user, setUser] = useState([])
@@ -91,6 +92,7 @@ const Profile = () => {
 
   return (
     <>
+      <Background />
       <Navbar />
       <div className="flex flex-col items-center w-full min-h-screen text-white bg-[e5e5e5]">
         <div className="w-full bg-[#1D2DB6] p-8 rounded-lg mb-8 flex flex-col md:flex-row items-center justify-center">
@@ -252,8 +254,10 @@ const Profile = () => {
         >
           Déconnexion
         </button>
-      <Footer />
-    </div>
+        <Footer />
+      </div>
     </>
   )
 }
+
+export default Profile

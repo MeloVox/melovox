@@ -4,8 +4,10 @@ import { authMelovoxAPI, spotifyLogin } from '../core'
 import { GoogleLogin, useGoogleLogin } from '@react-oauth/google'
 import logo_spotify from '../assets/logo_spotify.png'
 import logo_google from '../assets/Google_logo.png'
-import Background from './Background'
 import register from '../assets/register.png'
+import Background from '../components/Background/Background'
+import Navbar from '../components/Navbar/Navbar'
+import Footer from '../components/Footer/Footer'
 
 function Login() {
   const [message, setMessage] = useState('')
@@ -24,6 +26,7 @@ function Login() {
 
   return (
     <>
+      <Navbar />
       <Background />
       <div
         className="h-screen w-full flex flex-col justify-center items-center space-y-10 bgcolor text-white"
@@ -157,6 +160,7 @@ function Login() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   )
 }
