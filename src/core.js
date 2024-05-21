@@ -54,17 +54,37 @@ export async function spotifySearch({ token, searchInput }) {
   )
 }
 
-export const getSpotifyProfile = () => {
-  const spotify = sessionStorage.getItem('spotify-auth')
-  fetch('https://api.spotify.com/v1/me', {
-    method: 'GET',
+export async function getSpotifyProfile(accessToken) {
+  return await fetch('https://api.spotify.com/v1/me', {
     headers: {
-      Authorization: `Bearer ${spotify}`,
+      Authorization: 'Bearer ' + accessToken,
     },
-  }).then(async response => {
-    if (!response) return
-    return await response.json()
   })
+    .then(async response => {
+      if (response.status == 401) {
+        //refreshTokenSpotify()
+      }
+      const data = await response.json()
+      sessionStorage.setItem('spotify-user', JSON.stringify(data))
+      return data
+    })
+    .catch(err => {
+      console.error(err.message)
+    })
+}
+
+export async function getSpotifyArtistsFollowed(accessToken, setData) {
+  const response = await fetch(
+    'https://api.spotify.com/v1/me/following?type=artist',
+    {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    },
+  )
+
+  const { artists } = await response.json()
+  return setData(artists.items)
 }
 
 export const handleSpotify = setStatus => {
@@ -102,35 +122,52 @@ export const handleSpotify = setStatus => {
     })
 }
 
-export const getAuthToken = loginCode => {
-  const authUrl = 'https://accounts.spotify.com/api/token'
-  const spotify = `${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`
+export const getAccessToken = async code => {
+  const headers = {
+    'content-type': 'application/x-www-form-urlencoded',
+  }
 
-  fetch(authUrl, {
+  const codeVerifier = localStorage.getItem('code_verifier')
+  const data = new URLSearchParams()
+  data.append('client_id', SPOTIFY_CLIENT_ID)
+  data.append('grant_type', 'authorization_code')
+  data.append('redirect_uri', 'http://localhost:5173/callback')
+  data.append('code', code)
+  data.append('code_verifier', codeVerifier)
+  return fetch('https://accounts.spotify.com/api/token', {
     method: 'POST',
-    headers: {
-      Authorization: `Basic ${Buffer.from(spotify).toString('base64')}`,
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    form: {
-      code: loginCode,
-      redirect_uri: 'http://localhost:5173/callback',
-      grant_type: 'authorization_code',
-    },
-    body: querystring.stringify({
-      grant_type: 'client_credentials',
-    }),
-  }).then(response => {
-    if (!response) return
-    response.json().then(data => {
-      console.log(data)
-      localStorage.setItem('spotify-auth', JSON.stringify(data))
-    })
+    body: data,
+    headers,
+    json: true,
   })
+    .then(async response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      const data = await response.json()
+      sessionStorage.setItem('spotify-token', data.access_token)
+      sessionStorage.setItem('spotify-auth', JSON.stringify(data))
+      return data
+    })
+    .catch(error => {
+      console.error('Error fetching data', error)
+    })
 }
 
-export const spotifyLogin = () => {
-  const scope = 'user-read-private user-read-email'
+function base64encode(input) {
+  return btoa(String.fromCharCode(...new Uint8Array(input)))
+    .replace(/=/g, '')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+}
+const sha256 = async plain => {
+  const encoder = new TextEncoder()
+  const data = encoder.encode(plain)
+  return window.crypto.subtle.digest('SHA-256', data)
+}
+
+export const spotifyLogin = async () => {
+  const scope = 'user-read-private user-read-email user-follow-read'
   const client_id = SPOTIFY_CLIENT_ID
 
   const generateRandomString = length => {
@@ -142,20 +179,7 @@ export const spotifyLogin = () => {
 
   const codeVerifier = generateRandomString(64)
 
-  const sha256 = async plain => {
-    const encoder = new TextEncoder()
-    const data = encoder.encode(plain)
-    return window.crypto.subtle.digest('SHA-256', data)
-  }
-
-  const base64encode = input => {
-    return btoa(String.fromCharCode(...new Uint8Array(input)))
-      .replace(/=/g, '')
-      .replace(/\+/g, '-')
-      .replace(/\//g, '_')
-  }
-
-  const hashed = sha256(codeVerifier)
+  const hashed = await sha256(codeVerifier)
   const codeChallenge = base64encode(hashed)
   const authUrl = new URL('https://accounts.spotify.com/authorize')
 
