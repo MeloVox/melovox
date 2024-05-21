@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
-import { authMelovoxAPI, spotifyLogin } from '../core'
 import { GoogleLogin, useGoogleLogin } from '@react-oauth/google'
+import { useNavigate, Link } from 'react-router-dom'
+import { authMelovoxAPI, spotifyLogin } from '../core.js'
 import logo_spotify from '../assets/logo_spotify.png'
-import logo_google from '../assets/Google_logo.png'
-import Background from './Background'
+import Background from '../components/Background/Background'
 import register from '../assets/register.png'
+import logo_google from '../assets/Google_logo.png'
+import Navbar from '../components/Navbar/Navbar'
+import Footer from '../components/Footer/Footer'
 
-function Login() {
+function Register() {
   const [message, setMessage] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -16,6 +18,7 @@ function Login() {
   useEffect(() => {
     const response = sessionStorage.getItem('user')
     const spotify = sessionStorage.getItem('spotify-login')
+
     if (response || spotify) {
       navigate('/profile')
       return
@@ -24,14 +27,15 @@ function Login() {
 
   return (
     <>
+      <Navbar />
       <Background />
       <div
         className="h-screen w-full flex flex-col justify-center items-center space-y-10 bgcolor text-white"
         style={{ zIndex: 2 }}
       >
-        <h1 className="w-full text-center text-3xl font-Anton mt-48 md:mt-38 mb-10">
-          Ravi de te revoir sur{' '}
-          <span style={{ color: '#D340AA' }}>Mélovox</span> !
+        <h1 className="w-full text-center text-3xl font-Anton mt-10 md:mt-10 mb-10">
+          Avec <span style={{ color: '#D340AA' }}>Mélovox</span>, partage ton
+          opinion sur les titres les plus écoutés !
         </h1>
         <div className="flex w-full flex-col space-y-10 md:flex-row h-fit justify-center items-center">
           <div className="flex flex-col justify-center items-center w-[40%]">
@@ -48,7 +52,7 @@ function Login() {
                 onSubmit={e => {
                   e.preventDefault()
                   authMelovoxAPI({
-                    url: `api/login`,
+                    url: `api/register`,
                     props: { email, password },
                     callback: { setMessage, navigate },
                   })
@@ -86,7 +90,7 @@ function Login() {
                     className="btnlog w-[75%] rounded-full font-Anton bg-[#1D2DB6] py-2 px-5"
                     type="submit"
                   >
-                    Connexion
+                    Créer le compte
                   </button>
                 </div>
                 <p className="w-full text-center text-sm">{message}</p>
@@ -144,12 +148,12 @@ function Login() {
               </div>
               <div className="w-full flex justify-center items-center border-t border-neutral-400 mt-10">
                 <span className="textcolor font-Inter text-sm my-5">
-                  Je n'ai pas de compte.
+                  J'ai déjà un compte.
                   <Link
                     className="ml-2 text-[#D340AA] font-bold underline cursor-pointer"
-                    to="/register"
+                    to="/login"
                   >
-                    S'inscrire.
+                    Se connecter.
                   </Link>
                 </span>
               </div>
@@ -157,8 +161,9 @@ function Login() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   )
 }
 
-export default Login
+export default Register

@@ -1,39 +1,41 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Login from './components/Login.jsx'
-import Test from './components/Test.jsx'
-import Home from './components/Home.jsx'
-import Layout from './components/Layout.jsx'
-import Notfound from './components/404.jsx'
-import Register from './components/Register.jsx'
-import Profile from './components/Profile.jsx'
-import Artist from './components/Artist.jsx'
-import Callback from './components/Callback.jsx'
-import About from './components/About.jsx'
-import SwiperArrow from './components/SwiperArrow.jsx'
-import SwiperInfinite from './components/SwiperInfinite.jsx'
+import Callback from './pages/Callback'
+import Login from './pages/Login'
+import Home from './pages/Home'
+import Test from './pages/Test'
+import Notfound from './pages/404'
+import Register from './pages/Register'
+import Profile from './pages/Profile'
+import Artist from './pages/Artist'
+import About from './pages/About'
+import Genre from './pages/Genre'
+import Album from './pages/Album'
+import TestComments from './pages/TestComments'
+import Navbar from './components/Navbar/Navbar'
+import Footer from './components/Footer/Footer'
 
 function App() {
   return (
-    <div className="h-screen w-full flex flex-col justify-center items-center bgcolor">
+    <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/test" element={<Test />} />
-            <Route path="/Arrow" element={<SwiperArrow />} />
-            <Route path="/Infinite" element={<SwiperInfinite />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/callback" element={<Callback />} />
-            <Route path="/artist/:artistId" element={<Artist />} />
-            <Route path="/about" element={<About />} />
-
-            <Route path="*" element={<Notfound />} />
-          </Route>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/navbar" element={<Navbar />} />
+          <Route path="/footer" element={<Footer />} />
+          <Route path="/test" element={<Test />} />
+          <Route path="/testcomments" element={<TestComments />} />
+          <Route path="/genre" element={<Genre />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/callback" element={<Callback />} />
+          <Route path="/artist/:artistId" element={<Artist />} />
+          <Route path="/album/:albumId" element={<Album />} />
+          <Route path="*" element={<Notfound />} />
         </Routes>
       </BrowserRouter>
-    </div>
+    </>
   )
 }
 

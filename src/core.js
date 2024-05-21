@@ -33,7 +33,7 @@ export const authMelovoxAPI = ({ url, props, callback }) => {
     })
 }
 
-export async function spotifySearch({ token, searchInput }) {
+export async function spotifySearchAll({ token, searchInput }) {
   const searchParameters = {
     method: 'GET',
     headers: {
@@ -42,13 +42,32 @@ export async function spotifySearch({ token, searchInput }) {
   }
 
   return fetch(
-    `https://api.spotify.com/v1/search?q=${searchInput}&type=artist,album,track`,
+    `https://api.spotify.com/v1/search?q=${searchInput}&type=album,artist&limit=20`,
     searchParameters,
   ).then(response =>
     response.json().then(data => {
-      const items = ['artists', 'albums', 'tracks'].flatMap(
-        type => data[type].items,
-      )
+      // const items = ['artists', 'albums', 'tracks'].flatMap(
+      const items = ['albums', 'artists'].flatMap(type => data[type].items)
+      return items
+    }),
+  )
+}
+
+export async function spotifySearchArtists({ token, searchInput }) {
+  const searchParameters = {
+    method: 'GET',
+    headers: {
+      Authorization: token,
+    },
+  }
+
+  return fetch(
+    `https://api.spotify.com/v1/search?q=${searchInput}&type=artist`,
+    searchParameters,
+  ).then(response =>
+    response.json().then(data => {
+      // const items = ['artists', 'albums', 'tracks'].flatMap(
+      const items = ['artists'].flatMap(type => data[type].items)
       return items
     }),
   )
@@ -212,7 +231,13 @@ export const fetchData = (url, headers) => {
     })
 }
 
-export const getArtistInfo = (token, artistId, setStatus, setArtistInfo) => {
+export const getArtistInfo = (
+  token,
+  artistId,
+  setStatus,
+  setArtistInfo,
+  setAlbums,
+) => {
   const artistInfo = { artist: null, lastAlbum: null, topTracks: null }
   const headers = {
     method: 'GET',
@@ -245,8 +270,57 @@ export const getArtistInfo = (token, artistId, setStatus, setArtistInfo) => {
       artistInfo.totalTracks = totalTracks
 
       setArtistInfo(artistInfo)
+      setAlbums(albums.items)
     })
     .catch(error => {
       return setStatus(error.message)
+    })
+}
+
+// export const getAlbums = (token, artistId, setStatus, setAlbums) => {
+//   const headers = {
+//     method: 'GET',
+//     headers: {
+//       Authorization: token,
+//     },
+//   }
+//   const albumsUrl = `https://api.spotify.com/v1/artists/${artistId}/albums?limit=50`
+
+//   setStatus('getting data...')
+
+//   fetchData(albumsUrl, headers)
+//     .then(albums => {
+//       setAlbums(albums.items)
+//     })
+//     .catch(error => {
+//       setStatus(error.message)
+//     })
+// }
+
+export const getAlbumInfo = (token, albumId, setStatus, setAlbumInfo) => {
+  const albumInfo = { album: null, artistName: null, tracks: [] }
+  const headers = {
+    method: 'GET',
+    headers: {
+      Authorization: token,
+    },
+  }
+  const albumUrl = `https://api.spotify.com/v1/albums/${albumId}`
+
+  setStatus('getting data...')
+
+  fetchData(albumUrl, headers)
+    .then(album => {
+      albumInfo.album = album
+      albumInfo.artistName = album.artists[0].name
+      albumInfo.tracks = album.tracks.items.map(track => ({
+        name: track.name,
+        duration_ms: track.duration_ms,
+        preview_url: track.preview_url,
+      }))
+      setAlbumInfo(albumInfo)
+    })
+    .catch(error => {
+      setStatus(error.message)
     })
 }

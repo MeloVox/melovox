@@ -1,8 +1,8 @@
 import { Outlet, Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import logo from '../assets/logo.svg'
+import logo from '../../assets/logo.svg'
 
-const Layout = () => {
+const HeaderFooter = () => {
   const getUser = () => JSON.parse(sessionStorage.getItem('user'))?.data
   const getSpotify = () => JSON.parse(sessionStorage.getItem('spotify-user'))
   const [isLoggedIn, setIsLoggedIn] = useState(
@@ -40,7 +40,7 @@ const Layout = () => {
   })
   return (
     <>
-      <header className="sticky top-0 z-10 w-full h-24">
+      <header className="fixed top-0 z-10 w-full h-24">
         <nav className="h-full w-full bg-transparent flex items-center">
           <img className="p-5" src={logo} alt="" />
           <ul className="hidden md:flex absolute pr-5 right-0 flex items-center space-x-5 text-white text-md font-Anton">
@@ -50,16 +50,16 @@ const Layout = () => {
             {isLoggedIn ? (
               <>
                 <li>
-                  <Link to="/profile">Profile</Link>
+                  <Link to="/profile">Profil</Link>
                 </li>
               </>
             ) : (
               <>
                 <li>
-                  <Link to="/login">Login</Link>
+                  <Link to="/login">Se connecter</Link>
                 </li>
                 <li>
-                  <Link to="/register">Register</Link>
+                  <Link to="/register">Créer un compte</Link>
                 </li>
               </>
             )}
@@ -99,7 +99,7 @@ const Layout = () => {
             <Link to="/policy">Privacy Policiy</Link>
           </li>
           <li>
-            <Link to="/tos">Terms of Service</Link>
+            <Link to="/tos">Conditions d'utilisation</Link>
           </li>
         </ul>
       </footer>
@@ -107,4 +107,4 @@ const Layout = () => {
   )
 }
 
-export default Layout
+export default HeaderFooter
