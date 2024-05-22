@@ -45,6 +45,10 @@ function App() {
       <div className="flex w-full h-[80vh]">
         <div className="flex flex-col w-full h-full items-center">
           <div className="flex w-3/4 flex-col items-center justify-start p-3">
+            <p className="text-xl my-5 font-Anton">
+              Recherchez votre artiste préféré !
+            </p>
+
             <div className="flex w-full md:w-1/2">
               <input
                 id="searchInput"

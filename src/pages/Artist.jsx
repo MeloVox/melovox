@@ -102,7 +102,7 @@ function Artist() {
       await handleSpotify()
       const updatedResponse = await new Promise(resolve => {
         const intervalId = setInterval(() => {
-          const response = sessionStorage.getItem('spotify-token')
+          const response = sessionStorage.getItem('app-spotify-token')
           if (response) {
             clearInterval(intervalId)
             resolve(response)

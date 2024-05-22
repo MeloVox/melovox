@@ -13,7 +13,7 @@ const Callback = () => {
       await getSpotifyProfile(data.access_token)
       const event = new CustomEvent('userLoggedIn')
       window.dispatchEvent(event)
-      navigate('/profile')
+      navigate('/genre')
     }
     const error = searchParams.get('error')
     const code = searchParams.get('code')

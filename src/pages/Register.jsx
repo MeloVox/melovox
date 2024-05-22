@@ -20,7 +20,7 @@ function Register() {
     const spotify = sessionStorage.getItem('spotify-login')
 
     if (response || spotify) {
-      navigate('/profile')
+      navigate('/genre')
       return
     }
   }, [navigate])

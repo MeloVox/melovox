@@ -27,7 +27,7 @@ export const authMelovoxAPI = ({ url, props, callback }) => {
           sessionStorage.setItem('user', JSON.stringify(response))
           const event = new CustomEvent('userLoggedIn')
           window.dispatchEvent(event)
-          navigate('/profile')
+          navigate('/genre')
         }
       })
     })
@@ -97,6 +97,8 @@ export async function handleSpotifyAccount(data) {
         const { data } = response
         if (data) {
           sessionStorage.setItem('api-spotify-user', JSON.stringify(data))
+          const event = new CustomEvent('userLoggedIn')
+          window.dispatchEvent(event)
         }
       })
     })

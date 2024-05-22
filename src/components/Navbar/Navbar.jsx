@@ -6,7 +6,6 @@ import { CloseOutline, MenuOutline } from 'react-ionicons'
 const Header = () => {
   const getUser = () => JSON.parse(sessionStorage.getItem('user'))?.data
   const getSpotify = () => JSON.parse(sessionStorage.getItem('spotify-user'))
-
   const [isLoggedIn, setIsLoggedIn] = useState(
     sessionStorage.getItem('isconnected'),
   )
@@ -88,7 +87,7 @@ const Header = () => {
             open ? 'top-16 bg-black' : 'top-[-490px]'
           }`}
         >
-          {isLoggedIn ? (
+          {image ? (
             <>
               <li className="md:ml-8 md:my-0 my-7 font-semibold">
                 <Link to="/">Accueil</Link>
