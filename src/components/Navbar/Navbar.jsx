@@ -2,37 +2,63 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../../assets/logo.svg'
 import { CloseOutline, MenuOutline } from 'react-ionicons'
-import { getSpotifyProfile } from '../../core'
 
 const Header = () => {
   const getUser = () => JSON.parse(sessionStorage.getItem('user'))?.data
+  const getSpotify = () => JSON.parse(sessionStorage.getItem('spotify-user'))
+
   const [isLoggedIn, setIsLoggedIn] = useState(
     sessionStorage.getItem('isconnected'),
   )
-  const [user, setUser] = useState(getUser)
-
-  console.log(isLoggedIn)
+  const [image, setImage] = useState(undefined)
 
   useEffect(() => {
     const handleUserLogin = () => {
       sessionStorage.setItem('isconnected', true)
       setIsLoggedIn(true)
-      if (getUser) {
-        setUser(getUser)
-      } else {
-        const profile = getSpotifyProfile()
-        console.log(profile)
+      const dataUser = getUser()
+      const dataSpotify = getSpotify()
+      if (dataUser) {
+        if (dataUser.picture) {
+          setImage(dataUser.picture)
+        } else {
+          setImage(dataUser.photo)
+        }
+      }
+      if (dataSpotify) {
+        const list_images = dataSpotify.images
+        list_images.forEach(image => {
+          setImage(image.url)
+        })
       }
     }
 
     const handleDisconnect = () => {
       sessionStorage.setItem('isconnected', false)
-      setUser(undefined)
+      setImage(undefined)
       setIsLoggedIn(false)
     }
 
     window.addEventListener('userLoggedIn', handleUserLogin)
     window.addEventListener('userDisconnected', handleDisconnect)
+    if (isLoggedIn) {
+      const dataUser = getUser()
+      const dataSpotify = getSpotify()
+      if (dataUser) {
+        if (dataUser.picture) {
+          setImage(dataUser.picture)
+        } else {
+          setImage(dataUser.photo)
+        }
+      }
+      if (dataSpotify) {
+        const list_images = dataSpotify.images
+        list_images.forEach(image => {
+          setImage(image.url)
+        })
+        console.log(image)
+      }
+    }
   })
 
   const [open, setOpen] = useState(false)
@@ -93,13 +119,13 @@ const Header = () => {
               className="bgcolor font-roboto text-sm border bordercolor border-2 rounded-md py-1 px-2"
               type="search"
             /> */}
-          {isLoggedIn && user ? (
+          {isLoggedIn && image ? (
             <>
               <li className="md:ml-8 md:my-0 my-7 font-semibold">
                 <Link to="/profile">
                   <img
                     className="rounded-full cursor-pointer h-10 w-10 bg-white"
-                    src={user?.photo}
+                    src={image}
                   />
                 </Link>
               </li>

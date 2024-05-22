@@ -11,7 +11,7 @@ import Background from '../components/Background/Background'
 
 const Profile = () => {
   const [user, setUser] = useState([])
-  const [spotify_data, setData] = useState([])
+  const [spotify_data, setData] = useState(undefined)
   const [totalReviews, setTotalReviews] = useState(0)
   const [averageRating, setAverageRating] = useState(0)
   const [userReviews, setUserReviews] = useState([])
@@ -34,7 +34,11 @@ const Profile = () => {
       const { data } = JSON.parse(response)
       setUser(data)
       setUserId(data.id)
-      setUserPhoto(data.photo)
+      if (data.photo) {
+        setUserPhoto(data.photo)
+      } else {
+        setUserPhoto(data.picture)
+      }
     }
 
     if (spotify) {
@@ -63,6 +67,7 @@ const Profile = () => {
   }
 
   const fetchUserReviews = async () => {
+    console.log(spotify_data)
     try {
       const response = await fetch(
         `http://localhost:3333/api/getReviews?userId=${userId}`,
@@ -95,7 +100,7 @@ const Profile = () => {
       <Background />
       <Navbar />
       <div className="flex flex-col items-center w-full min-h-screen text-white bg-[e5e5e5]">
-        <div className="w-full bg-[#1D2DB6] p-8 rounded-lg mb-8 flex flex-col md:flex-row items-center justify-center">
+        <div className="w-full bg-transparent p-8 rounded-lg mb-8 flex flex-col md:flex-row items-center justify-center">
           <img
             className="rounded-full w-[150px] h-[150px] mb-4 md:mb-0 mx-auto md:mx-0 md:mr-8"
             src={userPhoto || image}
@@ -119,6 +124,12 @@ const Profile = () => {
               <button className="border rounded-md p-2 m-1">
                 Modifier Mot de Passe
               </button>
+              <button
+                className="bg-red-500 border border-red-500 border rounded-md p-2 m-1"
+                onClick={handleLogout}
+              >
+                Déconnexion
+              </button>
             </div>
           </div>
         </div>
@@ -128,7 +139,6 @@ const Profile = () => {
             style={{
               backgroundColor: 'rgba(251, 251, 251, 0.2)',
               borderRadius: '33px',
-              boxShadow: '0px 0px 5px white',
             }}
           >
             <h2 className="text-xl font-bold text-center mb-5">
@@ -225,7 +235,7 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <div>
+        <div className="my-10">
           {spotify_data ? (
             <>
               <h1 className="text-xl font-Rollicker">Followed Artists</h1>
@@ -248,12 +258,6 @@ const Profile = () => {
             <></>
           )}
         </div>
-        <button
-          className="text-red-500 border border-red-500 px-4 py-2 rounded-md bg-white hover:bg-red-500 hover:text-white mt-4 "
-          onClick={handleLogout}
-        >
-          Déconnexion
-        </button>
         <Footer />
       </div>
     </>

@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar/Navbar'
 import Footer from '../components/Footer/Footer'
 import Rating from 'react-rating'
 import { StarOutline, Star } from 'react-ionicons'
+import Background from '../components/Background/Background'
 
 const Home = () => {
   // const [totalReviews, setTotalReviews] = useState(0)
@@ -36,19 +37,20 @@ const Home = () => {
 
   return (
     <>
+      <Background />
       <Navbar />
       <div className="flex flex-col items-center justify-center min-h-screen">
         <h1 className="text-3xl font-bold mt-8 mb-4">
-          Les 10 commentaires les plus récents
+          Les commentaires les plus récents
         </h1>
         {userReviews.length > 0 ? (
-          <ul className="mt-2 space-y-4">
+          <ul className="w-[40%] mt-2 space-y-4">
             {userReviews.map(review => (
               <li
                 key={review.id}
-                className="p-4 bg-white rounded-lg shadow-md mb-4 md:mb-0"
+                className="p-4 w-full bg-white rounded-lg shadow-md mb-4 md:mb-0"
               >
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-2">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-2 space-x-10">
                   <span className="text-sm text-black mb-2 md:mb-0">
                     {new Date(review.createdAt).toLocaleString()}
                   </span>
@@ -58,19 +60,28 @@ const Home = () => {
                         ? `/artist/${review.idArtist}`
                         : `/album/${review.idAlbum}`
                     }
-                    className="text-blue-400 hover:font-bold"
+                    className="text-blue-400 hover:text-blue-500"
                   >
-                    Aller à la page de{' '}
-                    {review.idArtist ? "l'artiste" : "l'album"}{' '}
-                    <b>{review.artistName || review.albumName}</b>
+                    <div className="flex space-x-5 items-center mr-4">
+                      <img
+                        className="rounded-full"
+                        src={review.artistPhoto}
+                        width={50}
+                      />
+                      <b>{review.artistName || review.albumName}</b>
+                    </div>
                   </Link>
                 </div>
-                <div className="flex flex-row text-black">
+                <div className="flex flex-row text-black items-center">
                   <div className="flex mr-4">
-                    <img src={review.photo} alt={review.userId} />
+                    <img
+                      src={review.userPhoto}
+                      alt={review.userId}
+                      width={50}
+                    />
                   </div>
                   <div className="flex">
-                    <p>Utilisateur : {review.userId}</p>
+                    <p>Utilisateur : {review.userEmail}</p>
                   </div>
                 </div>
                 <p className="text-black bg-gray-100 p-2 rounded-md mb-2">

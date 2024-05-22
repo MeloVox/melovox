@@ -19,7 +19,7 @@ export const authMelovoxAPI = ({ url, props, callback }) => {
       return setMessage(err.toString())
     })
     .then(reponse => {
-      if (!reponse.ok) return setMessage('API offline: login not supported')
+      if (!reponse.ok) return setMessage(reponse.message)
       reponse.json().then(response => {
         const { message, data } = response
         setMessage(message)
@@ -107,7 +107,7 @@ export async function getSpotifyArtistsFollowed(accessToken, setData) {
 }
 
 export const handleSpotify = setStatus => {
-  const storedToken = JSON.parse(sessionStorage.getItem('spotify-token'))
+  const storedToken = JSON.parse(sessionStorage.getItem('app-spotify-token'))
   if (storedToken && storedToken.expires_at > Date.now()) {
     return Promise.resolve()
   }
@@ -133,7 +133,7 @@ export const handleSpotify = setStatus => {
       response.json().then(data => {
         if (data) {
           data.expires_at = Date.now() + data.expires_in * 1000
-          sessionStorage.setItem('spotify-token', JSON.stringify(data))
+          sessionStorage.setItem('app-spotify-token', JSON.stringify(data))
         } else {
           setStatus('No data received from Spotify API')
         }

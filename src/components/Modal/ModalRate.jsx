@@ -20,6 +20,7 @@ const ModalRate = ({
   const [error, setError] = useState('')
   const [userId, setUserId] = useState(null)
   const [userPhoto, setUserPhoto] = useState(null)
+  const [userEmail, setUserEmail] = useState(null)
 
   useEffect(() => {
     const response = sessionStorage.getItem('user')
@@ -29,6 +30,8 @@ const ModalRate = ({
       console.log(data)
       setUserId(data.id)
       setUserPhoto(data.photo)
+      setUserEmail(data.email)
+      console.log(data)
     }
   }, [])
 
@@ -64,6 +67,9 @@ const ModalRate = ({
         },
         body: JSON.stringify({
           userId,
+          userEmail,
+          userPhoto,
+          artistPhoto: albumCover,
           idArtist: artistId,
           idAlbum: albumId,
           idMusic: null,
