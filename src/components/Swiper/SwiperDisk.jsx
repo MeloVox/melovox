@@ -36,8 +36,6 @@ const SwiperDisk = ({ images }) => {
     setOpen(false)
   }
 
-  console.log(selectedAlbum)
-
   return (
     <>
       <Swiper

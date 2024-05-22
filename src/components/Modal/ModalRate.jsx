@@ -24,18 +24,27 @@ const ModalRate = ({
 
   useEffect(() => {
     const response = sessionStorage.getItem('user')
+    const spotify = sessionStorage.getItem('spotify-user')
+    const spotify_user = sessionStorage.getItem('api-spotify-user')
 
     if (response) {
       const { data } = JSON.parse(response)
-      console.log(data)
       setUserId(data.id)
       setUserPhoto(data.photo)
       setUserEmail(data.email)
-      console.log(data)
+    }
+
+    if (spotify) {
+      const data = JSON.parse(spotify_user)
+      setUserId(data.id)
+      const spotifyData = JSON.parse(spotify)
+      const list_images = spotifyData.images
+      list_images.forEach(image => {
+        setUserPhoto(image.url)
+      })
+      setUserEmail(spotifyData.email)
     }
   }, [])
-
-  console.log(userPhoto)
 
   const handleRatingChange = value => {
     setRating(value)
@@ -82,8 +91,6 @@ const ModalRate = ({
       if (!response.ok) {
         throw new Error('Erreur lors de la soumission de la critique')
       }
-      const responseData = await response.json()
-      console.log(responseData.message)
       onClose()
       fetchReviews()
     } catch (error) {

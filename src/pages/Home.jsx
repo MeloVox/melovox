@@ -75,6 +75,7 @@ const Home = () => {
                 <div className="flex flex-row text-black items-center">
                   <div className="flex mr-4">
                     <img
+                      className="rounded-full size-10"
                       src={review.userPhoto}
                       alt={review.userId}
                       width={50}

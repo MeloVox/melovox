@@ -56,7 +56,6 @@ const Header = () => {
         list_images.forEach(image => {
           setImage(image.url)
         })
-        console.log(image)
       }
     }
   })

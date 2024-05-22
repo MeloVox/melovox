@@ -73,6 +73,35 @@ export async function spotifySearchArtists({ token, searchInput }) {
   )
 }
 
+export async function handleSpotifyAccount(data) {
+  const params = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      spotifyId: data.id,
+      email: data.email,
+    }),
+  }
+  fetch(`${API}/api/spotify`, params)
+    .catch(err => {
+      if (err instanceof TypeError) {
+        return
+      }
+    })
+    .then(reponse => {
+      if (!reponse.ok) return
+      reponse.json().then(response => {
+        console.log(response)
+        const { data } = response
+        if (data) {
+          sessionStorage.setItem('api-spotify-user', JSON.stringify(data))
+        }
+      })
+    })
+}
+
 export async function getSpotifyProfile(accessToken) {
   return await fetch('https://api.spotify.com/v1/me', {
     headers: {
@@ -85,6 +114,7 @@ export async function getSpotifyProfile(accessToken) {
       }
       const data = await response.json()
       sessionStorage.setItem('spotify-user', JSON.stringify(data))
+      handleSpotifyAccount(data)
       return data
     })
     .catch(err => {
