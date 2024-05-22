@@ -29,6 +29,7 @@ const Profile = () => {
     const response = sessionStorage.getItem('user')
     const token = sessionStorage.getItem('spotify-token')
     const spotify = sessionStorage.getItem('spotify-user')
+    const appspotify = sessionStorage.getItem('api-spotify-user')
 
     if (response) {
       const { data } = JSON.parse(response)
@@ -43,6 +44,8 @@ const Profile = () => {
 
     if (spotify) {
       const spotify_user = JSON.parse(spotify)
+      const app_spotify_user = JSON.parse(appspotify)
+      setUserId(app_spotify_user.id)
       setUser(spotify_user)
       const list_images = spotify_user.images
       list_images.forEach(image => {
@@ -67,7 +70,6 @@ const Profile = () => {
   }
 
   const fetchUserReviews = async () => {
-    console.log(spotify_data)
     try {
       const response = await fetch(
         `http://localhost:3333/api/getReviews?userId=${userId}`,
